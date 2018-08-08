@@ -26,6 +26,10 @@
 #include <linux/delay.h>
 #include <linux/leds-qpnp-wled.h>
 #include <linux/qpnp/qpnp-revid.h>
+<<<<<<< HEAD
+=======
+#include <linux/regulator/consumer.h>
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 /* base addresses */
 #define QPNP_WLED_CTRL_BASE		"qpnp-wled-ctrl-base"
@@ -33,7 +37,10 @@
 
 /* ctrl registers */
 #define QPNP_WLED_FAULT_STATUS(b)	(b + 0x08)
+<<<<<<< HEAD
 #define QPNP_WLED_INT_RT_STS(b)		(b + 0x10)
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define QPNP_WLED_EN_REG(b)		(b + 0x46)
 #define QPNP_WLED_FDBK_OP_REG(b)	(b + 0x48)
 #define QPNP_WLED_VREF_REG(b)		(b + 0x49)
@@ -45,7 +52,10 @@
 #define QPNP_WLED_SOFTSTART_RAMP_DLY(b) (b + 0x53)
 #define QPNP_WLED_VLOOP_COMP_RES_REG(b)	(b + 0x55)
 #define QPNP_WLED_VLOOP_COMP_GM_REG(b)	(b + 0x56)
+<<<<<<< HEAD
 #define QPNP_WLED_EN_PSM_REG(b)		(b + 0x5A)
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define QPNP_WLED_PSM_CTRL_REG(b)	(b + 0x5B)
 #define QPNP_WLED_LCD_AUTO_PFM_REG(b)	(b + 0x5C)
 #define QPNP_WLED_SC_PRO_REG(b)		(b + 0x5E)
@@ -84,13 +94,20 @@
 #define QPNP_WLED_VREF_PSM_MIN_MV			400
 #define QPNP_WLED_VREF_PSM_MAX_MV			750
 #define QPNP_WLED_VREF_PSM_DFLT_AMOLED_MV		450
+<<<<<<< HEAD
 #define QPNP_WLED_PSM_OVERWRITE_BIT			BIT(7)
+=======
+#define QPNP_WLED_PSM_CTRL_OVERWRITE			0x80
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define QPNP_WLED_LCD_AUTO_PFM_DFLT_THRESH		1
 #define QPNP_WLED_LCD_AUTO_PFM_THRESH_MAX		0xF
 #define QPNP_WLED_LCD_AUTO_PFM_EN_SHIFT			7
 #define QPNP_WLED_LCD_AUTO_PFM_EN_BIT			BIT(7)
 #define QPNP_WLED_LCD_AUTO_PFM_THRESH_MASK		GENMASK(3, 0)
+<<<<<<< HEAD
 #define QPNP_WLED_EN_PSM_BIT				BIT(7)
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 #define QPNP_WLED_ILIM_MASK		GENMASK(2, 0)
 #define QPNP_WLED_ILIM_OVERWRITE	BIT(7)
@@ -120,9 +137,12 @@
 		QPNP_WLED_TEST4_EN_CLAMP_BIT |		\
 		QPNP_WLED_TEST4_EN_SOFT_START_BIT)
 #define QPNP_WLED_TEST4_EN_IIND_UP	0x1
+<<<<<<< HEAD
 #define QPNP_WLED_ILIM_FAULT_BIT	BIT(0)
 #define QPNP_WLED_OVP_FAULT_BIT		BIT(1)
 #define QPNP_WLED_SC_FAULT_BIT		BIT(2)
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 /* sink registers */
 #define QPNP_WLED_CURR_SINK_REG(b)	(b + 0x46)
@@ -305,6 +325,10 @@ static struct wled_vref_setting vref_setting_pmi8998 = {
 	60000, 397500, 22500, 127500,
 };
 
+<<<<<<< HEAD
+=======
+static struct regulator *bob_test = NULL;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /**
  *  qpnp_wled - wed data structure
  *  @ cdev - led class device
@@ -341,7 +365,10 @@ static struct wled_vref_setting vref_setting_pmi8998 = {
  *  @ lcd_auto_pfm_thresh - the threshold for lcd auto pfm mode
  *  @ loop_auto_gm_en - select if auto gm is enabled
  *  @ lcd_auto_pfm_en - select if auto pfm is enabled in lcd mode
+<<<<<<< HEAD
  *  @ lcd_psm_ctrl - select if psm needs to be controlled in lcd mode
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *  @ avdd_mode_spmi - enable avdd programming via spmi
  *  @ en_9b_dim_res - enable or disable 9bit dimming
  *  @ en_phase_stag - enable or disable phase staggering
@@ -387,7 +414,10 @@ struct qpnp_wled {
 	u8			lcd_auto_pfm_thresh;
 	bool			loop_auto_gm_en;
 	bool			lcd_auto_pfm_en;
+<<<<<<< HEAD
 	bool			lcd_psm_ctrl;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	bool			avdd_mode_spmi;
 	bool			en_9b_dim_res;
 	bool			en_phase_stag;
@@ -396,8 +426,16 @@ struct qpnp_wled {
 	bool			en_ext_pfet_sc_pro;
 	bool			prev_state;
 	bool			ovp_irq_disabled;
+<<<<<<< HEAD
 };
 
+=======
+    u16 fs_curr_ua_temp;//ZTEMT: added by nubia camera for front camera flash
+};
+
+extern int get_camera_lcd_bkl_wled(void); //ZTEMT: added by nubia camera for front camera flash
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /* helper to read a pmic register */
 static int qpnp_wled_read_reg(struct qpnp_wled *wled, u16 addr, u8 *data)
 {
@@ -557,6 +595,7 @@ static int qpnp_wled_set_level(struct qpnp_wled *wled, int level)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int qpnp_wled_psm_config(struct qpnp_wled *wled, bool enable)
 {
 	int rc;
@@ -581,6 +620,8 @@ static int qpnp_wled_psm_config(struct qpnp_wled *wled, bool enable)
 	return 0;
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static int qpnp_wled_module_en(struct qpnp_wled *wled,
 				u16 base_addr, bool state)
 {
@@ -593,6 +634,7 @@ static int qpnp_wled_module_en(struct qpnp_wled *wled,
 	if (rc < 0)
 		return rc;
 
+<<<<<<< HEAD
 	/*
 	 * Wait for at least 10ms before enabling OVP fault interrupt after
 	 * enabling the module so that soft start is completed. Also, this
@@ -618,6 +660,23 @@ static int qpnp_wled_module_en(struct qpnp_wled *wled,
 		rc = qpnp_wled_psm_config(wled, true);
 		if (rc < 0)
 			return rc;
+=======
+	if (wled->ovp_irq > 0) {
+		if (state && wled->ovp_irq_disabled) {
+			/*
+			 * Wait for at least 10ms before enabling OVP fault
+			 * interrupt after enabling the module so that soft
+			 * start is completed. Keep OVP interrupt disabled
+			 * when the module is disabled.
+			 */
+			usleep_range(10000, 11000);
+			enable_irq(wled->ovp_irq);
+			wled->ovp_irq_disabled = false;
+		} else if (!state && !wled->ovp_irq_disabled) {
+			disable_irq(wled->ovp_irq);
+			wled->ovp_irq_disabled = true;
+		}
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 
 	return 0;
@@ -925,15 +984,70 @@ static struct device_attribute qpnp_wled_attrs[] = {
 		qpnp_wled_ramp_step_store),
 };
 
+<<<<<<< HEAD
+=======
+//ZTEMT: added by nubia camera for front camera flash start
+int qpnp_camera_lcd_wled_config(struct qpnp_wled *wled, int enable)
+{
+	int rc, i, temp;
+	u8 reg = 0;
+	for (i = 0; i < wled->num_strings; i++) {
+        if (wled->strings[i] >= QPNP_WLED_MAX_STRINGS) {
+        	return -EINVAL;
+        }
+    	/* FULL SCALE CURRENT */
+    	if (wled->fs_curr_ua > QPNP_WLED_FS_CURR_MAX_UA)
+    		wled->fs_curr_ua = QPNP_WLED_FS_CURR_MAX_UA;
+
+    	rc = qpnp_wled_read_reg(wled,
+    			QPNP_WLED_FS_CURR_REG(wled->sink_base,
+    					wled->strings[i]), &reg);
+    	if (rc < 0)
+    		return rc;
+    	reg &= QPNP_WLED_FS_CURR_MASK;
+    	if (enable) {
+    		wled->fs_curr_ua = QPNP_WLED_FS_CURR_MAX_UA;
+    	} else {
+    		wled->fs_curr_ua = wled->fs_curr_ua_temp;
+    	}
+    	temp = wled->fs_curr_ua / QPNP_WLED_FS_CURR_STEP_UA;
+    	reg |= temp;
+    	rc = qpnp_wled_write_reg(wled, 
+    			QPNP_WLED_FS_CURR_REG(wled->sink_base,
+    					wled->strings[i]), reg);
+		if (rc)
+			return rc;
+    }
+	return rc;
+}
+//ZTEMT: added by nubia camera for front camera flash end
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /* worker for setting wled brightness */
 static void qpnp_wled_work(struct work_struct *work)
 {
 	struct qpnp_wled *wled;
 	int level, rc;
+<<<<<<< HEAD
+=======
+	static int camer_lcd_bkl_wled = 0; //ZTEMT: added by nubia camera for front camera flash
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	wled = container_of(work, struct qpnp_wled, work);
 
 	level = wled->cdev.brightness;
+<<<<<<< HEAD
+=======
+	//ZTEMT: added by nubia camera for front camera flash start
+	if (get_camera_lcd_bkl_wled()) {
+		camer_lcd_bkl_wled = 1;
+		qpnp_camera_lcd_wled_config(wled, 1);
+	} else if (camer_lcd_bkl_wled == 1) {
+		camer_lcd_bkl_wled = 0;
+		qpnp_camera_lcd_wled_config(wled, 0);
+	}
+	//ZTEMT: added by nubia camera for front camera flash end
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	mutex_lock(&wled->lock);
 
@@ -958,7 +1072,17 @@ static void qpnp_wled_work(struct work_struct *work)
 				goto unlock_mutex;
 			}
 		}
+<<<<<<< HEAD
 
+=======
+        if (!!level) {
+            rc = regulator_set_voltage(bob_test, 3312000, 3600000); 
+            rc = regulator_disable(bob_test); 
+        } else {
+            rc = regulator_set_voltage(bob_test, 3450000, 3600000); 
+            rc = regulator_enable(bob_test); 
+        }
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		rc = qpnp_wled_module_en(wled, wled->ctrl_base, !!level);
 		if (rc) {
 			dev_err(&wled->pdev->dev, "wled %sable failed\n",
@@ -1032,7 +1156,11 @@ static int qpnp_wled_set_disp(struct qpnp_wled *wled, u16 base_addr)
 		reg &= QPNP_WLED_VREF_PSM_MASK;
 		reg |= ((wled->vref_psm_mv - QPNP_WLED_VREF_PSM_MIN_MV)/
 			QPNP_WLED_VREF_PSM_STEP_MV);
+<<<<<<< HEAD
 		reg |= QPNP_WLED_PSM_OVERWRITE_BIT;
+=======
+		reg |= QPNP_WLED_PSM_CTRL_OVERWRITE;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		rc = qpnp_wled_write_reg(wled,
 				QPNP_WLED_PSM_CTRL_REG(wled->ctrl_base), reg);
 		if (rc)
@@ -1095,6 +1223,7 @@ static irqreturn_t qpnp_wled_ovp_irq_handler(int irq, void *_wled)
 {
 	struct qpnp_wled *wled = _wled;
 	int rc;
+<<<<<<< HEAD
 	u8 fault_sts, int_sts;
 
 	rc = qpnp_wled_read_reg(wled,
@@ -1106,14 +1235,24 @@ static irqreturn_t qpnp_wled_ovp_irq_handler(int irq, void *_wled)
 
 	rc = qpnp_wled_read_reg(wled,
 			QPNP_WLED_FAULT_STATUS(wled->ctrl_base), &fault_sts);
+=======
+	u8 val;
+
+	rc = qpnp_wled_read_reg(wled,
+			QPNP_WLED_FAULT_STATUS(wled->ctrl_base), &val);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (rc < 0) {
 		pr_err("Error in reading WLED_FAULT_STATUS rc=%d\n", rc);
 		return IRQ_HANDLED;
 	}
 
+<<<<<<< HEAD
 	if (fault_sts & (QPNP_WLED_OVP_FAULT_BIT | QPNP_WLED_ILIM_FAULT_BIT))
 		pr_err("WLED OVP fault detected, int_sts=%x fault_sts= %x\n",
 			int_sts, fault_sts);
+=======
+	pr_err("WLED OVP fault detected, fault_status= %x\n", val);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return IRQ_HANDLED;
 }
 
@@ -1728,8 +1867,11 @@ static int qpnp_wled_config(struct qpnp_wled *wled)
 				wled->ovp_irq, rc);
 			return rc;
 		}
+<<<<<<< HEAD
 		disable_irq(wled->ovp_irq);
 		wled->ovp_irq_disabled = true;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 
 	if (wled->sc_irq >= 0) {
@@ -2073,6 +2215,10 @@ static int qpnp_wled_parse_dt(struct qpnp_wled *wled)
 			"qcom,fs-curr-ua", &temp_val);
 	if (!rc) {
 		wled->fs_curr_ua = temp_val;
+<<<<<<< HEAD
+=======
+		wled->fs_curr_ua_temp = temp_val;//ZTEMT: added by nubia camera for front camera flash
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	} else if (rc != -EINVAL) {
 		dev_err(&pdev->dev, "Unable to read full scale current\n");
 		return rc;
@@ -2116,8 +2262,11 @@ static int qpnp_wled_parse_dt(struct qpnp_wled *wled)
 	wled->en_ext_pfet_sc_pro = of_property_read_bool(pdev->dev.of_node,
 					"qcom,en-ext-pfet-sc-pro");
 
+<<<<<<< HEAD
 	wled->lcd_psm_ctrl = of_property_read_bool(pdev->dev.of_node,
 				"qcom,lcd-psm-ctrl");
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return 0;
 }
 
@@ -2215,7 +2364,11 @@ static int qpnp_wled_probe(struct platform_device *pdev)
 			goto sysfs_fail;
 		}
 	}
+<<<<<<< HEAD
 
+=======
+    bob_test = regulator_get(&pdev->dev, "bob_test");
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return 0;
 
 sysfs_fail:

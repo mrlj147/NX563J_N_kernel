@@ -98,7 +98,12 @@ static int __apr_tal_write(struct apr_svc_ch_dev *apr_ch, void *data,
 	unsigned long flags;
 
 	spin_lock_irqsave(&apr_ch->w_lock, flags);
+<<<<<<< HEAD
 	rc = glink_tx(apr_ch->handle, pkt_priv, data, len, GLINK_TX_ATOMIC);
+=======
+	rc = glink_tx(apr_ch->handle, pkt_priv, data, len,
+			GLINK_TX_REQ_INTENT | GLINK_TX_ATOMIC);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	spin_unlock_irqrestore(&apr_ch->w_lock, flags);
 
 	if (rc)

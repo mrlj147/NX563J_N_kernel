@@ -293,7 +293,10 @@ static struct device_attribute power_supply_attrs[] = {
 	POWER_SUPPLY_ATTR(die_health),
 	POWER_SUPPLY_ATTR(connector_health),
 	POWER_SUPPLY_ATTR(ctm_current_max),
+<<<<<<< HEAD
 	POWER_SUPPLY_ATTR(hw_current_max),
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* Local extensions of type int64_t */
 	POWER_SUPPLY_ATTR(charge_counter_ext),
 	/* Properties of type `const char *' */

@@ -190,6 +190,7 @@
 	qcom,mdss-dsi-bl-max-level = <4095>;
 	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
 };
+<<<<<<< HEAD
 
 &i2c_2 {
 	status = "ok";
@@ -202,3 +203,5 @@
 		qcom,parallel-en-pin-polarity = <1>;
 	};
 };
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf

@@ -2236,6 +2236,7 @@ static int ipa3_q6_set_ex_path_to_apps(void)
 			desc[num_descs].len = cmd_pyld->len;
 			num_descs++;
 		}
+<<<<<<< HEAD
 
 		/* disable statuses for modem producers */
 		if (IPA_CLIENT_IS_Q6_PROD(client_idx)) {
@@ -2266,6 +2267,8 @@ static int ipa3_q6_set_ex_path_to_apps(void)
 			desc[num_descs].len = cmd_pyld->len;
 			num_descs++;
 		}
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 
 	/* Will wait 500msecs for IPA tag process completion */

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2012-2017, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -170,7 +174,10 @@ u32 get_dump_range(struct dump_offset *range_node, size_t max_offset);
 void mdss_dump_reg(const char *dump_name, u32 reg_dump_flag, char *addr,
 	int len, u32 **dump_mem, bool from_isr);
 void mdss_mdp_debug_mid(u32 mid);
+<<<<<<< HEAD
 void mdss_dump_dsi_debug_bus(u32 bus_dump_flag, u32 **dump_mem);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #else
 struct mdss_debug_base;
 struct dump_offset;

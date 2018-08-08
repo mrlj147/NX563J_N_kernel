@@ -166,7 +166,10 @@ struct spmi_pmic_arb {
 	u16			max_apid;
 	u16			max_periph;
 	u32			*mapping_table;
+<<<<<<< HEAD
 	int			reserved_chan;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	DECLARE_BITMAP(mapping_table_valid, PMIC_ARB_MAX_PERIPHS);
 	struct irq_domain	*domain;
 	struct spmi_controller	*spmic;
@@ -862,10 +865,13 @@ static u16 pmic_arb_find_apid(struct spmi_pmic_arb *pa, u16 ppid)
 	 * ppid_to_apid is an in-memory invert of that table.
 	 */
 	for (apid = pa->last_apid; apid < pa->max_periph; apid++) {
+<<<<<<< HEAD
 		/* Do not keep the reserved channel in the mapping table */
 		if (pa->reserved_chan >= 0 && apid == pa->reserved_chan)
 			continue;
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		regval = readl_relaxed(pa->cnfg +
 				      SPMI_OWNERSHIP_TABLE_REG(apid));
 		pa->apid_data[apid].irq_owner
@@ -925,10 +931,13 @@ static int pmic_arb_read_apid_map_v5(struct spmi_pmic_arb *pa)
 	 * receive interrupts from the PPID.
 	 */
 	for (apid = 0; apid < pa->max_periph; apid++) {
+<<<<<<< HEAD
 		/* Do not keep the reserved channel in the mapping table */
 		if (pa->reserved_chan >= 0 && apid == pa->reserved_chan)
 			continue;
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		offset = pa->ver_ops->channel_map_offset(apid);
 		if (offset >= pa->core_size)
 			break;
@@ -1349,10 +1358,13 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
 
 	pa->ee = ee;
 
+<<<<<<< HEAD
 	pa->reserved_chan = -EINVAL;
 	of_property_read_u32(pdev->dev.of_node, "qcom,reserved-chan",
 						&pa->reserved_chan);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	pa->mapping_table = devm_kcalloc(&ctrl->dev, PMIC_ARB_MAX_PERIPHS - 1,
 					sizeof(*pa->mapping_table), GFP_KERNEL);
 	if (!pa->mapping_table) {

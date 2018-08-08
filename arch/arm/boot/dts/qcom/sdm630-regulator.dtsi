@@ -28,7 +28,11 @@
 	rpm-regulator-smpa5 {
 		status = "okay";
 		pm660_s5: regulator-s5 {
+<<<<<<< HEAD
 			regulator-min-microvolt = <1224000>;
+=======
+			regulator-min-microvolt = <1350000>;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			regulator-max-microvolt = <1350000>;
 			status = "okay";
 		};
@@ -657,7 +661,10 @@
 		qcom,cpr-up-error-step-limit = <1>;
 		qcom,cpr-corner-switch-delay-time = <1042>;
 		qcom,cpr-voltage-settling-time = <1760>;
+<<<<<<< HEAD
 		qcom,cpr-reset-step-quot-loop-en;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 		qcom,apm-threshold-voltage = <872000>;
 		qcom,apm-crossover-voltage = <872000>;
@@ -666,9 +673,12 @@
 		qcom,voltage-base = <400000>;
 		qcom,cpr-saw-use-unit-mV;
 
+<<<<<<< HEAD
 		qcom,cpr-enable;
 		qcom,cpr-hw-closed-loop;
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		qcom,cpr-panic-reg-addr-list =
 			<0x179cbaa4 0x17912c18>;
 		qcom,cpr-panic-reg-name-list =
@@ -709,6 +719,7 @@
 				qcom,allow-voltage-interpolation;
 				qcom,allow-quotient-interpolation;
 				qcom,cpr-scaled-open-loop-voltage-as-ceiling;
+<<<<<<< HEAD
 
 				qcom,cpr-ro-scaling-factor =
 					<3600 3600 3830 2430 2520 2700 1790
@@ -727,6 +738,8 @@
 				qcom,cpr-floor-to-ceiling-max-range =
 					<32000  32000  32000  40000  44000
 					 40000  40000  40000>;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			};
 		};
 	};
@@ -753,7 +766,10 @@
 		qcom,cpr-up-error-step-limit = <1>;
 		qcom,cpr-corner-switch-delay-time = <1042>;
 		qcom,cpr-voltage-settling-time = <1760>;
+<<<<<<< HEAD
 		qcom,cpr-reset-step-quot-loop-en;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 		qcom,apm-threshold-voltage = <872000>;
 		qcom,apm-crossover-voltage = <872000>;
@@ -762,9 +778,12 @@
 		qcom,voltage-base = <400000>;
 		qcom,cpr-saw-use-unit-mV;
 
+<<<<<<< HEAD
 		qcom,cpr-enable;
 		qcom,cpr-hw-closed-loop;
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		qcom,cpr-panic-reg-addr-list =
 			<0x179c7aa4 0x17812c18>;
 		qcom,cpr-panic-reg-name-list =
@@ -860,6 +879,7 @@
 				qcom,allow-voltage-interpolation;
 				qcom,allow-quotient-interpolation;
 				qcom,cpr-scaled-open-loop-voltage-as-ceiling;
+<<<<<<< HEAD
 
 				qcom,cpr-ro-scaling-factor =
 					<4040 4230 0000 2210 2560 2450 2230
@@ -900,6 +920,8 @@
 					<40000  40000  40000  40000
 					 40000  40000  40000  66000
 					 66000  40000  40000>;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			};
 		};
 	};

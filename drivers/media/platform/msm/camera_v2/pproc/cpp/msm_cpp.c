@@ -2549,6 +2549,7 @@ static int msm_cpp_cfg_frame(struct cpp_device *cpp_dev,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	if (stripe_base == UINT_MAX || new_frame->num_strips >
 		(UINT_MAX - 1 - stripe_base) / stripe_size) {
 		pr_err("Invalid frame message,num_strips %d is large\n",
@@ -2556,6 +2557,8 @@ static int msm_cpp_cfg_frame(struct cpp_device *cpp_dev,
 		return -EINVAL;
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if ((stripe_base + new_frame->num_strips * stripe_size + 1) !=
 		new_frame->msg_len) {
 		pr_err("Invalid frame message,len=%d,expected=%d\n",
@@ -3011,6 +3014,11 @@ long msm_cpp_subdev_ioctl(struct v4l2_subdev *sd,
 	struct msm_camera_v4l2_ioctl_t *ioctl_ptr = NULL;
 	int rc = 0;
 
+<<<<<<< HEAD
+=======
+	CPP_DBG("E\n");
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (sd == NULL) {
 		pr_err("sd %pK\n", sd);
 		return -EINVAL;
@@ -3031,9 +3039,16 @@ long msm_cpp_subdev_ioctl(struct v4l2_subdev *sd,
 		pr_err("input validation failed\n");
 		return rc;
 	}
+<<<<<<< HEAD
 	mutex_lock(&cpp_dev->mutex);
 
 	CPP_DBG("E cmd: 0x%x\n", cmd);
+=======
+
+	mutex_lock(&cpp_dev->mutex);
+
+	CPP_DBG("cmd: 0x%x\n", cmd);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	switch (cmd) {
 	case VIDIOC_MSM_CPP_GET_HW_INFO: {
 		CPP_DBG("VIDIOC_MSM_CPP_GET_HW_INFO\n");
@@ -3504,9 +3519,12 @@ STREAM_BUFF_END:
 		}
 		break;
 	}
+<<<<<<< HEAD
 	default:
 		pr_err_ratelimited("invalid value: cmd=0x%x\n", cmd);
 		break;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	case VIDIOC_MSM_CPP_IOMMU_ATTACH: {
 		if (cpp_dev->iommu_state == CPP_IOMMU_STATE_DETACHED) {
 			struct msm_camera_smmu_attach_type cpp_attach_info;
@@ -3522,6 +3540,10 @@ STREAM_BUFF_END:
 				ioctl_ptr);
 			if (rc < 0) {
 				pr_err("CPP_IOMMU_ATTACH copy from user fail");
+<<<<<<< HEAD
+=======
+				rc = -EINVAL;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				break;
 			}
 
@@ -3535,12 +3557,20 @@ STREAM_BUFF_END:
 					CAM_SMMU_ATTACH);
 			}
 			if (rc < 0) {
+<<<<<<< HEAD
 				pr_err("%s:%diommu_attach_device failed\n",
+=======
+				pr_err("%s:%d iommu attach failed\n",
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 					__func__, __LINE__);
 				rc = -EINVAL;
 				break;
 			}
 			cpp_dev->iommu_state = CPP_IOMMU_STATE_ATTACHED;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		} else {
 			pr_err("%s:%d IOMMMU attach triggered in invalid state\n",
 				__func__, __LINE__);
@@ -3564,11 +3594,16 @@ STREAM_BUFF_END:
 				ioctl_ptr);
 			if (rc < 0) {
 				pr_err("CPP_IOMMU_DETTACH copy from user fail");
+<<<<<<< HEAD
+=======
+				rc = -EINVAL;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				break;
 			}
 
 			cpp_dev->security_mode = cpp_attach_info.attach;
 
+<<<<<<< HEAD
 			if (cpp_dev->security_mode == SECURE_MODE)
 				rc = cam_smmu_ops(cpp_dev->iommu_hdl,
 					CAM_SMMU_DETACH_SEC_CPP);
@@ -3577,21 +3612,50 @@ STREAM_BUFF_END:
 					CAM_SMMU_DETACH);
 			if (rc < 0) {
 				pr_err("%s:%diommu detach failed\n", __func__,
+=======
+			if (cpp_dev->security_mode == SECURE_MODE) {
+				rc = cam_smmu_ops(cpp_dev->iommu_hdl,
+					CAM_SMMU_DETACH_SEC_CPP);
+			} else {
+				rc = cam_smmu_ops(cpp_dev->iommu_hdl,
+					CAM_SMMU_DETACH);
+			}
+			if (rc < 0) {
+				pr_err("%s:%d iommu detach failed\n", __func__,
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 					__LINE__);
 				rc = -EINVAL;
 				break;
 			}
 			cpp_dev->iommu_state = CPP_IOMMU_STATE_DETACHED;
+<<<<<<< HEAD
 		} else {
 			pr_err("%s:%d IOMMMU attach triggered in invalid state\n",
+=======
+
+		} else {
+			pr_err("%s:%d IOMMMU detach triggered in invalid state\n",
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				__func__, __LINE__);
 			rc = -EINVAL;
 		}
 		break;
 	}
+<<<<<<< HEAD
 	}
 	mutex_unlock(&cpp_dev->mutex);
 	CPP_DBG("X\n");
+=======
+	default:
+		pr_err_ratelimited("invalid value: cmd=0x%x\n", cmd);
+		break;
+	}
+
+	mutex_unlock(&cpp_dev->mutex);
+
+	CPP_DBG("X\n");
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return rc;
 }
 
@@ -4231,13 +4295,22 @@ static long msm_cpp_subdev_fops_compat_ioctl(struct file *file,
 		cmd = MSM_SD_SHUTDOWN;
 		break;
 	default:
+<<<<<<< HEAD
 		pr_err_ratelimited("%s: unsupported compat type :%x LOAD %lu\n",
 				__func__, cmd, VIDIOC_MSM_CPP_LOAD_FIRMWARE);
+=======
+		pr_err_ratelimited("%s: unsupported compat type :%x\n",
+			__func__, cmd);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		mutex_unlock(&cpp_dev->mutex);
 		return -EINVAL;
 	}
 
 	mutex_unlock(&cpp_dev->mutex);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	switch (cmd) {
 	case VIDIOC_MSM_CPP_LOAD_FIRMWARE:
 	case VIDIOC_MSM_CPP_FLUSH_QUEUE:
@@ -4263,8 +4336,13 @@ static long msm_cpp_subdev_fops_compat_ioctl(struct file *file,
 	case MSM_SD_UNNOTIFY_FREEZE:
 		break;
 	default:
+<<<<<<< HEAD
 		pr_err_ratelimited("%s: unsupported compat type :%d\n",
 				__func__, cmd);
+=======
+		pr_err_ratelimited("%s: unsupported compat type :%x\n",
+			__func__, cmd);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		return -EINVAL;
 	}
 

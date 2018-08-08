@@ -110,8 +110,11 @@ void diag_notify_md_client(uint8_t peripheral, int data)
 {
 	int stat = 0;
 	struct siginfo info;
+<<<<<<< HEAD
 	struct pid *pid_struct;
 	struct task_struct *result;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	if (peripheral > NUM_PERIPHERALS)
 		return;
@@ -124,6 +127,7 @@ void diag_notify_md_client(uint8_t peripheral, int data)
 	info.si_code = SI_QUEUE;
 	info.si_int = (PERIPHERAL_MASK(peripheral) | data);
 	info.si_signo = SIGCONT;
+<<<<<<< HEAD
 
 	if (!driver->md_session_map[peripheral] ||
 		driver->md_session_map[peripheral]->pid <= 0) {
@@ -156,6 +160,22 @@ void diag_notify_md_client(uint8_t peripheral, int data)
 			driver->md_session_map[peripheral]->task == result) {
 			stat = send_sig_info(info.si_signo,
 					&info, result);
+=======
+	if (driver->md_session_map[peripheral] &&
+		driver->md_session_map[peripheral]->task) {
+		if (driver->md_session_map[peripheral]->
+			md_client_thread_info->task != NULL
+			&& driver->md_session_map[peripheral]->pid ==
+			driver->md_session_map[peripheral]->task->tgid) {
+			DIAG_LOG(DIAG_DEBUG_PERIPHERALS,
+				"md_session %d pid = %d, md_session %d task tgid = %d\n",
+				peripheral,
+				driver->md_session_map[peripheral]->pid,
+				peripheral,
+				driver->md_session_map[peripheral]->task->tgid);
+			stat = send_sig_info(info.si_signo, &info,
+				driver->md_session_map[peripheral]->task);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			if (stat)
 				pr_err("diag: Err sending signal to memory device client, signal data: 0x%x, stat: %d\n",
 					info.si_int, stat);

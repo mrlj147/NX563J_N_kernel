@@ -468,7 +468,11 @@ static void diag_glink_connect_work_fn(struct work_struct *work)
 	struct diag_glink_info *glink_info = container_of(work,
 							struct diag_glink_info,
 							connect_work);
+<<<<<<< HEAD
 	if (!glink_info || !glink_info->hdl)
+=======
+	if (!glink_info || glink_info->hdl)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		return;
 	atomic_set(&glink_info->opened, 1);
 	diagfwd_channel_open(glink_info->fwd_ctxt);
@@ -480,7 +484,11 @@ static void diag_glink_remote_disconnect_work_fn(struct work_struct *work)
 	struct diag_glink_info *glink_info = container_of(work,
 							struct diag_glink_info,
 							remote_disconnect_work);
+<<<<<<< HEAD
 	if (!glink_info || !glink_info->hdl)
+=======
+	if (!glink_info || glink_info->hdl)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		return;
 	atomic_set(&glink_info->opened, 0);
 	diagfwd_channel_close(glink_info->fwd_ctxt);

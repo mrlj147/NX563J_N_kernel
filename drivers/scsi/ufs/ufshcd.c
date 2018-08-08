@@ -4289,13 +4289,17 @@ static int __ufshcd_uic_hibern8_enter(struct ufs_hba *hba)
 	 * mode hence full reinit is required to move link to HS speeds.
 	 */
 	if (ret || hba->full_init_linereset) {
+<<<<<<< HEAD
 		int err;
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		hba->full_init_linereset = false;
 		ufshcd_update_error_stats(hba, UFS_ERR_HIBERN8_ENTER);
 		dev_err(hba->dev, "%s: hibern8 enter failed. ret = %d",
 			__func__, ret);
 		/*
+<<<<<<< HEAD
 		 * If link recovery fails then return error code (-ENOLINK)
 		 * returned ufshcd_link_recovery().
 		 * If link recovery succeeds then return -EAGAIN to attempt
@@ -4308,6 +4312,12 @@ static int __ufshcd_uic_hibern8_enter(struct ufs_hba *hba)
 		} else {
 			ret = -EAGAIN;
 		}
+=======
+		 * If link recovery fails then return error so that caller
+		 * don't retry the hibern8 enter again.
+		 */
+		ret = ufshcd_link_recovery(hba);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	} else {
 		dev_dbg(hba->dev, "%s: Hibern8 Enter at %lld us", __func__,
 			ktime_to_us(ktime_get()));
@@ -4324,8 +4334,13 @@ int ufshcd_uic_hibern8_enter(struct ufs_hba *hba)
 		ret = __ufshcd_uic_hibern8_enter(hba);
 		if (!ret)
 			goto out;
+<<<<<<< HEAD
 		else if (ret != -EAGAIN)
 			/* Unable to recover the link, so no point proceeding */
+=======
+		/* Unable to recover the link, so no point proceeding */
+		 if (ret == -ENOLINK)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			BUG();
 	}
 out:

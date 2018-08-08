@@ -27,6 +27,7 @@ Required properties
 - qcom,aux-en-gpio:			Specifies the aux-channel enable gpio.
 - qcom,aux-sel-gpio:			Specifies the aux-channel select gpio.
 - qcom,usbplug-cc-gpio:			Specifies the usbplug orientation gpio.
+<<<<<<< HEAD
 - qcom,aux-cfg0-settings:		Specifies the DP AUX configuration 0 settings. The first
 					entry in this array corresponds to the register offset
 					within DP AUX, while the remaining entries indicate the
@@ -67,6 +68,9 @@ Required properties
 					entry in this array corresponds to the register offset
 					within DP AUX, while the remaining entries indicate the
 					programmable values.
+=======
+- qcom,aux-cfg-settings:		An array that specifies the DP AUX configuration settings.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 Optional properties:
 - qcom,<type>-supply-entries:		A node that lists the elements of the supply used by the
@@ -126,6 +130,7 @@ Example:
 			"core_aux_clk", "core_cfg_ahb_clk", "ctrl_link_clk",
 			"ctrl_link_iface_clk", "ctrl_crypto_clk", "ctrl_pixel_clk";
 
+<<<<<<< HEAD
 		qcom,aux-cfg0-settings = [1c 00];
 		qcom,aux-cfg1-settings = [20 13 23 1d];
 		qcom,aux-cfg2-settings = [24 00];
@@ -136,6 +141,9 @@ Example:
 		qcom,aux-cfg7-settings = [38 03];
 		qcom,aux-cfg8-settings = [3c bb];
 		qcom,aux-cfg9-settings = [40 03];
+=======
+		qcom,aux-cfg-settings = [00 13 00 10 0a 26 0a 03 8b 03];
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		qcom,logical2physical-lane-map = [02 03 01 00];
 		qcom,phy-register-offset = <0x4>;
 		qcom,max-pclk-frequency-khz = <593470>;

@@ -106,7 +106,10 @@ static char dbg_buff[IPA_MAX_MSG_LEN];
 static char *active_clients_buf;
 
 static s8 ep_reg_idx;
+<<<<<<< HEAD
 static void *ipa_ipc_low_buff;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 
 static ssize_t ipa3_read_gen_reg(struct file *file, char __user *ubuf,
@@ -1779,6 +1782,7 @@ static ssize_t ipa3_enable_ipc_low(struct file *file,
 	if (kstrtos8(dbg_buff, 0, &option))
 		return -EFAULT;
 
+<<<<<<< HEAD
 	mutex_lock(&ipa3_ctx->lock);
 	if (option) {
 		if (!ipa_ipc_low_buff) {
@@ -1793,6 +1797,24 @@ static ssize_t ipa3_enable_ipc_low(struct file *file,
 		ipa3_ctx->logbuf_low = NULL;
 	}
 	mutex_unlock(&ipa3_ctx->lock);
+=======
+	if (option) {
+		if (!ipa3_ctx->logbuf_low) {
+			ipa3_ctx->logbuf_low =
+				ipc_log_context_create(IPA_IPC_LOG_PAGES,
+					"ipa_low", 0);
+		}
+
+		if (ipa3_ctx->logbuf_low == NULL) {
+			IPAERR("failed to get logbuf_low\n");
+			return -EFAULT;
+		}
+	} else {
+		if (ipa3_ctx->logbuf_low)
+			ipc_log_context_destroy(ipa3_ctx->logbuf_low);
+		ipa3_ctx->logbuf_low = NULL;
+	}
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	return count;
 }

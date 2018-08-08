@@ -150,6 +150,12 @@ static void _ab_buslevel_update(struct kgsl_pwrctrl *pwr,
 		*ab = pwr->bus_ab_mbytes;
 	else
 		*ab = (pwr->bus_percent_ab * max_bw) / 100;
+<<<<<<< HEAD
+=======
+
+	if (*ab > ib)
+		*ab = ib;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 /**
@@ -2000,6 +2006,13 @@ static int _get_clocks(struct kgsl_device *device)
 
 			if (!strcmp(name, "isense_clk"))
 				pwr->isense_clk_indx = i;
+<<<<<<< HEAD
+=======
+
+			if (device->ftbl->clk_set_options)
+				device->ftbl->clk_set_options(device, name,
+					pwr->grp_clks[i]);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			break;
 		}
 	}
@@ -2446,6 +2459,7 @@ static void kgsl_pwrctrl_disable(struct kgsl_device *device)
 	kgsl_pwrctrl_pwrrail(device, KGSL_PWRFLAGS_OFF);
 }
 
+<<<<<<< HEAD
 static void
 kgsl_pwrctrl_clk_set_options(struct kgsl_device *device, bool on)
 {
@@ -2462,6 +2476,8 @@ kgsl_pwrctrl_clk_set_options(struct kgsl_device *device, bool on)
 	}
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /**
  * _init() - Get the GPU ready to start, but don't turn anything on
  * @device - Pointer to the kgsl_device struct
@@ -2508,7 +2524,10 @@ static int _wake(struct kgsl_device *device)
 		device->ftbl->resume(device);
 		/* fall through */
 	case KGSL_STATE_SLUMBER:
+<<<<<<< HEAD
 		kgsl_pwrctrl_clk_set_options(device, true);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		status = device->ftbl->start(device,
 				device->pwrctrl.superfast);
 		device->pwrctrl.superfast = false;
@@ -2545,7 +2564,10 @@ static int _wake(struct kgsl_device *device)
 				device->pwrctrl.interval_timeout);
 		break;
 	case KGSL_STATE_AWARE:
+<<<<<<< HEAD
 		kgsl_pwrctrl_clk_set_options(device, true);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		/* Enable state before turning on irq */
 		kgsl_pwrctrl_set_state(device, KGSL_STATE_ACTIVE);
 		kgsl_pwrctrl_irq(device, KGSL_PWRFLAGS_ON);
@@ -2660,7 +2682,10 @@ _slumber(struct kgsl_device *device)
 		status = kgsl_pwrctrl_enable(device);
 		device->ftbl->suspend_context(device);
 		device->ftbl->stop(device);
+<<<<<<< HEAD
 		kgsl_pwrctrl_clk_set_options(device, false);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		kgsl_pwrctrl_disable(device);
 		kgsl_pwrscale_sleep(device);
 		kgsl_pwrctrl_irq(device, KGSL_PWRFLAGS_OFF);

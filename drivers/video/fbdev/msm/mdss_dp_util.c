@@ -858,6 +858,7 @@ void mdss_dp_setup_tr_unit(struct dss_io_data *ctrl_io, u8 link_rate,
 	pr_debug("dp_tu=0x%x\n", dp_tu);
 }
 
+<<<<<<< HEAD
 void mdss_dp_aux_set_limits(struct dss_io_data *ctrl_io)
 {
 	u32 const max_aux_timeout_count = 0xFFFFF;
@@ -900,6 +901,8 @@ void mdss_dp_phy_aux_update_config(struct mdss_dp_drv_pdata *dp,
 	mdss_dp_aux_reset(&dp->ctrl_io);
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 void mdss_dp_ctrl_lane_mapping(struct dss_io_data *ctrl_io, char *l_map)
 {
 	u8 bits_per_lane = 2;
@@ -912,6 +915,7 @@ void mdss_dp_ctrl_lane_mapping(struct dss_io_data *ctrl_io, char *l_map)
 		ctrl_io->base + DP_LOGICAL2PHYSCIAL_LANE_MAPPING);
 }
 
+<<<<<<< HEAD
 void mdss_dp_phy_aux_setup(struct mdss_dp_drv_pdata *dp)
 {
 	int i;
@@ -930,6 +934,28 @@ void mdss_dp_phy_aux_setup(struct mdss_dp_drv_pdata *dp)
 				dp->phy_io.base + cfg->offset);
 	};
 	writel_relaxed(0x1e, adjusted_phy_io_base + DP_PHY_AUX_INTERRUPT_MASK);
+=======
+void mdss_dp_phy_aux_setup(struct dss_io_data *phy_io, u32 *aux_cfg,
+		u32 phy_reg_offset)
+{
+	void __iomem *adjusted_phy_io_base = phy_io->base + phy_reg_offset;
+
+	writel_relaxed(0x3d, adjusted_phy_io_base + DP_PHY_PD_CTL);
+
+	/* DP AUX CFG register programming */
+	writel_relaxed(aux_cfg[0], adjusted_phy_io_base + DP_PHY_AUX_CFG0);
+	writel_relaxed(aux_cfg[1], adjusted_phy_io_base + DP_PHY_AUX_CFG1);
+	writel_relaxed(aux_cfg[2], adjusted_phy_io_base + DP_PHY_AUX_CFG2);
+	writel_relaxed(aux_cfg[3], adjusted_phy_io_base + DP_PHY_AUX_CFG3);
+	writel_relaxed(aux_cfg[4], adjusted_phy_io_base + DP_PHY_AUX_CFG4);
+	writel_relaxed(aux_cfg[5], adjusted_phy_io_base + DP_PHY_AUX_CFG5);
+	writel_relaxed(aux_cfg[6], adjusted_phy_io_base + DP_PHY_AUX_CFG6);
+	writel_relaxed(aux_cfg[7], adjusted_phy_io_base + DP_PHY_AUX_CFG7);
+	writel_relaxed(aux_cfg[8], adjusted_phy_io_base + DP_PHY_AUX_CFG8);
+	writel_relaxed(aux_cfg[9], adjusted_phy_io_base + DP_PHY_AUX_CFG9);
+
+	writel_relaxed(0x1f, adjusted_phy_io_base + DP_PHY_AUX_INTERRUPT_MASK);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 int mdss_dp_irq_setup(struct mdss_dp_drv_pdata *dp_drv)

@@ -38,7 +38,12 @@
 #include "vl53l0_api.h"
 #include "vl53l010_api.h"
 
+<<<<<<< HEAD
 #define USE_INT
+=======
+/*#define USE_INT */
+#define IRQ_NUM	   59
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /* #define DEBUG_TIME_LOG */
 #ifdef DEBUG_TIME_LOG
 struct timeval start_tv, stop_tv;
@@ -54,7 +59,10 @@ static struct stmvl53l0_module_fn_t stmvl53l0_module_func_tbl = {
 	.deinit = stmvl53l0_exit_cci,
 	.power_up = stmvl53l0_power_up_cci,
 	.power_down = stmvl53l0_power_down_cci,
+<<<<<<< HEAD
 	.query_power_status = stmvl53l0_cci_power_status,
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 #else
 static struct stmvl53l0_module_fn_t stmvl53l0_module_func_tbl = {
@@ -62,7 +70,10 @@ static struct stmvl53l0_module_fn_t stmvl53l0_module_func_tbl = {
 	.deinit = stmvl53l0_exit_i2c,
 	.power_up = stmvl53l0_power_up_i2c,
 	.power_down = stmvl53l0_power_down_i2c,
+<<<<<<< HEAD
 	.stmv53l0_cci_power_status = NULL;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 #endif
 struct stmvl53l0_module_fn_t *pmodule_func_tbl;
@@ -957,12 +968,15 @@ static void stmvl53l0_work_handler(struct work_struct *work)
 	mutex_lock(&data->work_mutex);
 	/* vl53l0_dbgmsg("Enter\n"); */
 
+<<<<<<< HEAD
 	if (pmodule_func_tbl->query_power_status(data->client_object) == 0) {
 		if (data->enable_ps_sensor == 1) {
 			stmvl53l0_stop(data);
 			data->enable_ps_sensor = 0;
 		}
 	}
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	if (vl53l0_dev->enable_ps_sensor == 1) {
 #ifdef DEBUG_TIME_LOG
@@ -2675,12 +2689,21 @@ int stmvl53l0_setup(struct stmvl53l0_data *data)
 
 #ifdef USE_INT
 	/* init interrupt */
+<<<<<<< HEAD
 	gpio_request(data->irq_gpio, "vl53l0_gpio_int");
 	gpio_direction_input(data->irq_gpio);
 	irq = gpio_to_irq(data->irq_gpio);
 	if (irq < 0) {
 		vl53l0_errmsg("filed to map GPIO: %d to interrupt:%d\n",
 			data->irq_gpio, irq);
+=======
+	gpio_request(IRQ_NUM, "vl53l0_gpio_int");
+	gpio_direction_input(IRQ_NUM);
+	irq = gpio_to_irq(IRQ_NUM);
+	if (irq < 0) {
+		vl53l0_errmsg("filed to map GPIO: %d to interrupt:%d\n",
+			IRQ_NUM, irq);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	} else {
 		vl53l0_dbgmsg("register_irq:%d\n", irq);
 		/* IRQF_TRIGGER_FALLING- poliarity:0 IRQF_TRIGGER_RISNG -

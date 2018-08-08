@@ -14,11 +14,14 @@ Required Node Structure
 	Value type: <string>
 	Definition: should be "qcom,qpnp-oledb-regulator".
 
+<<<<<<< HEAD
 - qcom,pmic-revid
 	Usage:      required
 	Value type: <phandle>
 	Definition: Used to identify the PMIC subtype.
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 - reg
 	Usage:      required
 	Value type: <prop-encoded-array>
@@ -62,6 +65,16 @@ Required Node Structure
 		     rail.  This property is applicable only if qcom,ext-pin-ctl
 		     property is specified and it is specific to PM660A.
 
+<<<<<<< HEAD
+=======
+- qcom,force-pd-control
+	Usage:      optional
+	Value type: <bool>
+	Definition:  Used to enable the pull down control forcibly via SPMI by
+		     disabling the pull down configuration done by hardware
+		     automatically through SWIRE pulses.
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 - qcom,pbs-client
 	Usage:      optional
 	Value type: <phandle>
@@ -222,7 +235,10 @@ pm660a_oledb: qpnp-oledb@e000 {
 	compatible = "qcom,qpnp-oledb-regulator";
 	#address-cells = <1>;
 	#size-cells = <1>;
+<<<<<<< HEAD
 	qcom,pmic-revid = <&pm660l_revid>;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	reg = <0xe000 0x100>;
 
 	label = "oledb";

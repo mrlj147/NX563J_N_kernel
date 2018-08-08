@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2014-2017, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2014-2016, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -196,6 +200,26 @@ static const struct file_operations mhi_dbgfs_ev_fops = {
 	.write = NULL,
 };
 
+<<<<<<< HEAD
+=======
+static ssize_t mhi_dbgfs_trigger_msi(struct file *fp, const char __user *buf,
+				size_t count, loff_t *offp)
+{
+	u32 msi_nr = 0;
+	void *irq_ctxt = &((mhi_devices.device_list[0]).pcie_device->dev);
+
+	if (copy_from_user(&msi_nr, buf, sizeof(msi_nr)))
+		return -ENOMEM;
+	mhi_msi_handlr(msi_nr, irq_ctxt);
+	return 0;
+}
+
+static const struct file_operations mhi_dbgfs_trigger_msi_fops = {
+	.read = NULL,
+	.write = mhi_dbgfs_trigger_msi,
+};
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static ssize_t mhi_dbgfs_state_read(struct file *fp, char __user *buf,
 				size_t count, loff_t *offp)
 {
@@ -251,6 +275,10 @@ int mhi_init_debugfs(struct mhi_device_ctxt *mhi_dev_ctxt)
 {
 	struct dentry *mhi_chan_stats;
 	struct dentry *mhi_state_stats;
+<<<<<<< HEAD
+=======
+	struct dentry *mhi_msi_trigger;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	struct dentry *mhi_ev_stats;
 
 	mhi_dev_ctxt->mhi_parent_folder =
@@ -280,12 +308,27 @@ int mhi_init_debugfs(struct mhi_device_ctxt *mhi_dev_ctxt)
 					&mhi_dbgfs_state_fops);
 	if (mhi_state_stats == NULL)
 		goto clean_ev_stats;
+<<<<<<< HEAD
+=======
+	mhi_msi_trigger = debugfs_create_file("mhi_msi_trigger",
+					0444,
+					mhi_dev_ctxt->mhi_parent_folder,
+					mhi_dev_ctxt,
+					&mhi_dbgfs_trigger_msi_fops);
+	if (mhi_msi_trigger == NULL)
+		goto clean_state;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	mhi_dev_ctxt->chan_info = kmalloc(MHI_LOG_SIZE, GFP_KERNEL);
 	if (mhi_dev_ctxt->chan_info == NULL)
 		goto clean_all;
 	return 0;
 clean_all:
+<<<<<<< HEAD
+=======
+	debugfs_remove(mhi_msi_trigger);
+clean_state:
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	debugfs_remove(mhi_state_stats);
 clean_ev_stats:
 	debugfs_remove(mhi_ev_stats);

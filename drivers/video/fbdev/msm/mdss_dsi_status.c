@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2013-2017, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -39,6 +43,7 @@ static uint32_t interval = STATUS_CHECK_INTERVAL_MS;
 static int32_t dsi_status_disable = DSI_STATUS_CHECK_INIT;
 struct dsi_status_data *pstatus_data;
 
+<<<<<<< HEAD
 int mdss_dsi_check_panel_status(struct mdss_dsi_ctrl_pdata *ctrl, void *arg)
 {
 	struct mdss_mdp_ctl *ctl = NULL;
@@ -68,6 +73,8 @@ int mdss_dsi_check_panel_status(struct mdss_dsi_ctrl_pdata *ctrl, void *arg)
 	return ret;
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /*
  * check_dsi_ctrl_status() - Reads MFD structure and
  * calls platform specific DSI ctrl Status function.

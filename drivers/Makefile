@@ -79,6 +79,12 @@ obj-$(CONFIG_SPMI)		+= spmi/
 obj-$(CONFIG_SLIMBUS)		+= slimbus/
 obj-$(CONFIG_SOUNDWIRE)		+= soundwire/
 obj-y				+= hsi/
+<<<<<<< HEAD
+=======
+#nubia change hwmon
+obj-$(CONFIG_HWMON)		+= hwmon/
+obj-$(CONFIG_NUBIA_HW_VERSION)         += nubia_hw_version/
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 obj-y				+= net/
 obj-$(CONFIG_ATM)		+= atm/
 obj-$(CONFIG_FUSION)		+= message/
@@ -108,6 +114,10 @@ obj-$(CONFIG_PPS)		+= pps/
 obj-$(CONFIG_PTP_1588_CLOCK)	+= ptp/
 obj-$(CONFIG_W1)		+= w1/
 obj-$(CONFIG_POWER_SUPPLY)	+= power/
+<<<<<<< HEAD
+=======
+#nubia change hwmon
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 obj-$(CONFIG_HWMON)		+= hwmon/
 obj-$(CONFIG_THERMAL)		+= thermal/
 obj-$(CONFIG_WATCHDOG)		+= watchdog/

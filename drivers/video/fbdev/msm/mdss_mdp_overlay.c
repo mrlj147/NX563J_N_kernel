@@ -2601,6 +2601,7 @@ int mdss_mdp_overlay_kickoff(struct msm_fb_data_type *mfd,
 	mdss_mdp_splash_cleanup(mfd, true);
 
 	/*
+<<<<<<< HEAD
 	 * Wait for pingpong done only during resume for
 	 * command mode panels. Ensure that one commit is
 	 * sent before kickoff completes so that backlight
@@ -2613,6 +2614,8 @@ int mdss_mdp_overlay_kickoff(struct msm_fb_data_type *mfd,
 	}
 
 	/*
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	 * Configure Timing Engine, if new fps was set.
 	 * We need to do this after the wait for vsync
 	 * to guarantee that mdp flush bit and dsi flush
@@ -6291,6 +6294,7 @@ int mdss_mdp_input_event_handler(struct msm_fb_data_type *mfd)
 	return rc;
 }
 
+<<<<<<< HEAD
 void mdss_mdp_footswitch_ctrl_handler(bool on)
 {
 	struct mdss_data_type *mdata = mdss_mdp_get_mdata();
@@ -6298,6 +6302,8 @@ void mdss_mdp_footswitch_ctrl_handler(bool on)
 	mdss_mdp_footswitch_ctrl(mdata, on);
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 int mdss_mdp_overlay_init(struct msm_fb_data_type *mfd)
 {
 	struct device *dev = mfd->fbi->dev;
@@ -6340,6 +6346,7 @@ int mdss_mdp_overlay_init(struct msm_fb_data_type *mfd)
 	mdp5_interface->configure_panel = mdss_mdp_update_panel_info;
 	mdp5_interface->input_event_handler = mdss_mdp_input_event_handler;
 
+<<<<<<< HEAD
 	/*
 	 * Register footswitch control only for primary fb pm
 	 * suspend/resume calls.
@@ -6348,6 +6355,8 @@ int mdss_mdp_overlay_init(struct msm_fb_data_type *mfd)
 		mdp5_interface->footswitch_ctrl =
 			mdss_mdp_footswitch_ctrl_handler;
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (mfd->panel_info->type == WRITEBACK_PANEL) {
 		mdp5_interface->atomic_validate =
 			mdss_mdp_layer_atomic_validate_wfd;

@@ -5476,7 +5476,11 @@ static int tavil_mad_input_put(struct snd_kcontrol *kcontrol,
 	u32 adc, i, mic_bias_found = 0;
 	int ret = 0;
 	char *mad_input;
+<<<<<<< HEAD
 	bool is_adc_input = false;
+=======
+	bool is_adc2_input = false;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	tavil_mad_input = ucontrol->value.integer.value[0];
 
@@ -5524,7 +5528,12 @@ static int tavil_mad_input_put(struct snd_kcontrol *kcontrol,
 		snprintf(mad_amic_input_widget, 6, "%s%u", "AMIC", adc);
 
 		mad_input_widget = mad_amic_input_widget;
+<<<<<<< HEAD
 		is_adc_input = true;
+=======
+		if (adc == 2)
+			is_adc2_input = true;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	} else {
 		/* DMIC type input widget*/
 		mad_input_widget = tavil_conn_mad_text[tavil_mad_input];
@@ -5532,7 +5541,11 @@ static int tavil_mad_input_put(struct snd_kcontrol *kcontrol,
 
 	dev_dbg(codec->dev,
 		"%s: tavil input widget = %s, adc_input = %s\n", __func__,
+<<<<<<< HEAD
 		mad_input_widget, is_adc_input ? "true" : "false");
+=======
+		mad_input_widget, is_adc2_input ? "true" : "false");
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	for (i = 0; i < card->num_of_dapm_routes; i++) {
 		if (!strcmp(card->of_dapm_routes[i].sink, mad_input_widget)) {
@@ -5577,8 +5590,13 @@ static int tavil_mad_input_put(struct snd_kcontrol *kcontrol,
 			    0x0F, tavil_mad_input);
 	snd_soc_update_bits(codec, WCD934X_ANA_MAD_SETUP,
 			    0x07, mic_bias_found);
+<<<<<<< HEAD
 	/* for all adc inputs, mad should be in micbias mode with BG enabled */
 	if (is_adc_input)
+=======
+	/* for adc2 input, mad should be in micbias mode with BG enabled */
+	if (is_adc2_input)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		snd_soc_update_bits(codec, WCD934X_ANA_MAD_SETUP,
 				    0x88, 0x88);
 	else

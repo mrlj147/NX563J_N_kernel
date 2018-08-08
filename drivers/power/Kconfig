@@ -14,6 +14,15 @@ config POWER_SUPPLY_DEBUG
 	  Say Y here to enable debugging messages for power supply class
 	  and drivers.
 
+<<<<<<< HEAD
+=======
+config ZTEMT_POWER_DEBUG
+	bool "ZTEMT Power Debug Feature"
+	default y
+	help
+	  ZTEMT Power Debug Feature
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 config PDA_POWER
 	tristate "Generic PDA/phone power driver"
 	depends on !S390

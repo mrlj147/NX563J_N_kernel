@@ -28,6 +28,10 @@
 #include <linux/of_address.h>
 #include <linux/radix-tree.h>
 #include <linux/qpnp/pwm.h>
+<<<<<<< HEAD
+=======
+#include <linux/delay.h>
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 #define QPNP_LPG_DRIVER_NAME	"qcom,qpnp-pwm"
 #define QPNP_LPG_CHANNEL_BASE	"qpnp-lpg-channel-base"
@@ -1129,6 +1133,10 @@ static int qpnp_lpg_configure_lut_state(struct qpnp_pwm_chip *chip,
 	if (rc)
 		return rc;
 
+<<<<<<< HEAD
+=======
+	mdelay(5);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (state == QPNP_LUT_ENABLE
 		|| (chip->sub_type == QPNP_LPG_CHAN_SUB_TYPE
 		&& chip->revision == QPNP_LPG_REVISION_0))

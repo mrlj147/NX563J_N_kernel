@@ -112,7 +112,11 @@ static int __init pfk_ecryptfs_lsm_init(void)
 /*
  * pfk_ecryptfs_deinit() - Deinit function, should be invoked by upper PFK layer
  */
+<<<<<<< HEAD
 void pfk_ecryptfs_deinit(void)
+=======
+void __exit pfk_ecryptfs_deinit(void)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 {
 	pfk_ecryptfs_ready = false;
 	ecryptfs_unregister_from_events(g_events_handle);

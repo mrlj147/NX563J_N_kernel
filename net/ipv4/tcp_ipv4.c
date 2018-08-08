@@ -94,6 +94,16 @@ static int tcp_v4_md5_hash_hdr(char *md5_hash, const struct tcp_md5sig_key *key,
 			       __be32 daddr, __be32 saddr, const struct tcphdr *th);
 #endif
 
+<<<<<<< HEAD
+=======
+//nubia add for LTE+wifi to calc rtt
+#ifdef CONFIG_MULTI_CHANNEL_ROUTER
+int (*multi_calc_rtt)(struct sock *sk, struct sk_buff *skb) = NULL;
+EXPORT_SYMBOL(multi_calc_rtt);
+#endif
+//nubia end
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 struct inet_hashinfo tcp_hashinfo;
 EXPORT_SYMBOL(tcp_hashinfo);
 
@@ -1644,6 +1654,17 @@ process:
 	if (!xfrm4_policy_check(sk, XFRM_POLICY_IN, skb))
 		goto discard_and_relse;
 
+<<<<<<< HEAD
+=======
+//nubia add for LTE+wifi to calc rtt
+#ifdef CONFIG_MULTI_CHANNEL_ROUTER
+	if(NULL  !=  multi_calc_rtt){
+		(*multi_calc_rtt)(sk,skb);
+	}
+#endif
+//nubia end
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (tcp_v4_inbound_md5_hash(sk, skb))
 		goto discard_and_relse;
 

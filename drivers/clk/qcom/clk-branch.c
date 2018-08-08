@@ -21,7 +21,10 @@
 #include <linux/regmap.h>
 
 #include "clk-branch.h"
+<<<<<<< HEAD
 #include "clk-debug.h"
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #include "clk-regmap.h"
 #include "common.h"
 
@@ -251,7 +254,10 @@ const struct clk_ops clk_branch2_ops = {
 	.is_enabled = clk_is_enabled_regmap,
 	.set_flags = clk_branch_set_flags,
 	.list_registers = clk_branch2_list_registers,
+<<<<<<< HEAD
 	.debug_init = clk_debug_measure_add,
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 EXPORT_SYMBOL_GPL(clk_branch2_ops);
 
@@ -386,7 +392,10 @@ const struct clk_ops clk_gate2_ops = {
 	.is_enabled = clk_is_enabled_regmap,
 	.list_registers = clk_gate2_list_registers,
 	.set_flags = clk_gate2_set_flags,
+<<<<<<< HEAD
 	.debug_init = clk_debug_measure_add,
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 EXPORT_SYMBOL_GPL(clk_gate2_ops);
 

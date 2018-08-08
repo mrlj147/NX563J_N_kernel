@@ -295,12 +295,36 @@ ssize_t persistent_ram_ecc_string(struct persistent_ram_zone *prz,
 
 	return ret;
 }
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_PSTORE
+static void *memcpy_pstore(void *dest, const void *src, size_t count)
+{
+  char *tmp = dest;
+  const char *s = src;
+
+  while (count--)
+  {
+      *tmp++ = *s++;
+  }
+  return dest;
+}
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 static void notrace persistent_ram_update(struct persistent_ram_zone *prz,
 	const void *s, unsigned int start, unsigned int count)
 {
 	struct persistent_ram_buffer *buffer = prz->buffer;
+<<<<<<< HEAD
 	memcpy(buffer->data + start, s, count);
+=======
+#ifdef CONFIG_PSTORE
+	memcpy_pstore(buffer->data + start, s, count);
+#else
+	memcpy(buffer->data + start, s, count);
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	persistent_ram_update_ecc(prz, start, count);
 }
 

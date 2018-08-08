@@ -789,7 +789,11 @@ struct adreno_gpudev {
 	void (*preemption_schedule)(struct adreno_device *);
 	void (*enable_64bit)(struct adreno_device *);
 	void (*clk_set_options)(struct adreno_device *,
+<<<<<<< HEAD
 				const char *, struct clk *, bool on);
+=======
+				const char *, struct clk *);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 /**

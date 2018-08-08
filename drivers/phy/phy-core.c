@@ -287,6 +287,14 @@ int phy_power_on(struct phy *phy)
 	}
 
 	ret = phy_pm_runtime_get_sync(phy);
+<<<<<<< HEAD
+=======
+	#ifdef CONFIG_NUBIA_ADD_QCOM_WORKROUND_FOR_MODEM_DOG
+	 /* UFSPHY is not using runtime PM */
+	if (!strcmp(phy->dev.kobj.name, "phy-1da7000.ufsphy.0") && ret == -ENOSYS)
+		ret = -ENOTSUPP;
+	#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (ret < 0 && ret != -ENOTSUPP)
 		goto err_pm_sync;
 

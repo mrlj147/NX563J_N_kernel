@@ -207,7 +207,11 @@ struct qpnp_pon {
 	int			pon_power_off_reason;
 	int			num_pon_reg;
 	int			num_pon_config;
+<<<<<<< HEAD
 	u32			dbc_time_us;
+=======
+	u32			dbc;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	u32			uvlo;
 	int			warm_reset_poff_type;
 	int			hard_reset_poff_type;
@@ -219,8 +223,11 @@ struct qpnp_pon {
 	u8			warm_reset_reason2;
 	bool			is_spon;
 	bool			store_hard_reset_reason;
+<<<<<<< HEAD
 	bool			kpdpwr_dbc_enable;
 	ktime_t			kpdpwr_last_release_time;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 static int pon_ship_mode_en;
@@ -383,7 +390,11 @@ static int qpnp_pon_set_dbc(struct qpnp_pon *pon, u32 delay)
 	int rc = 0;
 	u32 val;
 
+<<<<<<< HEAD
 	if (delay == pon->dbc_time_us)
+=======
+	if (delay == pon->dbc)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		goto out;
 
 	if (pon->pon_input)
@@ -411,7 +422,11 @@ static int qpnp_pon_set_dbc(struct qpnp_pon *pon, u32 delay)
 		goto unlock;
 	}
 
+<<<<<<< HEAD
 	pon->dbc_time_us = delay;
+=======
+	pon->dbc = delay;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 unlock:
 	if (pon->pon_input)
@@ -420,6 +435,7 @@ out:
 	return rc;
 }
 
+<<<<<<< HEAD
 static int qpnp_pon_get_dbc(struct qpnp_pon *pon, u32 *delay)
 {
 	int rc;
@@ -442,12 +458,18 @@ static int qpnp_pon_get_dbc(struct qpnp_pon *pon, u32 *delay)
 	return rc;
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static ssize_t qpnp_pon_dbc_show(struct device *dev,
 				struct device_attribute *attr, char *buf)
 {
 	struct qpnp_pon *pon = dev_get_drvdata(dev);
 
+<<<<<<< HEAD
 	return snprintf(buf, QPNP_PON_BUFFER_SIZE, "%d\n", pon->dbc_time_us);
+=======
+	return snprintf(buf, QPNP_PON_BUFFER_SIZE, "%d\n", pon->dbc);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 static ssize_t qpnp_pon_dbc_store(struct device *dev,
@@ -801,7 +823,10 @@ qpnp_pon_input_dispatch(struct qpnp_pon *pon, u32 pon_type)
 	u8  pon_rt_bit = 0;
 	u32 key_status;
 	uint pon_rt_sts;
+<<<<<<< HEAD
 	u64 elapsed_us;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	cfg = qpnp_get_cfg(pon, pon_type);
 	if (!cfg)
@@ -811,6 +836,7 @@ qpnp_pon_input_dispatch(struct qpnp_pon *pon, u32 pon_type)
 	if (!cfg->key_code)
 		return 0;
 
+<<<<<<< HEAD
 	if (pon->kpdpwr_dbc_enable && cfg->pon_type == PON_KPDPWR) {
 		elapsed_us = ktime_us_delta(ktime_get(),
 				pon->kpdpwr_last_release_time);
@@ -820,6 +846,8 @@ qpnp_pon_input_dispatch(struct qpnp_pon *pon, u32 pon_type)
 		}
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* check the RT status to get the current status of the line */
 	rc = regmap_read(pon->regmap, QPNP_PON_RT_STS(pon), &pon_rt_sts);
 	if (rc) {
@@ -848,11 +876,14 @@ qpnp_pon_input_dispatch(struct qpnp_pon *pon, u32 pon_type)
 					cfg->key_code, pon_rt_sts);
 	key_status = pon_rt_sts & pon_rt_bit;
 
+<<<<<<< HEAD
 	if (pon->kpdpwr_dbc_enable && cfg->pon_type == PON_KPDPWR) {
 		if (!key_status)
 			pon->kpdpwr_last_release_time = ktime_get();
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/*
 	 * simulate press event in case release event occurred
 	 * without a press event
@@ -2272,6 +2303,7 @@ static int qpnp_pon_probe(struct platform_device *pdev)
 		}
 	} else {
 		rc = qpnp_pon_set_dbc(pon, delay);
+<<<<<<< HEAD
 		if (rc) {
 			dev_err(&pdev->dev,
 				"Unable to set PON debounce delay rc=%d\n", rc);
@@ -2288,6 +2320,10 @@ static int qpnp_pon_probe(struct platform_device *pdev)
 	pon->kpdpwr_dbc_enable = of_property_read_bool(pon->pdev->dev.of_node,
 					"qcom,kpdpwr-sw-debounce");
 
+=======
+	}
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	rc = of_property_read_u32(pon->pdev->dev.of_node,
 				"qcom,warm-reset-poweroff-type",
 				&pon->warm_reset_poff_type);

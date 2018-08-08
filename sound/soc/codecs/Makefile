@@ -133,6 +133,10 @@ snd-soc-uda1380-objs := uda1380.o
 snd-soc-wcd9320-objs := wcd9320.o wcd9320-tables.o
 snd-soc-wcd9330-objs := wcd9330.o wcd9330-tables.o
 snd-soc-wcd9335-objs := wcd9335.o
+<<<<<<< HEAD
+=======
+snd-soc-tas2555-generic-objs := tas2555-core.o tas2555-regmap.o tas2555-codec.o tas2555-misc.o tiload.o
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 snd-soc-wcd934x-objs := wcd934x.o
 snd-soc-wcd9xxx-objs := wcd9xxx-resmgr.o wcd9xxx-mbhc.o wcd9xxx-common.o wcdcal-hwdep.o
 snd-soc-wcd9xxx-v2-objs := wcd9xxx-common-v2.o wcd9xxx-resmgr-v2.o
@@ -349,6 +353,10 @@ obj-$(CONFIG_SND_SOC_UDA1380)	+= snd-soc-uda1380.o
 obj-$(CONFIG_SND_SOC_WCD9320)	+= snd-soc-wcd9320.o
 obj-$(CONFIG_SND_SOC_WCD9330)	+= snd-soc-wcd9330.o
 obj-$(CONFIG_SND_SOC_WCD9335)	+= snd-soc-wcd9335.o
+<<<<<<< HEAD
+=======
+obj-$(CONFIG_SND_SOC_TAS2555_GENERIC) += snd-soc-tas2555-generic.o
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 obj-$(CONFIG_SND_SOC_WCD934X)	+= wcd934x/
 ifeq ($(CONFIG_COMMON_CLK_MSM), y)
 	obj-$(CONFIG_AUDIO_EXT_CLK)	+= audio-ext-clock.o

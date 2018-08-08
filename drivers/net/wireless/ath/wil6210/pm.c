@@ -71,11 +71,14 @@ int wil_suspend(struct wil6210_priv *wil, bool is_runtime)
 
 	wil_dbg_pm(wil, "suspend: %s\n", is_runtime ? "runtime" : "system");
 
+<<<<<<< HEAD
 	if (test_bit(wil_status_suspended, wil->status)) {
 		wil_dbg_pm(wil, "trying to suspend while suspended\n");
 		return 0;
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* if netif up, hardware is alive, shut it down */
 	if (ndev->flags & IFF_UP) {
 		rc = wil_down(wil);
@@ -91,6 +94,7 @@ int wil_suspend(struct wil6210_priv *wil, bool is_runtime)
 
 	if (wil->platform_ops.suspend) {
 		rc = wil->platform_ops.suspend(wil->platform_handle);
+<<<<<<< HEAD
 		if (rc) {
 			wil_enable_irq(wil);
 			goto out;
@@ -99,6 +103,12 @@ int wil_suspend(struct wil6210_priv *wil, bool is_runtime)
 
 	set_bit(wil_status_suspended, wil->status);
 
+=======
+		if (rc)
+			wil_enable_irq(wil);
+	}
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 out:
 	wil_dbg_pm(wil, "suspend: %s => %d\n",
 		   is_runtime ? "runtime" : "system", rc);
@@ -126,6 +136,7 @@ int wil_resume(struct wil6210_priv *wil, bool is_runtime)
 
 	/* if netif up, bring hardware up
 	 * During open(), IFF_UP set after actual device method
+<<<<<<< HEAD
 	 * invocation. This prevent recursive call to wil_up().
 	 * wil_status_suspended will be cleared in wil_reset
 	 */
@@ -133,6 +144,12 @@ int wil_resume(struct wil6210_priv *wil, bool is_runtime)
 		rc = wil_up(wil);
 	else
 		clear_bit(wil_status_suspended, wil->status);
+=======
+	 * invocation. This prevent recursive call to wil_up()
+	 */
+	if (ndev->flags & IFF_UP)
+		rc = wil_up(wil);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 out:
 	wil_dbg_pm(wil, "resume: %s => %d\n",

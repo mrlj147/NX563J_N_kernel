@@ -99,6 +99,10 @@
 		pinctrl-names = "cam_default", "cam_suspend";
 		pinctrl-0 = <&cam_actuator_vaf_active>;
 		pinctrl-1 = <&cam_actuator_vaf_suspend>;
+<<<<<<< HEAD
+=======
+		status = "disabled";
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	};
 
 	eeprom0: qcom,eeprom@0 {
@@ -277,7 +281,10 @@
 		qcom,csid-sd-index = <1>;
 		qcom,mount-angle = <90>;
 		qcom,eeprom-src = <&eeprom1>;
+<<<<<<< HEAD
 		qcom,led-flash-src = <&led_flash0>;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		qcom,actuator-src = <&actuator1>;
 		cam_vdig-supply = <&pm8998_lvs1>;
 		cam_vio-supply = <&pm8998_lvs1>;

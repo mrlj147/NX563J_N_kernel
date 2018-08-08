@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2016-2017, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2016, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -18,6 +22,10 @@
 #define ENABLE_REGULATOR	BIT(0)
 #define DISABLE_REGULATOR	BIT(1)
 #define QUERY_MAX_CURRENT	BIT(2)
+<<<<<<< HEAD
+=======
+#define PRE_FLASH		BIT(3)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 #define FLASH_LED_PREPARE_OPTIONS_MASK	GENMASK(3, 0)
 

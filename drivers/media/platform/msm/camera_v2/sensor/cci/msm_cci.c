@@ -32,7 +32,11 @@
 #define CYCLES_PER_MICRO_SEC_DEFAULT 4915
 #define CCI_MAX_DELAY 1000000
 
+<<<<<<< HEAD
 #define CCI_TIMEOUT msecs_to_jiffies(100)
+=======
+#define CCI_TIMEOUT msecs_to_jiffies(800) // ZTEMT: fuyipeng modify for timeout
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 /* TODO move this somewhere else */
 #define MSM_CCI_DRV_NAME "msm_cci"
@@ -47,8 +51,11 @@
 #define CCI_DBG(fmt, args...) pr_debug(fmt, ##args)
 #endif
 
+<<<<<<< HEAD
 #define CCI_DUMP_REG 0
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /* Max bytes that can be read per CCI read transaction */
 #define CCI_READ_MAX 12
 #define CCI_I2C_READ_MAX_RETRIES 3
@@ -203,7 +210,10 @@ static int32_t msm_cci_validate_queue(struct cci_device *cci_dev,
 	enum cci_i2c_queue_t queue)
 {
 	int32_t rc = 0;
+<<<<<<< HEAD
 	unsigned long flags;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	uint32_t read_val = 0;
 	uint32_t reg_offset = master * 0x200 + queue * 0x100;
 	read_val = msm_camera_io_r_mb(cci_dev->base +
@@ -226,8 +236,11 @@ static int32_t msm_cci_validate_queue(struct cci_device *cci_dev,
 			CCI_I2C_M0_Q0_EXEC_WORD_CNT_ADDR + reg_offset);
 		reg_val = 1 << ((master * 2) + queue);
 		CDBG("%s:%d CCI_QUEUE_START_ADDR\n", __func__, __LINE__);
+<<<<<<< HEAD
 		spin_lock_irqsave(&cci_dev->cci_master_info[master].
 						lock_q[queue], flags);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		atomic_set(&cci_dev->cci_master_info[master].
 						done_pending[queue], 1);
 		msm_camera_io_w_mb(reg_val, cci_dev->base +
@@ -235,8 +248,11 @@ static int32_t msm_cci_validate_queue(struct cci_device *cci_dev,
 		CDBG("%s line %d wait_for_completion_timeout\n",
 			__func__, __LINE__);
 		atomic_set(&cci_dev->cci_master_info[master].q_free[queue], 1);
+<<<<<<< HEAD
 		spin_unlock_irqrestore(&cci_dev->cci_master_info[master].
 						lock_q[queue], flags);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		rc = wait_for_completion_timeout(&cci_dev->
 			cci_master_info[master].report_q[queue], CCI_TIMEOUT);
 		if (rc <= 0) {
@@ -298,9 +314,12 @@ static uint32_t msm_cci_wait(struct cci_device *cci_dev,
 		__func__, __LINE__);
 
 	if (rc <= 0) {
+<<<<<<< HEAD
 		if (CCI_DUMP_REG)
 			msm_cci_dump_registers(cci_dev, master, queue);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		pr_err("%s: %d wait for queue: %d\n",
 			 __func__, __LINE__, queue);
 		if (rc == 0)
@@ -448,6 +467,7 @@ static int32_t msm_cci_wait_report_cmd(struct cci_device *cci_dev,
 	enum cci_i2c_master_t master,
 	enum cci_i2c_queue_t queue)
 {
+<<<<<<< HEAD
 	unsigned long flags;
 	uint32_t reg_val = 1 << ((master * 2) + queue);
 	msm_cci_load_report_cmd(cci_dev, master, queue);
@@ -459,6 +479,12 @@ static int32_t msm_cci_wait_report_cmd(struct cci_device *cci_dev,
 	spin_unlock_irqrestore(&cci_dev->cci_master_info[master].
 					lock_q[queue], flags);
 
+=======
+	uint32_t reg_val = 1 << ((master * 2) + queue);
+	msm_cci_load_report_cmd(cci_dev, master, queue);
+	atomic_set(&cci_dev->cci_master_info[master].q_free[queue], 1);
+	atomic_set(&cci_dev->cci_master_info[master].done_pending[queue], 1);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	msm_camera_io_w_mb(reg_val, cci_dev->base +
 		CCI_QUEUE_START_ADDR);
 	return msm_cci_wait(cci_dev, master, queue);
@@ -468,19 +494,26 @@ static void msm_cci_process_half_q(struct cci_device *cci_dev,
 	enum cci_i2c_master_t master,
 	enum cci_i2c_queue_t queue)
 {
+<<<<<<< HEAD
 	unsigned long flags;
 	uint32_t reg_val = 1 << ((master * 2) + queue);
 
 	spin_lock_irqsave(&cci_dev->cci_master_info[master].
 					lock_q[queue], flags);
+=======
+	uint32_t reg_val = 1 << ((master * 2) + queue);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (0 == atomic_read(&cci_dev->cci_master_info[master].q_free[queue])) {
 		msm_cci_load_report_cmd(cci_dev, master, queue);
 		atomic_set(&cci_dev->cci_master_info[master].q_free[queue], 1);
 		msm_camera_io_w_mb(reg_val, cci_dev->base +
 			CCI_QUEUE_START_ADDR);
 	}
+<<<<<<< HEAD
 	spin_unlock_irqrestore(&cci_dev->cci_master_info[master].
 					lock_q[queue], flags);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 static int32_t msm_cci_process_full_q(struct cci_device *cci_dev,
@@ -488,6 +521,7 @@ static int32_t msm_cci_process_full_q(struct cci_device *cci_dev,
 	enum cci_i2c_queue_t queue)
 {
 	int32_t rc = 0;
+<<<<<<< HEAD
 	unsigned long flags;
 
 	spin_lock_irqsave(&cci_dev->cci_master_info[master].
@@ -497,14 +531,22 @@ static int32_t msm_cci_process_full_q(struct cci_device *cci_dev,
 						done_pending[queue], 1);
 		spin_unlock_irqrestore(&cci_dev->cci_master_info[master].
 					lock_q[queue], flags);
+=======
+	if (1 == atomic_read(&cci_dev->cci_master_info[master].q_free[queue])) {
+		atomic_set(&cci_dev->cci_master_info[master].
+						done_pending[queue], 1);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		rc = msm_cci_wait(cci_dev, master, queue);
 		if (rc < 0) {
 			pr_err("%s: %d failed rc %d\n", __func__, __LINE__, rc);
 			return rc;
 		}
 	} else {
+<<<<<<< HEAD
 		spin_unlock_irqrestore(&cci_dev->cci_master_info[master].
 						lock_q[queue], flags);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		rc = msm_cci_wait_report_cmd(cci_dev, master, queue);
 		if (rc < 0) {
 			pr_err("%s: %d failed rc %d\n", __func__, __LINE__, rc);
@@ -532,6 +574,7 @@ static int32_t msm_cci_transfer_end(struct cci_device *cci_dev,
 	enum cci_i2c_queue_t queue)
 {
 	int32_t rc = 0;
+<<<<<<< HEAD
 	unsigned long flags;
 
 	spin_lock_irqsave(&cci_dev->cci_master_info[master].
@@ -539,6 +582,10 @@ static int32_t msm_cci_transfer_end(struct cci_device *cci_dev,
 	if (0 == atomic_read(&cci_dev->cci_master_info[master].q_free[queue])) {
 		spin_unlock_irqrestore(&cci_dev->cci_master_info[master].
 						lock_q[queue], flags);
+=======
+
+	if (0 == atomic_read(&cci_dev->cci_master_info[master].q_free[queue])) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		rc = msm_cci_lock_queue(cci_dev, master, queue, 0);
 		if (rc < 0) {
 			pr_err("%s failed line %d\n", __func__, __LINE__);
@@ -552,8 +599,11 @@ static int32_t msm_cci_transfer_end(struct cci_device *cci_dev,
 	} else {
 		atomic_set(&cci_dev->cci_master_info[master].
 						done_pending[queue], 1);
+<<<<<<< HEAD
 		spin_unlock_irqrestore(&cci_dev->cci_master_info[master].
 						lock_q[queue], flags);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		rc = msm_cci_wait(cci_dev, master, queue);
 		if (rc < 0) {
 			pr_err("%s: %d failed rc %d\n", __func__, __LINE__, rc);
@@ -608,7 +658,10 @@ static int32_t msm_cci_data_queue(struct cci_device *cci_dev,
 	uint32_t reg_offset;
 	uint32_t val = 0;
 	uint32_t max_queue_size;
+<<<<<<< HEAD
 	unsigned long flags;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	if (i2c_cmd == NULL) {
 		pr_err("%s:%d Failed line\n", __func__,
@@ -652,11 +705,15 @@ static int32_t msm_cci_data_queue(struct cci_device *cci_dev,
 	msm_camera_io_w_mb(val, cci_dev->base + CCI_I2C_M0_Q0_LOAD_DATA_ADDR +
 		reg_offset);
 
+<<<<<<< HEAD
 	spin_lock_irqsave(&cci_dev->cci_master_info[master].
 					lock_q[queue], flags);
 	atomic_set(&cci_dev->cci_master_info[master].q_free[queue], 0);
 	spin_unlock_irqrestore(&cci_dev->cci_master_info[master].
 					lock_q[queue], flags);
+=======
+	atomic_set(&cci_dev->cci_master_info[master].q_free[queue], 0);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	max_queue_size = cci_dev->cci_i2c_queue_info[master][queue].
 			max_queue_size;
@@ -932,9 +989,13 @@ static int32_t msm_cci_i2c_read(struct v4l2_subdev *sd,
 	rc = wait_for_completion_timeout(&cci_dev->
 		cci_master_info[master].reset_complete, CCI_TIMEOUT);
 	if (rc <= 0) {
+<<<<<<< HEAD
 		if (CCI_DUMP_REG)
 			msm_cci_dump_registers(cci_dev, master, queue);
 
+=======
+		msm_cci_dump_registers(cci_dev, master, queue);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		if (rc == 0)
 			rc = -ETIMEDOUT;
 		pr_err("%s: %d wait_for_completion_timeout rc = %d\n",
@@ -1686,7 +1747,10 @@ static int32_t msm_cci_config(struct v4l2_subdev *sd,
 static irqreturn_t msm_cci_irq(int irq_num, void *data)
 {
 	uint32_t irq;
+<<<<<<< HEAD
 	unsigned long flags;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	struct cci_device *cci_dev = data;
 	irq = msm_camera_io_r_mb(cci_dev->base + CCI_IRQ_STATUS_0_ADDR);
 	msm_camera_io_w_mb(irq, cci_dev->base + CCI_IRQ_CLEAR_0_ADDR);
@@ -1713,30 +1777,42 @@ static irqreturn_t msm_cci_irq(int irq_num, void *data)
 	if (irq & CCI_IRQ_STATUS_0_I2C_M0_Q0_REPORT_BMSK) {
 		struct msm_camera_cci_master_info *cci_master_info;
 		cci_master_info = &cci_dev->cci_master_info[MASTER_0];
+<<<<<<< HEAD
 		spin_lock_irqsave(&cci_dev->cci_master_info[MASTER_0].
 						lock_q[QUEUE_0], flags);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		atomic_set(&cci_master_info->q_free[QUEUE_0], 0);
 		cci_master_info->status = 0;
 		if (atomic_read(&cci_master_info->done_pending[QUEUE_0]) == 1) {
 			complete(&cci_master_info->report_q[QUEUE_0]);
 			atomic_set(&cci_master_info->done_pending[QUEUE_0], 0);
 		}
+<<<<<<< HEAD
 		spin_unlock_irqrestore(&cci_dev->cci_master_info[MASTER_0].
 					lock_q[QUEUE_0], flags);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 	if (irq & CCI_IRQ_STATUS_0_I2C_M0_Q1_REPORT_BMSK) {
 		struct msm_camera_cci_master_info *cci_master_info;
 		cci_master_info = &cci_dev->cci_master_info[MASTER_0];
+<<<<<<< HEAD
 		spin_lock_irqsave(&cci_dev->cci_master_info[MASTER_0].
 						lock_q[QUEUE_1], flags);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		atomic_set(&cci_master_info->q_free[QUEUE_1], 0);
 		cci_master_info->status = 0;
 		if (atomic_read(&cci_master_info->done_pending[QUEUE_1]) == 1) {
 			complete(&cci_master_info->report_q[QUEUE_1]);
 			atomic_set(&cci_master_info->done_pending[QUEUE_1], 0);
 		}
+<<<<<<< HEAD
 		spin_unlock_irqrestore(&cci_dev->cci_master_info[MASTER_0].
 						lock_q[QUEUE_1], flags);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 	if (irq & CCI_IRQ_STATUS_0_I2C_M1_RD_DONE_BMSK) {
 		cci_dev->cci_master_info[MASTER_1].status = 0;
@@ -1745,30 +1821,42 @@ static irqreturn_t msm_cci_irq(int irq_num, void *data)
 	if (irq & CCI_IRQ_STATUS_0_I2C_M1_Q0_REPORT_BMSK) {
 		struct msm_camera_cci_master_info *cci_master_info;
 		cci_master_info = &cci_dev->cci_master_info[MASTER_1];
+<<<<<<< HEAD
 		spin_lock_irqsave(&cci_dev->cci_master_info[MASTER_1].
 						lock_q[QUEUE_0], flags);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		atomic_set(&cci_master_info->q_free[QUEUE_0], 0);
 		cci_master_info->status = 0;
 		if (atomic_read(&cci_master_info->done_pending[QUEUE_0]) == 1) {
 			complete(&cci_master_info->report_q[QUEUE_0]);
 			atomic_set(&cci_master_info->done_pending[QUEUE_0], 0);
 		}
+<<<<<<< HEAD
 		spin_unlock_irqrestore(&cci_dev->cci_master_info[MASTER_1].
 						lock_q[QUEUE_0], flags);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 	if (irq & CCI_IRQ_STATUS_0_I2C_M1_Q1_REPORT_BMSK) {
 		struct msm_camera_cci_master_info *cci_master_info;
 		cci_master_info = &cci_dev->cci_master_info[MASTER_1];
+<<<<<<< HEAD
 		spin_lock_irqsave(&cci_dev->cci_master_info[MASTER_1].
 						lock_q[QUEUE_1], flags);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		atomic_set(&cci_master_info->q_free[QUEUE_1], 0);
 		cci_master_info->status = 0;
 		if (atomic_read(&cci_master_info->done_pending[QUEUE_1]) == 1) {
 			complete(&cci_master_info->report_q[QUEUE_1]);
 			atomic_set(&cci_master_info->done_pending[QUEUE_1], 0);
 		}
+<<<<<<< HEAD
 		spin_unlock_irqrestore(&cci_dev->cci_master_info[MASTER_1].
 						lock_q[QUEUE_1], flags);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 	if (irq & CCI_IRQ_STATUS_0_I2C_M0_Q0Q1_HALT_ACK_BMSK) {
 		cci_dev->cci_master_info[MASTER_0].reset_pending = TRUE;
@@ -1857,9 +1945,13 @@ static void msm_cci_init_cci_params(struct cci_device *new_cci_dev)
 			mutex_init(&new_cci_dev->cci_master_info[i].mutex_q[j]);
 			init_completion(&new_cci_dev->
 				cci_master_info[i].report_q[j]);
+<<<<<<< HEAD
 			spin_lock_init(&new_cci_dev->
 				cci_master_info[i].lock_q[j]);
 		}
+=======
+			}
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 	return;
 }

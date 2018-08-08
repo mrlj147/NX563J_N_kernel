@@ -193,6 +193,7 @@
 	qcom,partial-update-enabled = "single_roi";
 	qcom,panel-roi-alignment = <2 2 4 2 1080 2>;
 };
+<<<<<<< HEAD
 
 &pm660l_pwm_4 {
 	qcom,dtest-line = <2>;   /* DTEST2 */
@@ -216,3 +217,5 @@
 	qcom,mdss-dsi-bl-pmic-pwm-frequency = <100>;
 	qcom,panel-supply-entries = <&dsi_panel_split_link_pwr_supply>;
 };
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf

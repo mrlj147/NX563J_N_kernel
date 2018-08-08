@@ -687,7 +687,10 @@ static void __init arch_timer_common_init(void)
 	arch_timer_banner(arch_timers_present);
 	arch_counter_register(arch_timers_present);
 	arch_timer_arch_init();
+<<<<<<< HEAD
 	clocksource_select_force();
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 static void __init arch_timer_init(void)

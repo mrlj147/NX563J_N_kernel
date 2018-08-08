@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2012-2017, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -26,7 +30,13 @@
 #include <linux/uaccess.h>
 #include <linux/msm-bus.h>
 #include <linux/pm_qos.h>
+<<<<<<< HEAD
 #include <linux/dma-buf.h>
+=======
+#ifdef CONFIG_NUBIA_LCD_KEEP_POWER_ON
+#include <linux/reboot.h>
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 #include "mdss.h"
 #include "mdss_panel.h"
@@ -35,16 +45,30 @@
 #include "mdss_dsi_phy.h"
 #include "mdss_dba_utils.h"
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NUBIA_LCD_DISP_PREFERENCE
+#include "nubia_disp_preference.h"
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define CMDLINE_DSI_CTL_NUM_STRING_LEN 2
 
 /* Master structure to hold all the information about the DSI/panel */
 static struct mdss_dsi_data *mdss_dsi_res;
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NUBIA_LCD_KEEP_POWER_ON
+static bool incell_lcd_power_off = false;
+#endif
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define DSI_DISABLE_PC_LATENCY 100
 #define DSI_ENABLE_PC_LATENCY PM_QOS_DEFAULT_VALUE
 
 static struct pm_qos_request mdss_dsi_pm_qos_request;
 
+<<<<<<< HEAD
 void mdss_dump_dsi_debug_bus(u32 bus_dump_flag,
 	u32 **dump_mem)
 {
@@ -136,6 +160,8 @@ void mdss_dump_dsi_debug_bus(u32 bus_dump_flag,
 	pr_info("========End DSI Debug Bus=========\n");
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static void mdss_dsi_pm_qos_add_request(struct mdss_dsi_ctrl_pdata *ctrl_pdata)
 {
 	struct irq_info *irq_info;
@@ -363,6 +389,13 @@ static int mdss_dsi_regulator_init(struct platform_device *pdev,
 	return rc;
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NUBIA_LCD_KEEP_POWER_ON
+extern unsigned int nubia_wakeup_gesture;
+#endif
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static int mdss_dsi_panel_power_off(struct mdss_panel_data *pdata)
 {
 	int ret = 0;
@@ -376,7 +409,54 @@ static int mdss_dsi_panel_power_off(struct mdss_panel_data *pdata)
 
 	ctrl_pdata = container_of(pdata, struct mdss_dsi_ctrl_pdata,
 				panel_data);
+<<<<<<< HEAD
 
+=======
+#ifdef CONFIG_NUBIA_LCD_KEEP_POWER_ON
+	if (incell_lcd_power_off || !nubia_wakeup_gesture) {
+		if (!strncmp(ctrl_pdata->panel_data.panel_info.panel_name,
+				"jdi nt35695", 11)) {
+			ret = msm_dss_enable_vreg(
+				ctrl_pdata->panel_power_data.vreg_config,
+				ctrl_pdata->panel_power_data.num_vreg, 0);
+			if (ret)
+				pr_err("%s: failed to disable vregs for %s\n",
+					__func__, __mdss_dsi_pm_name(DSI_PANEL_PM));
+				pr_err("%s: incell_lcd_power_off!\n", __func__);
+
+			ret = mdss_dsi_panel_reset(pdata, 0);
+			if (ret) {
+				pr_warn("%s: Panel reset failed. rc=%d\n", __func__, ret);
+				ret = 0;
+			}
+
+			if (mdss_dsi_pinctrl_set_state(ctrl_pdata, false))
+				pr_debug("reset disable: pinctrl not enabled\n");
+
+			usleep_range(20, 20);
+		} else {
+			ret = mdss_dsi_panel_reset(pdata, 0);
+			if (ret) {
+				pr_warn("%s: Panel reset failed. rc=%d\n", __func__, ret);
+				ret = 0;
+			}
+
+			if (mdss_dsi_pinctrl_set_state(ctrl_pdata, false))
+				pr_debug("reset disable: pinctrl not enabled\n");
+//add for lcd nx563j
+			usleep_range(5000, 5000);
+//end
+			ret = msm_dss_enable_vreg(
+				ctrl_pdata->panel_power_data.vreg_config,
+				ctrl_pdata->panel_power_data.num_vreg, 0);
+			if (ret)
+				pr_err("%s: failed to disable vregs for %s\n",
+					__func__, __mdss_dsi_pm_name(DSI_PANEL_PM));
+				pr_err("%s: incell_lcd_power_off!\n", __func__);
+		}
+	}
+#else
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	ret = mdss_dsi_panel_reset(pdata, 0);
 	if (ret) {
 		pr_warn("%s: Panel reset failed. rc=%d\n", __func__, ret);
@@ -393,6 +473,10 @@ static int mdss_dsi_panel_power_off(struct mdss_panel_data *pdata)
 		pr_err("%s: failed to disable vregs for %s\n",
 			__func__, __mdss_dsi_pm_name(DSI_PANEL_PM));
 
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 end:
 	return ret;
 }
@@ -410,6 +494,11 @@ static int mdss_dsi_panel_power_on(struct mdss_panel_data *pdata)
 	ctrl_pdata = container_of(pdata, struct mdss_dsi_ctrl_pdata,
 				panel_data);
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NUBIA_LCD_KEEP_POWER_ON
+	if (!nubia_wakeup_gesture) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	ret = msm_dss_enable_vreg(
 		ctrl_pdata->panel_power_data.vreg_config,
 		ctrl_pdata->panel_power_data.num_vreg, 1);
@@ -418,6 +507,25 @@ static int mdss_dsi_panel_power_on(struct mdss_panel_data *pdata)
 			__func__, __mdss_dsi_pm_name(DSI_PANEL_PM));
 		return ret;
 	}
+<<<<<<< HEAD
+=======
+	} else {
+		if (pdata->panel_info.mipi.lp11_init) {
+			mdss_dsi_panel_reset(pdata, 0);
+			usleep_range(11000, 11000);
+		}
+	}
+#else
+	ret = msm_dss_enable_vreg(
+		ctrl_pdata->panel_power_data.vreg_config,
+		ctrl_pdata->panel_power_data.num_vreg, 1);
+	if (ret) {
+		pr_err("%s: failed to enable vregs for %s\n",
+			__func__, __mdss_dsi_pm_name(DSI_PANEL_PM));
+		return ret;
+	}
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	/*
 	 * If continuous splash screen feature is enabled, then we need to
@@ -427,6 +535,11 @@ static int mdss_dsi_panel_power_on(struct mdss_panel_data *pdata)
 	 */
 	if (pdata->panel_info.cont_splash_enabled ||
 		!pdata->panel_info.mipi.lp11_init) {
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NUBIA_LCD_KEEP_POWER_ON
+		if (!nubia_wakeup_gesture) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		if (mdss_dsi_pinctrl_set_state(ctrl_pdata, true))
 			pr_debug("reset enable: pinctrl not enabled\n");
 
@@ -434,11 +547,43 @@ static int mdss_dsi_panel_power_on(struct mdss_panel_data *pdata)
 		if (ret)
 			pr_err("%s: Panel reset failed. rc=%d\n",
 					__func__, ret);
+<<<<<<< HEAD
+=======
+		}else{
+			mdss_dsi_panel_reset_nubia(pdata, 1);
+		}
+#else
+		if (mdss_dsi_pinctrl_set_state(ctrl_pdata, true))
+			pr_debug("reset enable: pinctrl not enabled\n");
+
+		ret = mdss_dsi_panel_reset(pdata, 1);
+		if (ret)
+			pr_err("%s: Panel reset failed. rc=%d\n",
+					__func__, ret);
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 
 	return ret;
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NUBIA_LCD_KEEP_POWER_ON
+static int incell_lcd_reboot_nb_handler(struct notifier_block *cb, unsigned long code, void *unused)
+{
+	switch (code) {
+	case SYS_DOWN:
+	case SYS_HALT:
+	case SYS_POWER_OFF:
+		incell_lcd_power_off = true;
+	default:
+		break;
+	}
+	return NOTIFY_DONE;
+}
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static int mdss_dsi_panel_power_lp(struct mdss_panel_data *pdata, int enable)
 {
 	/* Panel power control when entering/exiting lp mode */
@@ -1555,6 +1700,18 @@ int mdss_dsi_on(struct mdss_panel_data *pdata)
 	if (mipi->init_delay)
 		usleep_range(mipi->init_delay, mipi->init_delay);
 
+<<<<<<< HEAD
+=======
+	if (mipi->force_clk_lane_hs) {
+		u32 tmp;
+
+		tmp = MIPI_INP((ctrl_pdata->ctrl_base) + 0xac);
+		tmp |= (1<<28);
+		MIPI_OUTP((ctrl_pdata->ctrl_base) + 0xac, tmp);
+		wmb();
+	}
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (pdata->panel_info.type == MIPI_CMD_PANEL)
 		mdss_dsi_clk_ctrl(ctrl_pdata, ctrl_pdata->dsi_clk_handle,
 				  MDSS_DSI_ALL_CLKS, MDSS_DSI_CLK_OFF);
@@ -2805,7 +2962,14 @@ static int mdss_dsi_event_handler(struct mdss_panel_data *pdata,
 		rc = mdss_dsi_reconfig(pdata, mode);
 		break;
 	case MDSS_EVENT_DSI_PANEL_STATUS:
+<<<<<<< HEAD
 		rc = mdss_dsi_check_panel_status(ctrl_pdata, arg);
+=======
+		if (ctrl_pdata->check_status)
+			rc = ctrl_pdata->check_status(ctrl_pdata);
+		else
+			rc = true;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		break;
 	case MDSS_EVENT_PANEL_TIMING_SWITCH:
 		rc = mdss_dsi_panel_timing_switch(ctrl_pdata, arg);
@@ -3283,6 +3447,15 @@ error:
 	return rc;
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NUBIA_LCD_KEEP_POWER_ON
+	static struct notifier_block incell_lcd_reboot_nb = {
+		.notifier_call = incell_lcd_reboot_nb_handler,
+	};
+#endif
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static int mdss_dsi_ctrl_probe(struct platform_device *pdev)
 {
 	int rc = 0;
@@ -3448,8 +3621,14 @@ static int mdss_dsi_ctrl_probe(struct platform_device *pdev)
 	else
 		ctrl_pdata->shared_data->dsi1_active = true;
 
+<<<<<<< HEAD
 	mdss_dsi_debug_bus_init(mdss_dsi_res);
 
+=======
+#ifdef CONFIG_NUBIA_LCD_KEEP_POWER_ON
+	register_reboot_notifier(&incell_lcd_reboot_nb);
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return 0;
 
 error_shadow_clk_deinit:
@@ -4360,9 +4539,12 @@ int dsi_panel_device_register(struct platform_device *ctrl_pdev,
 		return rc;
 	}
 
+<<<<<<< HEAD
 	/* default state of gpio is false */
 	ctrl_pdata->bklt_en_gpio_state = false;
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	pinfo->panel_max_fps = mdss_panel_get_framerate(pinfo);
 	pinfo->panel_max_vtotal = mdss_panel_get_vtotal(pinfo);
 

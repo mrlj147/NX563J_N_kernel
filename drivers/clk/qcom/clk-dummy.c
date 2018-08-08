@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2016-2017, The Linux Foundation. All rights reserved.
+=======
+ * Copyright (c) 2016, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -17,8 +21,11 @@
 #include <linux/slab.h>
 #include <linux/reset-controller.h>
 
+<<<<<<< HEAD
 #include "clk-debug.h"
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 struct clk_dummy {
 	struct clk_hw hw;
 	struct reset_controller_dev reset;
@@ -67,7 +74,10 @@ struct clk_ops clk_dummy_ops = {
 	.round_rate = dummy_clk_round_rate,
 	.recalc_rate = dummy_clk_recalc_rate,
 	.set_flags = dummy_clk_set_flags,
+<<<<<<< HEAD
 	.debug_init = clk_debug_measure_add,
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 EXPORT_SYMBOL_GPL(clk_dummy_ops);
 

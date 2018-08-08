@@ -138,6 +138,7 @@ static int xhci_start(struct xhci_hcd *xhci)
 {
 	u32 temp;
 	int ret;
+<<<<<<< HEAD
 	struct usb_hcd *hcd = xhci_to_hcd(xhci);
 
 	/*
@@ -145,6 +146,9 @@ static int xhci_start(struct xhci_hcd *xhci)
 	 * change event in halt state, as soon as xhci_start clears halt bit
 	 */
 	disable_irq(hcd->irq);
+=======
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	temp = readl(&xhci->op_regs->command);
 	temp |= (CMD_RUN);
 	xhci_dbg_trace(xhci, trace_xhci_dbg_init, "// Turn on HC, cmd = 0x%x.",
@@ -165,8 +169,11 @@ static int xhci_start(struct xhci_hcd *xhci)
 		/* clear state flags. Including dying, halted or removing */
 		xhci->xhc_state = 0;
 
+<<<<<<< HEAD
 	enable_irq(hcd->irq);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return ret;
 }
 

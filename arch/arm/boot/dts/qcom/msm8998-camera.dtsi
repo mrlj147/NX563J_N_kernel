@@ -535,9 +535,15 @@
 			"NO_SET_RATE", "NO_SET_RATE",
 			"NO_SET_RATE", "NO_SET_RATE",
 			"INIT_RATE",
+<<<<<<< HEAD
 			"NO_SET_RATE", "NO_SET_RATE",
 			"INIT_RATE",
 			"NO_SET_RATE", "NO_SET_RATE";
+=======
+			"INIT_RATE", "NO_SET_RATE",
+			"INIT_RATE",
+			"INIT_RATE", "NO_SET_RATE";
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		status = "ok";
 	};
 
@@ -573,7 +579,11 @@
 			"camss_vfe_ahb_clk", "camss_vfe_vbif_ahb_clk",
 			"camss_vfe_vbif_axi_clk",
 			"camss_csi_vfe_clk";
+<<<<<<< HEAD
 		qcom,clock-rates = <0 0 0 0 0 0 480000000 0 0 0 0 0 0
+=======
+		qcom,clock-rates = <0 0 0 0 0 0 384000000 0 0 0 0 0 0
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 					0 0 0 0 0 0 576000000 0 0 0 0 0 0
 					0 0 0 0 0 0 600000000 0 0 0 0 0 0>;
 		status = "ok";
@@ -653,7 +663,11 @@
 			"camss_vfe_ahb_clk", "camss_vfe_vbif_ahb_clk",
 			"camss_vfe_vbif_axi_clk",
 			"camss_csi_vfe_clk";
+<<<<<<< HEAD
 		qcom,clock-rates = <0 0 0 0 0 0 480000000 0 0 0 0 0 0
+=======
+		qcom,clock-rates = <0 0 0 0 0 0 384000000 0 0 0 0 0 0
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 					0 0 0 0 0 0 576000000 0 0 0 0 0 0
 					0 0 0 0 0 0 600000000 0 0 0 0 0 0>;
 		status = "ok";

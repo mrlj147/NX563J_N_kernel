@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2013-2017, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -15,6 +19,10 @@
 #include <sound/q6asm-v2.h>
 #include <sound/compress_params.h>
 #include <sound/msm-audio-effects-q6-v2.h>
+<<<<<<< HEAD
+=======
+#include <sound/msm-dts-eagle.h>
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #include <sound/devdep_params.h>
 
 #define MAX_ENABLE_CMD_SIZE 32
@@ -48,6 +56,29 @@ bool msm_audio_effects_is_effmodule_supp_in_top(int effect_module,
 	case EQ_MODULE:
 		switch (topology) {
 		case ASM_STREAM_POSTPROC_TOPO_ID_SA_PLUS:
+<<<<<<< HEAD
+=======
+		case ASM_STREAM_POSTPROC_TOPO_ID_HPX_PLUS:
+		case ASM_STREAM_POSTPROC_TOPO_ID_HPX_MASTER:
+			return true;
+		default:
+			return false;
+		}
+	case DTS_EAGLE_MODULE:
+		switch (topology) {
+		case ASM_STREAM_POSTPROC_TOPO_ID_DTS_HPX:
+		case ASM_STREAM_POSTPROC_TOPO_ID_HPX_PLUS:
+		case ASM_STREAM_POSTPROC_TOPO_ID_HPX_MASTER:
+			return true;
+		default:
+			return false;
+		}
+	case SOFT_VOLUME2_MODULE:
+	case DTS_EAGLE_MODULE_ENABLE:
+		switch (topology) {
+		case ASM_STREAM_POSTPROC_TOPO_ID_HPX_PLUS:
+		case ASM_STREAM_POSTPROC_TOPO_ID_HPX_MASTER:
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			return true;
 		default:
 			return false;
@@ -255,7 +286,11 @@ int msm_audio_effects_virtualizer_handler(struct audio_client *ac,
 			break;
 		}
 	}
+<<<<<<< HEAD
 	if (params_length && (rc == 0))
+=======
+	if (params_length && !msm_dts_eagle_is_hpx_on() && (rc == 0))
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		q6asm_send_audio_effects_params(ac, params,
 						params_length);
 	else
@@ -726,7 +761,11 @@ int msm_audio_effects_reverb_handler(struct audio_client *ac,
 			break;
 		}
 	}
+<<<<<<< HEAD
 	if (params_length && (rc == 0))
+=======
+	if (params_length && !msm_dts_eagle_is_hpx_on() && (rc == 0))
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		q6asm_send_audio_effects_params(ac, params,
 						params_length);
 	else
@@ -862,7 +901,11 @@ int msm_audio_effects_bass_boost_handler(struct audio_client *ac,
 			break;
 		}
 	}
+<<<<<<< HEAD
 	if (params_length && (rc == 0))
+=======
+	if (params_length && !msm_dts_eagle_is_hpx_on() && (rc == 0))
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		q6asm_send_audio_effects_params(ac, params,
 						params_length);
 	else
@@ -1202,7 +1245,11 @@ int msm_audio_effects_popless_eq_handler(struct audio_client *ac,
 			break;
 		}
 	}
+<<<<<<< HEAD
 	if (params_length && (rc == 0))
+=======
+	if (params_length && !msm_dts_eagle_is_hpx_on() && (rc == 0))
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		q6asm_send_audio_effects_params(ac, params,
 						params_length);
 	else

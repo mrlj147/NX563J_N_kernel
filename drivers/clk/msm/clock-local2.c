@@ -928,8 +928,12 @@ static unsigned long branch_clk_get_rate(struct clk *c)
 {
 	struct branch_clk *branch = to_branch_clk(c);
 
+<<<<<<< HEAD
 	if (branch->max_div ||
 			(branch->aggr_sibling_rates && !branch->is_prepared))
+=======
+	if (branch->max_div)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		return branch->c.rate;
 
 	return clk_get_rate(c->parent);

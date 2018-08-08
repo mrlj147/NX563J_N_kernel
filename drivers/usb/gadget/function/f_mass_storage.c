@@ -2284,15 +2284,26 @@ reset:
 			fsg->bulk_out_enabled = 0;
 		}
 
+<<<<<<< HEAD
 		/* allow usb LPM after eps are disabled */
 		usb_gadget_autopm_put_async(common->gadget);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		common->fsg = NULL;
 		wake_up(&common->fsg_wait);
 	}
 
 	common->running = 0;
+<<<<<<< HEAD
 	if (!new_fsg || rc)
 		return rc;
+=======
+	if (!new_fsg || rc) {
+		/* allow usb LPM after eps are disabled */
+		usb_gadget_autopm_put_async(common->gadget);
+		return rc;
+	}
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	common->fsg = new_fsg;
 	fsg = common->fsg;
@@ -2350,10 +2361,15 @@ static int fsg_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
 {
 	struct fsg_dev *fsg = fsg_from_func(f);
 	fsg->common->new_fsg = fsg;
+<<<<<<< HEAD
 
 	/* prevents usb LPM until thread runs to completion */
 	usb_gadget_autopm_get_async(fsg->common->gadget);
 
+=======
+	/* prevents usb LPM until thread runs to completion */
+	usb_gadget_autopm_get_async(fsg->common->gadget);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	raise_exception(fsg->common, FSG_STATE_CONFIG_CHANGE);
 	return USB_GADGET_DELAYED_STATUS;
 }

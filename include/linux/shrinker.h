@@ -66,7 +66,10 @@ struct shrinker {
 /* Flags */
 #define SHRINKER_NUMA_AWARE	(1 << 0)
 #define SHRINKER_MEMCG_AWARE	(1 << 1)
+<<<<<<< HEAD
 #define SHRINKER_LMK		(1 << 2)
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 extern int register_shrinker(struct shrinker *);
 extern void unregister_shrinker(struct shrinker *);

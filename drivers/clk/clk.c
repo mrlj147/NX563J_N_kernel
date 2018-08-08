@@ -2874,6 +2874,11 @@ static int clk_debug_create_one(struct clk_core *core, struct dentry *pdentry)
 			goto err_out;
 	}
 
+<<<<<<< HEAD
+=======
+	clk_debug_measure_add(core->hw, core->dentry);
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	ret = 0;
 	goto out;
 
@@ -3003,8 +3008,15 @@ static int __init clk_debug_init(void)
 		return -ENOMEM;
 
 	mutex_lock(&clk_debug_lock);
+<<<<<<< HEAD
 	hlist_for_each_entry(core, &clk_debug_list, debug_node)
 		clk_debug_create_one(core, rootdir);
+=======
+	hlist_for_each_entry(core, &clk_debug_list, debug_node) {
+		clk_register_debug(core->hw, core->dentry);
+		clk_debug_create_one(core, rootdir);
+	}
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	inited = 1;
 	mutex_unlock(&clk_debug_lock);

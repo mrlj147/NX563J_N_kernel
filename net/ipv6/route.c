@@ -3193,10 +3193,13 @@ int rt6_dump_route(struct rt6_info *rt, void *p_arg)
 {
 	struct rt6_rtnl_dump_arg *arg = (struct rt6_rtnl_dump_arg *) p_arg;
 	int prefix;
+<<<<<<< HEAD
 	struct net *net = arg->net;
 
 	if (rt == net->ipv6.ip6_null_entry)
 		return 0;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	if (nlmsg_len(arg->cb->nlh) >= sizeof(struct rtmsg)) {
 		struct rtmsg *rtm = nlmsg_data(arg->cb->nlh);
@@ -3204,7 +3207,11 @@ int rt6_dump_route(struct rt6_info *rt, void *p_arg)
 	} else
 		prefix = 0;
 
+<<<<<<< HEAD
 	return rt6_fill_node(net,
+=======
+	return rt6_fill_node(arg->net,
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		     arg->skb, rt, NULL, NULL, 0, RTM_NEWROUTE,
 		     NETLINK_CB(arg->cb->skb).portid, arg->cb->nlh->nlmsg_seq,
 		     prefix, 0, NLM_F_MULTI);

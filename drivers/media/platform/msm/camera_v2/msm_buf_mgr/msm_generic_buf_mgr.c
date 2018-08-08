@@ -553,7 +553,12 @@ static long msm_buf_mngr_subdev_ioctl(struct v4l2_subdev *sd,
 				sizeof(struct msm_buf_mngr_info))) {
 				return -EFAULT;
 			}
+<<<<<<< HEAD
 			k_ioctl.ioctl_ptr = (uintptr_t)&buf_info;
+=======
+			MSM_CAM_GET_IOCTL_ARG_PTR(&k_ioctl.ioctl_ptr,
+				&buf_info, sizeof(void *));
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			argp = &k_ioctl;
 			rc = msm_cam_buf_mgr_ops(cmd, argp);
 			}

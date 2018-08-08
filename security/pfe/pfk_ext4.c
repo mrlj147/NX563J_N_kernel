@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2015-2017, The Linux Foundation. All rights reserved.
+=======
+ * Copyright (c) 2015-2016, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -44,7 +48,11 @@ static bool pfk_ext4_ready;
 /*
  * pfk_ext4_deinit() - Deinit function, should be invoked by upper PFK layer
  */
+<<<<<<< HEAD
 void pfk_ext4_deinit(void)
+=======
+void __exit pfk_ext4_deinit(void)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 {
 	pfk_ext4_ready = false;
 }

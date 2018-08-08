@@ -2615,11 +2615,14 @@ void hdmi_edid_set_video_resolution(void *input, u32 resolution, bool reset)
 		return;
 	}
 
+<<<<<<< HEAD
 	if (resolution == HDMI_VFRMT_UNKNOWN) {
 		pr_debug("%s: Default video resolution not set\n", __func__);
 		return;
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	edid_ctrl->video_resolution = resolution;
 
 	if (reset) {

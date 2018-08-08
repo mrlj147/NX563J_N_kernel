@@ -72,8 +72,11 @@ static const char *iommu_debug_attr_to_string(enum iommu_attr attr)
 		return "DOMAIN_ATTR_FAST";
 	case DOMAIN_ATTR_EARLY_MAP:
 		return "DOMAIN_ATTR_EARLY_MAP";
+<<<<<<< HEAD
 	case DOMAIN_ATTR_CB_STALL_DISABLE:
 		return "DOMAIN_ATTR_CB_STALL_DISABLE";
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	default:
 		return "Unknown attr!";
 	}

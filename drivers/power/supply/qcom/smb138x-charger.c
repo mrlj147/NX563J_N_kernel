@@ -104,8 +104,11 @@ struct smb138x {
 	struct smb_dt_props	dt;
 	struct power_supply	*parallel_psy;
 	u32			wa_flags;
+<<<<<<< HEAD
 	struct pmic_revid_data	*pmic_rev_id;
 	char			*name;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 static int __debug_mask;
@@ -169,6 +172,7 @@ static int smb138x_parse_dt(struct smb138x *chip)
 	if (rc < 0)
 		chip->dt.pl_mode = POWER_SUPPLY_PL_USBMID_USBMID;
 
+<<<<<<< HEAD
 	/* check that smb1355 is configured to run in mid-mid mode */
 	if (chip->pmic_rev_id->pmic_subtype == SMB1355_SUBTYPE
 		&& chip->dt.pl_mode != POWER_SUPPLY_PL_USBMID_USBMID) {
@@ -177,6 +181,8 @@ static int smb138x_parse_dt(struct smb138x *chip)
 		return -EINVAL;
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	chip->dt.suspend_input = of_property_read_bool(node,
 				"qcom,suspend-input");
 
@@ -489,6 +495,7 @@ static int smb138x_init_batt_psy(struct smb138x *chip)
  * PARALLEL PSY REGISTRATION *
  *****************************/
 
+<<<<<<< HEAD
 static int smb1355_get_prop_connector_health(struct smb138x *chip)
 {
 	struct smb_charger *chg = &chip->chg;
@@ -513,6 +520,8 @@ static int smb1355_get_prop_connector_health(struct smb138x *chip)
 	return POWER_SUPPLY_HEALTH_COOL;
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static int smb138x_get_prop_connector_health(struct smb138x *chip)
 {
 	struct smb_charger *chg = &chip->chg;
@@ -569,6 +578,7 @@ static enum power_supply_property smb138x_parallel_props[] = {
 	POWER_SUPPLY_PROP_CHARGING_ENABLED,
 	POWER_SUPPLY_PROP_PIN_ENABLED,
 	POWER_SUPPLY_PROP_INPUT_SUSPEND,
+<<<<<<< HEAD
 	POWER_SUPPLY_PROP_INPUT_CURRENT_LIMITED,
 	POWER_SUPPLY_PROP_VOLTAGE_MAX,
 	POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX,
@@ -590,12 +600,22 @@ static enum power_supply_property smb1355_parallel_props[] = {
 	POWER_SUPPLY_PROP_INPUT_CURRENT_LIMITED,
 	POWER_SUPPLY_PROP_VOLTAGE_MAX,
 	POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX,
+=======
+	POWER_SUPPLY_PROP_VOLTAGE_MAX,
+	POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX,
+	POWER_SUPPLY_PROP_CURRENT_NOW,
+	POWER_SUPPLY_PROP_CHARGER_TEMP,
+	POWER_SUPPLY_PROP_CHARGER_TEMP_MAX,
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	POWER_SUPPLY_PROP_MODEL_NAME,
 	POWER_SUPPLY_PROP_PARALLEL_MODE,
 	POWER_SUPPLY_PROP_CONNECTOR_HEALTH,
 	POWER_SUPPLY_PROP_SET_SHIP_MODE,
+<<<<<<< HEAD
 	POWER_SUPPLY_PROP_CHARGER_TEMP,
 	POWER_SUPPLY_PROP_CHARGER_TEMP_MAX,
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 static int smb138x_parallel_get_prop(struct power_supply *psy,
@@ -626,6 +646,7 @@ static int smb138x_parallel_get_prop(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_INPUT_SUSPEND:
 		rc = smblib_get_usb_suspend(chg, &val->intval);
 		break;
+<<<<<<< HEAD
 	case POWER_SUPPLY_PROP_INPUT_CURRENT_LIMITED:
 		if ((chip->dt.pl_mode == POWER_SUPPLY_PL_USBIN_USBIN)
 		|| (chip->dt.pl_mode == POWER_SUPPLY_PL_USBIN_USBIN_EXT))
@@ -633,6 +654,8 @@ static int smb138x_parallel_get_prop(struct power_supply *psy,
 		else
 			val->intval = 0;
 		break;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	case POWER_SUPPLY_PROP_VOLTAGE_MAX:
 		rc = smblib_get_charge_param(chg, &chg->param.fv, &val->intval);
 		break;
@@ -640,22 +663,41 @@ static int smb138x_parallel_get_prop(struct power_supply *psy,
 		rc = smblib_get_charge_param(chg, &chg->param.fcc,
 					     &val->intval);
 		break;
+<<<<<<< HEAD
 	case POWER_SUPPLY_PROP_MODEL_NAME:
 		val->strval = chip->name;
+=======
+	case POWER_SUPPLY_PROP_CURRENT_NOW:
+		rc = smblib_get_prop_slave_current_now(chg, val);
+		break;
+	case POWER_SUPPLY_PROP_CHARGER_TEMP:
+		rc = smb138x_get_prop_charger_temp(chip, val);
+		break;
+	case POWER_SUPPLY_PROP_CHARGER_TEMP_MAX:
+		rc = smblib_get_prop_charger_temp_max(chg, val);
+		break;
+	case POWER_SUPPLY_PROP_MODEL_NAME:
+		val->strval = "smb138x";
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		break;
 	case POWER_SUPPLY_PROP_PARALLEL_MODE:
 		val->intval = chip->dt.pl_mode;
 		break;
 	case POWER_SUPPLY_PROP_CONNECTOR_HEALTH:
+<<<<<<< HEAD
 		if (chip->pmic_rev_id->pmic_subtype != SMB1355_SUBTYPE)
 			val->intval = smb138x_get_prop_connector_health(chip);
 		else
 			val->intval = smb1355_get_prop_connector_health(chip);
+=======
+		val->intval = smb138x_get_prop_connector_health(chip);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		break;
 	case POWER_SUPPLY_PROP_SET_SHIP_MODE:
 		/* Not in ship mode as long as device is active */
 		val->intval = 0;
 		break;
+<<<<<<< HEAD
 	case POWER_SUPPLY_PROP_CHARGER_TEMP:
 		if (chip->pmic_rev_id->pmic_subtype != SMB1355_SUBTYPE)
 			rc = smb138x_get_prop_charger_temp(chip, val);
@@ -680,6 +722,8 @@ static int smb138x_parallel_get_prop(struct power_supply *psy,
 		else
 			rc = -ENODATA;
 		break;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	default:
 		pr_err("parallel power supply get prop %d not supported\n",
 			prop);
@@ -699,6 +743,7 @@ static int smb138x_set_parallel_suspend(struct smb138x *chip, bool suspend)
 	struct smb_charger *chg = &chip->chg;
 	int rc = 0;
 
+<<<<<<< HEAD
 	rc = smblib_masked_write(chg, WD_CFG_REG, WDOG_TIMER_EN_BIT,
 				 suspend ? 0 : WDOG_TIMER_EN_BIT);
 	if (rc < 0) {
@@ -707,6 +752,8 @@ static int smb138x_set_parallel_suspend(struct smb138x *chip, bool suspend)
 		suspend = true;
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	rc = smblib_masked_write(chg, USBIN_CMD_IL_REG, USBIN_SUSPEND_BIT,
 				 suspend ? USBIN_SUSPEND_BIT : 0);
 	if (rc < 0) {
@@ -730,12 +777,15 @@ static int smb138x_parallel_set_prop(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_INPUT_SUSPEND:
 		rc = smb138x_set_parallel_suspend(chip, (bool)val->intval);
 		break;
+<<<<<<< HEAD
 	case POWER_SUPPLY_PROP_CURRENT_MAX:
 		if ((chip->dt.pl_mode == POWER_SUPPLY_PL_USBIN_USBIN)
 		|| (chip->dt.pl_mode == POWER_SUPPLY_PL_USBIN_USBIN_EXT))
 			rc = smblib_set_charge_param(chg, &chg->param.usb_icl,
 				val->intval);
 		break;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	case POWER_SUPPLY_PROP_VOLTAGE_MAX:
 		rc = smblib_set_charge_param(chg, &chg->param.fv, val->intval);
 		break;
@@ -763,7 +813,11 @@ static int smb138x_parallel_prop_is_writeable(struct power_supply *psy,
 	return 0;
 }
 
+<<<<<<< HEAD
 static struct power_supply_desc parallel_psy_desc = {
+=======
+static const struct power_supply_desc parallel_psy_desc = {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	.name			= "parallel",
 	.type			= POWER_SUPPLY_TYPE_PARALLEL,
 	.properties		= smb138x_parallel_props,
@@ -791,6 +845,7 @@ static int smb138x_init_parallel_psy(struct smb138x *chip)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int smb1355_init_parallel_psy(struct smb138x *chip)
 {
 	struct power_supply_config parallel_cfg = {};
@@ -813,6 +868,8 @@ static int smb1355_init_parallel_psy(struct smb138x *chip)
 	return 0;
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /******************************
  * VBUS REGULATOR REGISTRATION *
  ******************************/
@@ -1132,6 +1189,10 @@ static int smb138x_init_hw(struct smb138x *chip)
 
 static int smb138x_setup_wa_flags(struct smb138x *chip)
 {
+<<<<<<< HEAD
+=======
+	struct pmic_revid_data *pmic_rev_id;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	struct device_node *revid_dev_node;
 
 	revid_dev_node = of_parse_phandle(chip->chg.dev->of_node,
@@ -1141,8 +1202,13 @@ static int smb138x_setup_wa_flags(struct smb138x *chip)
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	chip->pmic_rev_id = get_revid_data(revid_dev_node);
 	if (IS_ERR_OR_NULL(chip->pmic_rev_id)) {
+=======
+	pmic_rev_id = get_revid_data(revid_dev_node);
+	if (IS_ERR_OR_NULL(pmic_rev_id)) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		/*
 		 * the revid peripheral must be registered, any failure
 		 * here only indicates that the rev-id module has not
@@ -1151,14 +1217,24 @@ static int smb138x_setup_wa_flags(struct smb138x *chip)
 		return -EPROBE_DEFER;
 	}
 
+<<<<<<< HEAD
 	switch (chip->pmic_rev_id->pmic_subtype) {
 	case SMB1381_SUBTYPE:
 		if (chip->pmic_rev_id->rev4 < 2) /* SMB1381 rev 1.0 */
+=======
+	switch (pmic_rev_id->pmic_subtype) {
+	case SMB1381_SUBTYPE:
+		if (pmic_rev_id->rev4 < 2) /* SMB1381 rev 1.0 */
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			chip->wa_flags |= OOB_COMP_WA_BIT;
 		break;
 	default:
 		pr_err("PMIC subtype %d not supported\n",
+<<<<<<< HEAD
 				chip->pmic_rev_id->pmic_subtype);
+=======
+				pmic_rev_id->pmic_subtype);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		return -EINVAL;
 	}
 
@@ -1456,7 +1532,10 @@ static int smb138x_master_probe(struct smb138x *chip)
 
 	chg->param = v1_params;
 
+<<<<<<< HEAD
 	chip->name = "smb1381";
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	rc = smblib_init(chg);
 	if (rc < 0) {
 		pr_err("Couldn't initialize smblib rc=%d\n", rc);
@@ -1517,7 +1596,11 @@ static int smb138x_master_probe(struct smb138x *chip)
 	return rc;
 }
 
+<<<<<<< HEAD
 static int smb1355_slave_probe(struct smb138x *chip)
+=======
+static int smb138x_slave_probe(struct smb138x *chip)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 {
 	struct smb_charger *chg = &chip->chg;
 	int rc = 0;
@@ -1530,6 +1613,7 @@ static int smb1355_slave_probe(struct smb138x *chip)
 		goto cleanup;
 	}
 
+<<<<<<< HEAD
 	rc = smb138x_parse_dt(chip);
 	if (rc < 0) {
 		pr_err("Couldn't parse device tree rc=%d\n", rc);
@@ -1579,6 +1663,8 @@ static int smb1381_slave_probe(struct smb138x *chip)
 		pr_err("Couldn't initialize smblib rc=%d\n", rc);
 		goto cleanup;
 	}
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	chg->iio.temp_max_chan = iio_channel_get(chg->dev, "charger_temp_max");
 	if (IS_ERR(chg->iio.temp_max_chan)) {
 		rc = PTR_ERR(chg->iio.temp_max_chan);
@@ -1618,8 +1704,12 @@ static int smb1381_slave_probe(struct smb138x *chip)
 		goto cleanup;
 	}
 
+<<<<<<< HEAD
 	if ((chip->dt.pl_mode == POWER_SUPPLY_PL_USBIN_USBIN)
 		|| (chip->dt.pl_mode == POWER_SUPPLY_PL_USBIN_USBIN_EXT)) {
+=======
+	if (chip->dt.pl_mode == POWER_SUPPLY_PL_USBIN_USBIN) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		rc = smb138x_init_vbus_regulator(chip);
 		if (rc < 0) {
 			pr_err("Couldn't initialize vbus regulator rc=%d\n",
@@ -1646,6 +1736,7 @@ static int smb1381_slave_probe(struct smb138x *chip)
 		goto cleanup;
 	}
 
+<<<<<<< HEAD
 	return 0;
 
 cleanup:
@@ -1711,6 +1802,27 @@ static const struct of_device_id match_table[] = {
 	{
 		.compatible	= "qcom,smb1355-parallel-slave",
 		.data		= (void *) PARALLEL_SLAVE,
+=======
+	return rc;
+
+cleanup:
+	smblib_deinit(chg);
+	if (chip->parallel_psy)
+		power_supply_unregister(chip->parallel_psy);
+	if (chg->vbus_vreg && chg->vbus_vreg->rdev)
+		regulator_unregister(chg->vbus_vreg->rdev);
+	return rc;
+}
+
+static const struct of_device_id match_table[] = {
+	{
+		.compatible = "qcom,smb138x-charger",
+		.data = (void *) PARALLEL_MASTER
+	},
+	{
+		.compatible = "qcom,smb138x-parallel-slave",
+		.data = (void *) PARALLEL_SLAVE
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	},
 	{ },
 };
@@ -1757,7 +1869,11 @@ static int smb138x_probe(struct platform_device *pdev)
 		rc = smb138x_master_probe(chip);
 		break;
 	case PARALLEL_SLAVE:
+<<<<<<< HEAD
 		rc = slave_probe(chip);
+=======
+		rc = smb138x_slave_probe(chip);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		break;
 	default:
 		pr_err("Couldn't find a matching mode %d\n", chip->chg.mode);
@@ -1771,8 +1887,12 @@ static int smb138x_probe(struct platform_device *pdev)
 		goto cleanup;
 	}
 
+<<<<<<< HEAD
 	pr_info("%s probed successfully mode=%d pl_mode = %d\n",
 		chip->name, chip->chg.mode, chip->dt.pl_mode);
+=======
+	pr_info("SMB138X probed successfully mode=%d\n", chip->chg.mode);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return rc;
 
 cleanup:

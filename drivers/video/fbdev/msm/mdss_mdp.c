@@ -233,6 +233,10 @@ static struct mdss_mdp_irq mdp_irq_map[] =  {
 
 static struct intr_callback *mdp_intr_cb;
 
+<<<<<<< HEAD
+=======
+static void mdss_mdp_footswitch_ctrl(struct mdss_data_type *mdata, int on);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static int mdss_mdp_parse_dt(struct platform_device *pdev);
 static int mdss_mdp_parse_dt_pipe(struct platform_device *pdev);
 static int mdss_mdp_parse_dt_mixer(struct platform_device *pdev);
@@ -5171,7 +5175,11 @@ static void mdss_mdp_notify_idle_pc(struct mdss_data_type *mdata)
  * active (but likely in an idle state), the vote for the CX and the batfet
  * rails should not be released.
  */
+<<<<<<< HEAD
 void mdss_mdp_footswitch_ctrl(struct mdss_data_type *mdata, int on)
+=======
+static void mdss_mdp_footswitch_ctrl(struct mdss_data_type *mdata, int on)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 {
 	int ret;
 	int active_cnt = 0;

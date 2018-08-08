@@ -45,7 +45,15 @@ module_param(record_size, ulong, 0400);
 MODULE_PARM_DESC(record_size,
 		"size of each dump done on oops/panic");
 
+<<<<<<< HEAD
 static ulong ramoops_console_size = MIN_MEM_SIZE;
+=======
+#ifdef CONFIG_PSTORE
+static ulong ramoops_console_size=256*1024UL;
+#else
+static ulong ramoops_console_size = MIN_MEM_SIZE;
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 module_param_named(console_size, ramoops_console_size, ulong, 0400);
 MODULE_PARM_DESC(console_size, "size of kernel console log");
 
@@ -57,12 +65,29 @@ static ulong ramoops_pmsg_size = MIN_MEM_SIZE;
 module_param_named(pmsg_size, ramoops_pmsg_size, ulong, 0400);
 MODULE_PARM_DESC(pmsg_size, "size of user space message log");
 
+<<<<<<< HEAD
 static ulong mem_address;
+=======
+#ifdef CONFIG_PSTORE
+static ulong mem_address = 0xAff00000;
+#else
+static ulong mem_address;
+#endif
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 module_param(mem_address, ulong, 0400);
 MODULE_PARM_DESC(mem_address,
 		"start of reserved RAM used to store oops/panic logs");
 
+<<<<<<< HEAD
 static ulong mem_size;
+=======
+#ifdef CONFIG_PSTORE
+static ulong mem_size = 0x100000;
+#else
+static ulong mem_size;
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 module_param(mem_size, ulong, 0400);
 MODULE_PARM_DESC(mem_size,
 		"size of reserved RAM used to store oops/panic logs");

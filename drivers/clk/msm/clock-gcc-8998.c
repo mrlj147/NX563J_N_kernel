@@ -42,7 +42,10 @@ static void __iomem *virt_dbgbase;
 #define gpll0_out_main_source_val 1
 #define gpll0_ao_source_val 1
 #define gpll4_out_main_source_val 5
+<<<<<<< HEAD
 #define gpll0_early_div_source_val 6
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 #define FIXDIV(div) (div ? (2 * (div) - 1) : (0))
 
@@ -165,7 +168,10 @@ static struct pll_vote_clk gpll0_ao = {
 };
 
 DEFINE_EXT_CLK(gpll0_out_main, &gpll0.c);
+<<<<<<< HEAD
 DEFINE_EXT_CLK(gpll0_early_div, &gpll0.c);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 static struct local_vote_clk gcc_mmss_gpll0_clk = {
 	.cbcr_reg = GCC_APCS_CLOCK_BRANCH_ENA_VOTE_1,
@@ -330,7 +336,11 @@ static struct clk_freq_tbl ftbl_blsp_qup_spi_apps_clk_src[] = {
 	F(    960000,    cxo_clk_src,   10,    1,     2),
 	F(   4800000,    cxo_clk_src,    4,    0,     0),
 	F(   9600000,    cxo_clk_src,    2,    0,     0),
+<<<<<<< HEAD
 	F(  15000000, gpll0_early_div,   5,    1,     4),
+=======
+	F(  15000000, gpll0_out_main,   10,    1,     4),
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	F(  19200000,    cxo_clk_src,    1,    0,     0),
 	F(  25000000, gpll0_out_main,   12,    1,     2),
 	F(  50000000, gpll0_out_main,   12,    0,     0),
@@ -498,10 +508,17 @@ static struct rcg_clk blsp1_qup6_spi_apps_clk_src = {
 };
 
 static struct clk_freq_tbl ftbl_blsp_uart_apps_clk_src[] = {
+<<<<<<< HEAD
 	F(   3686400, gpll0_early_div,   1,  192, 15625),
 	F(   7372800, gpll0_early_div,   1,  384, 15625),
 	F(  14745600, gpll0_early_div,   1,  768, 15625),
 	F(  16000000, gpll0_early_div,   1,    4,    75),
+=======
+	F(   3686400, gpll0_out_main,    1,   96, 15625),
+	F(   7372800, gpll0_out_main,    1,  192, 15625),
+	F(  14745600, gpll0_out_main,    1,  384, 15625),
+	F(  16000000, gpll0_out_main,    5,    2,    15),
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	F(  19200000,    cxo_clk_src,    1,    0,     0),
 	F(  24000000, gpll0_out_main,    5,    1,     5),
 	F(  32000000, gpll0_out_main,    1,    4,    75),
@@ -2734,8 +2751,11 @@ static int msm_gcc_8998_probe(struct platform_device *pdev)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	gpll0_early_div.c.rate = 300000000;
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	ret = enable_rpm_scaling();
 	if (ret < 0)
 		return ret;

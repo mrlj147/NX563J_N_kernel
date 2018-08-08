@@ -246,7 +246,10 @@ enum power_supply_property {
 	POWER_SUPPLY_PROP_DIE_HEALTH,
 	POWER_SUPPLY_PROP_CONNECTOR_HEALTH,
 	POWER_SUPPLY_PROP_CTM_CURRENT_MAX,
+<<<<<<< HEAD
 	POWER_SUPPLY_PROP_HW_CURRENT_MAX,
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* Local extensions of type int64_t */
 	POWER_SUPPLY_PROP_CHARGE_COUNTER_EXT,
 	/* Properties of type `const char *' */

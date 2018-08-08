@@ -2148,14 +2148,22 @@ static int mdss_mdp_cmd_wait4pingpong(struct mdss_mdp_ctl *ctl, void *arg)
 			MDSS_XLOG(0xbad);
 			MDSS_XLOG_TOUT_HANDLER("mdp", "dsi0_ctrl", "dsi0_phy",
 				"dsi1_ctrl", "dsi1_phy", "vbif", "vbif_nrt",
+<<<<<<< HEAD
 				"dbg_bus", "vbif_dbg_bus",
 				"dsi_dbg_bus", "panic");
+=======
+				"dbg_bus", "vbif_dbg_bus", "panic");
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		} else if (ctx->pp_timeout_report_cnt == MAX_RECOVERY_TRIALS) {
 			MDSS_XLOG(0xbad2);
 			MDSS_XLOG_TOUT_HANDLER("mdp", "dsi0_ctrl", "dsi0_phy",
 				"dsi1_ctrl", "dsi1_phy", "vbif", "vbif_nrt",
+<<<<<<< HEAD
 				"dbg_bus", "vbif_dbg_bus",
 				"dsi_dbg_bus", "panic");
+=======
+				"dbg_bus", "vbif_dbg_bus", "panic");
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			mdss_fb_report_panel_dead(ctl->mfd);
 		}
 		ctx->pp_timeout_report_cnt++;

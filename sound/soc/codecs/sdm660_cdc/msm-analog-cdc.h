@@ -144,9 +144,12 @@ struct sdm660_cdc_regulator {
 struct on_demand_supply {
 	struct regulator *supply;
 	atomic_t ref;
+<<<<<<< HEAD
 	int min_uv;
 	int max_uv;
 	int optimum_ua;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 struct wcd_imped_i_ref {

@@ -76,9 +76,13 @@
 				| DIAG_CON_LPASS | DIAG_CON_WCNSS \
 				| DIAG_CON_SENSORS | DIAG_CON_WDSP \
 				| DIAG_CON_CDSP)
+<<<<<<< HEAD
 #define DIAG_CON_UPD_ALL	(DIAG_CON_UPD_WLAN \
 				| DIAG_CON_UPD_AUDIO \
 				| DIAG_CON_UPD_SENSORS)
+=======
+#define DIAG_CON_UPD_ALL	(DIAG_CON_UPD_WLAN)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 #define DIAG_STM_MODEM	0x01
 #define DIAG_STM_LPASS	0x02
@@ -224,10 +228,13 @@
 #define DIAG_ID_APPS		1
 #define DIAG_ID_MPSS		2
 #define DIAG_ID_WLAN		3
+<<<<<<< HEAD
 #define DIAG_ID_LPASS		4
 #define DIAG_ID_CDSP		5
 #define DIAG_ID_AUDIO		6
 #define DIAG_ID_SENSORS		7
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 /* Number of sessions possible in Memory Device Mode. +1 for Apps data */
 #define NUM_MD_SESSIONS		(NUM_PERIPHERALS \
@@ -509,7 +516,10 @@ struct diagchar_dev {
 	int supports_separate_cmdrsp;
 	int supports_apps_hdlc_encoding;
 	int supports_apps_header_untagging;
+<<<<<<< HEAD
 	int peripheral_untag[NUM_PERIPHERALS];
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	int supports_sockets;
 	/* The state requested in the STM command */
 	int stm_state_requested[NUM_STM_PROCESSORS];
@@ -604,6 +614,7 @@ struct diagchar_dev {
 	int in_busy_dcipktdata;
 	int logging_mode;
 	int logging_mask;
+<<<<<<< HEAD
 	int pd_logging_mode[NUM_UPD];
 	int pd_session_clear[NUM_UPD];
 	int num_pd_session;
@@ -613,6 +624,12 @@ struct diagchar_dev {
 	int upd_len_1_b[NUM_PERIPHERALS];
 	int upd_len_2_a;
 	int upd_len_2_b;
+=======
+	int pd_logging_mode;
+	int num_pd_session;
+	int cpd_len_1;
+	int cpd_len_2;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	int mask_check;
 	uint32_t md_session_mask;
 	uint8_t md_session_mode;

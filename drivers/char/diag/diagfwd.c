@@ -38,7 +38,10 @@
 #include "diag_masks.h"
 #include "diag_usb.h"
 #include "diag_mux.h"
+<<<<<<< HEAD
 #include "diag_ipc_logging.h"
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 #define STM_CMD_VERSION_OFFSET	4
 #define STM_CMD_MASK_OFFSET	5
@@ -261,13 +264,22 @@ static void pack_rsp_and_send(unsigned char *buf, int len,
 
 	if (info && info->peripheral_mask) {
 		if (info->peripheral_mask == DIAG_CON_ALL ||
+<<<<<<< HEAD
 			(info->peripheral_mask & (1 << APPS_DATA)) ||
 			(info->peripheral_mask & (1 << PERIPHERAL_MODEM))) {
+=======
+		(info->peripheral_mask & (1 << APPS_DATA)) ||
+		(info->peripheral_mask & (1 << PERIPHERAL_MODEM))) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			rsp_ctxt = SET_BUF_CTXT(APPS_DATA, TYPE_CMD, 1);
 		} else {
 			for (i = 0; i <= NUM_PERIPHERALS; i++) {
 				if (info->peripheral_mask & (1 << i))
+<<<<<<< HEAD
 					break;
+=======
+				break;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			}
 			rsp_ctxt = SET_BUF_CTXT(i, TYPE_CMD, 1);
 		}
@@ -345,6 +357,7 @@ static void encode_rsp_and_send(unsigned char *buf, int len,
 
 	if (info && info->peripheral_mask) {
 		if (info->peripheral_mask == DIAG_CON_ALL ||
+<<<<<<< HEAD
 			(info->peripheral_mask & (1 << APPS_DATA)) ||
 			(info->peripheral_mask & (1 << PERIPHERAL_MODEM))) {
 			rsp_ctxt = SET_BUF_CTXT(APPS_DATA, TYPE_CMD, 1);
@@ -354,6 +367,17 @@ static void encode_rsp_and_send(unsigned char *buf, int len,
 					break;
 			}
 			rsp_ctxt = SET_BUF_CTXT(i, TYPE_CMD, 1);
+=======
+		(info->peripheral_mask & (1 << APPS_DATA)) ||
+		(info->peripheral_mask & (1 << PERIPHERAL_MODEM))) {
+			rsp_ctxt = SET_BUF_CTXT(APPS_DATA, TYPE_CMD, 1);
+		} else {
+			for (i = 0; i <= NUM_PERIPHERALS; i++) {
+			if (info->peripheral_mask & (1 << i))
+			break;
+		}
+		rsp_ctxt = SET_BUF_CTXT(i, TYPE_CMD, 1);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		}
 	} else
 		rsp_ctxt = driver->rsp_buf_ctxt;
@@ -1029,6 +1053,23 @@ int diag_process_apps_pkt(unsigned char *buf, int len,
 		/* Not required, represents that command isnt sent to modem */
 		return 0;
 	}
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NUBIA_DIAG_REBOOT_CMD
+    	/* Check for reboot command */
+	else if (chk_apps_master() && (*buf == 0x29) && (*(buf+1) == 0x02) && (*(buf+2) == 0x00)) {
+		/* send response back */
+		//driver->apps_rsp_buf[0] = *buf;
+		memcpy(driver->apps_rsp_buf,buf,3);
+		diag_send_rsp(driver->apps_rsp_buf, 1, info);
+		msleep(5000);
+		printk(KERN_CRIT "diag: reboot set, Rebooting SoC..\n");
+		kernel_restart(NULL);
+		/* Not required, represents that command isnt sent to modem */
+		return 0;
+	}
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* Check for polling for Apps only DIAG */
 	else if ((*buf == 0x4b) && (*(buf+1) == 0x32) &&
 		(*(buf+2) == 0x03)) {
@@ -1601,8 +1642,11 @@ int diagfwd_init(void)
 	driver->supports_separate_cmdrsp = 1;
 	driver->supports_apps_hdlc_encoding = 1;
 	driver->supports_apps_header_untagging = 1;
+<<<<<<< HEAD
 	for (i = 0; i < NUM_PERIPHERALS; i++)
 		driver->peripheral_untag[i] = 0;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	mutex_init(&driver->diag_hdlc_mutex);
 	mutex_init(&driver->diag_cntl_mutex);
 	mutex_init(&driver->mode_lock);

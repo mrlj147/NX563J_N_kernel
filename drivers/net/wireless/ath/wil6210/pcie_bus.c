@@ -26,10 +26,13 @@ static bool use_msi = true;
 module_param(use_msi, bool, 0444);
 MODULE_PARM_DESC(use_msi, " Use MSI interrupt, default - true");
 
+<<<<<<< HEAD
 static bool ftm_mode;
 module_param(ftm_mode, bool, 0444);
 MODULE_PARM_DESC(ftm_mode, " Set factory test mode, default - false");
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #ifdef CONFIG_PM
 #ifdef CONFIG_PM_SLEEP
 static int wil6210_pm_notify(struct notifier_block *notify_block,
@@ -40,15 +43,22 @@ static int wil6210_pm_notify(struct notifier_block *notify_block,
 static
 void wil_set_capabilities(struct wil6210_priv *wil)
 {
+<<<<<<< HEAD
 	const char *wil_fw_name;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	u32 jtag_id = wil_r(wil, RGF_USER_JTAG_DEV_ID);
 	u8 chip_revision = (wil_r(wil, RGF_USER_REVISION_ID) &
 			    RGF_USER_REVISION_ID_MASK);
 
 	bitmap_zero(wil->hw_capabilities, hw_capability_last);
 	bitmap_zero(wil->fw_capabilities, WMI_FW_CAPABILITY_MAX);
+<<<<<<< HEAD
 	wil->wil_fw_name = ftm_mode ? WIL_FW_NAME_FTM_DEFAULT :
 			   WIL_FW_NAME_DEFAULT;
+=======
+	wil->wil_fw_name = WIL_FW_NAME_DEFAULT;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	wil->chip_revision = chip_revision;
 
 	switch (jtag_id) {
@@ -57,11 +67,17 @@ void wil_set_capabilities(struct wil6210_priv *wil)
 		case REVISION_ID_SPARROW_D0:
 			wil->hw_name = "Sparrow D0";
 			wil->hw_version = HW_VER_SPARROW_D0;
+<<<<<<< HEAD
 			wil_fw_name = ftm_mode ? WIL_FW_NAME_FTM_SPARROW_PLUS :
 				      WIL_FW_NAME_SPARROW_PLUS;
 
 			if (wil_fw_verify_file_exists(wil, wil_fw_name))
 				wil->wil_fw_name = wil_fw_name;
+=======
+			if (wil_fw_verify_file_exists(wil,
+						      WIL_FW_NAME_SPARROW_PLUS))
+				wil->wil_fw_name = WIL_FW_NAME_SPARROW_PLUS;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			break;
 		case REVISION_ID_SPARROW_B0:
 			wil->hw_name = "Sparrow B0";

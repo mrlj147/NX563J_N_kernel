@@ -587,6 +587,12 @@ enum {
 #define EN_LEGACY_CABLE_DETECTION_BIT		BIT(1)
 #define ALLOW_PD_DRING_UFP_TCCDB_BIT		BIT(0)
 
+<<<<<<< HEAD
+=======
+#define HVDCP_PULSE_COUNT_MAX			(USBIN_BASE + 0x5B)
+#define HVDCP_DEFAULT_VALUE			0x54
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define USBIN_ADAPTER_ALLOW_CFG_REG		(USBIN_BASE + 0x60)
 #define USBIN_ADAPTER_ALLOW_MASK		GENMASK(3, 0)
 enum {
@@ -628,6 +634,10 @@ enum {
 
 #define USBIN_LOAD_CFG_REG			(USBIN_BASE + 0x65)
 #define USBIN_OV_CH_LOAD_OPTION_BIT		BIT(7)
+<<<<<<< HEAD
+=======
+#define USBIN_INPUT_COLLAPSE			GENMASK(1, 0)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define ICL_OVERRIDE_AFTER_APSD_BIT		BIT(4)
 
 #define USBIN_ICL_OPTIONS_REG			(USBIN_BASE + 0x66)
@@ -919,7 +929,10 @@ enum {
 
 #define MISC_CFG_REG				(MISC_BASE + 0x52)
 #define GSM_PA_ON_ADJ_SEL_BIT			BIT(0)
+<<<<<<< HEAD
 #define STAT_PARALLEL_1400MA_EN_CFG_BIT		BIT(3)
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define TCC_DEBOUNCE_20MS_BIT			BIT(5)
 
 #define SNARL_BARK_BITE_WD_CFG_REG		(MISC_BASE + 0x53)
@@ -1020,11 +1033,21 @@ enum {
 #define CFG_BUCKBOOST_FREQ_SELECT_BUCK_REG	(MISC_BASE + 0xA0)
 #define CFG_BUCKBOOST_FREQ_SELECT_BOOST_REG	(MISC_BASE + 0xA1)
 
+<<<<<<< HEAD
 #define TM_IO_DTEST4_SEL			(MISC_BASE + 0xE9)
+=======
+#if defined(CONFIG_NUBIA_CHARGE_FEATURE)
+#define TADC_CONV_REQ				0x3651
+#define TADC_CONV_CMD_CFG_BIT		BIT(2)
+#define TADC_EN_CTL					0x3646
+#define TADC_EN_CTL_CFG_BIT			BIT(7)
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 /* CHGR FREQ Peripheral registers */
 #define FREQ_CLK_DIV_REG			(CHGR_FREQ_BASE + 0x50)
 
+<<<<<<< HEAD
 /* SMB1355 specific registers */
 #define SMB1355_TEMP_COMP_STATUS_REG		(MISC_BASE + 0x07)
 #define SKIN_TEMP_RST_HOT_BIT			BIT(6)
@@ -1035,4 +1058,6 @@ enum {
 #define DIE_TEMP_UB_HOT_BIT			BIT(1)
 #define DIE_TEMP_LB_HOT_BIT			BIT(0)
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #endif /* __SMB2_CHARGER_REG_H */

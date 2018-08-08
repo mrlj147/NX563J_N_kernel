@@ -397,10 +397,13 @@ static uint32_t diag_translate_kernel_to_user_mask(uint32_t peripheral_mask)
 		ret |= DIAG_CON_CDSP;
 	if (peripheral_mask & MD_PERIPHERAL_MASK(UPD_WLAN))
 		ret |= DIAG_CON_UPD_WLAN;
+<<<<<<< HEAD
 	if (peripheral_mask & MD_PERIPHERAL_MASK(UPD_AUDIO))
 		ret |= DIAG_CON_UPD_AUDIO;
 	if (peripheral_mask & MD_PERIPHERAL_MASK(UPD_SENSORS))
 		ret |= DIAG_CON_UPD_SENSORS;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return ret;
 }
 int diag_mask_param(void)
@@ -430,8 +433,13 @@ void diag_clear_masks(struct diag_md_session_t *info)
 
 static void diag_close_logging_process(const int pid)
 {
+<<<<<<< HEAD
 	int i, j;
 	int session_mask;
+=======
+	int i;
+	int session_peripheral_mask;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	struct diag_md_session_t *session_info = NULL;
 	struct diag_logging_mode_param_t params;
 
@@ -447,17 +455,26 @@ static void diag_close_logging_process(const int pid)
 	mutex_unlock(&driver->diag_maskclear_mutex);
 
 	mutex_lock(&driver->diagchar_mutex);
+<<<<<<< HEAD
 
 	session_mask = session_info->peripheral_mask;
 	diag_md_session_close(session_info);
 
 	for (i = 0; i < NUM_MD_SESSIONS; i++)
 		if (MD_PERIPHERAL_MASK(i) & session_mask)
+=======
+	session_peripheral_mask = session_info->peripheral_mask;
+	diag_md_session_close(session_info);
+	mutex_unlock(&driver->diagchar_mutex);
+	for (i = 0; i < NUM_MD_SESSIONS; i++)
+		if (MD_PERIPHERAL_MASK(i) & session_peripheral_mask)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			diag_mux_close_peripheral(DIAG_LOCAL_PROC, i);
 
 	params.req_mode = USB_MODE;
 	params.mode_param = 0;
 	params.peripheral_mask =
+<<<<<<< HEAD
 		diag_translate_kernel_to_user_mask(session_mask);
 
 	for (i = UPD_WLAN; i < NUM_MD_SESSIONS; i++) {
@@ -475,6 +492,19 @@ static void diag_close_logging_process(const int pid)
 
 	diag_switch_logging(&params);
 
+=======
+		diag_translate_kernel_to_user_mask(session_peripheral_mask);
+	if (driver->pd_logging_mode)
+		params.pd_mask =
+		diag_translate_kernel_to_user_mask(session_peripheral_mask);
+
+	if (session_peripheral_mask & MD_PERIPHERAL_MASK(UPD_WLAN)) {
+		driver->pd_logging_mode--;
+		driver->num_pd_session--;
+	}
+	mutex_lock(&driver->diagchar_mutex);
+	diag_switch_logging(&params);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	mutex_unlock(&driver->diagchar_mutex);
 }
 
@@ -1573,22 +1603,32 @@ static uint32_t diag_translate_mask(uint32_t peripheral_mask)
 		ret |= (1 << PERIPHERAL_CDSP);
 	if (peripheral_mask & DIAG_CON_UPD_WLAN)
 		ret |= (1 << UPD_WLAN);
+<<<<<<< HEAD
 	if (peripheral_mask & DIAG_CON_UPD_AUDIO)
 		ret |= (1 << UPD_AUDIO);
 	if (peripheral_mask & DIAG_CON_UPD_SENSORS)
 		ret |= (1 << UPD_SENSORS);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	return ret;
 }
 
 static int diag_switch_logging(struct diag_logging_mode_param_t *param)
 {
+<<<<<<< HEAD
 	int new_mode, i;
+=======
+	int new_mode;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	int curr_mode;
 	int err = 0;
 	uint8_t do_switch = 1;
 	uint32_t peripheral_mask = 0;
+<<<<<<< HEAD
 	uint8_t peripheral, upd;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	if (!param)
 		return -EINVAL;
@@ -1599,6 +1639,7 @@ static int diag_switch_logging(struct diag_logging_mode_param_t *param)
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	if (param->pd_mask) {
 		switch (param->pd_mask) {
 		case DIAG_CON_UPD_WLAN:
@@ -1621,6 +1662,12 @@ static int diag_switch_logging(struct diag_logging_mode_param_t *param)
 
 		if (driver->md_session_map[peripheral] &&
 			(MD_PERIPHERAL_MASK(peripheral) &
+=======
+	switch (param->pd_mask) {
+	case DIAG_CON_UPD_WLAN:
+		if (driver->md_session_map[PERIPHERAL_MODEM] &&
+			(MD_PERIPHERAL_MASK(PERIPHERAL_MODEM) &
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			diag_mux->mux_mask)) {
 			DIAG_LOG(DIAG_DEBUG_USERSPACE,
 			"diag_fr: User PD is already logging onto active peripheral logging\n");
@@ -1629,6 +1676,7 @@ static int diag_switch_logging(struct diag_logging_mode_param_t *param)
 		peripheral_mask =
 			diag_translate_mask(param->pd_mask);
 		param->peripheral_mask = peripheral_mask;
+<<<<<<< HEAD
 		i = upd - UPD_WLAN;
 		if (!driver->pd_session_clear[i]) {
 			driver->pd_logging_mode[i] = 1;
@@ -1639,6 +1687,17 @@ static int diag_switch_logging(struct diag_logging_mode_param_t *param)
 		peripheral_mask =
 			diag_translate_mask(param->peripheral_mask);
 		param->peripheral_mask = peripheral_mask;
+=======
+		driver->pd_logging_mode++;
+		driver->num_pd_session++;
+		break;
+
+	default:
+		peripheral_mask =
+			diag_translate_mask(param->peripheral_mask);
+		param->peripheral_mask = peripheral_mask;
+		break;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 
 	switch (param->req_mode) {
@@ -1980,6 +2039,7 @@ static int diag_ioctl_hdlc_toggle(unsigned long ioarg)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int diag_ioctl_query_pd_logging(struct diag_logging_mode_param_t *param)
 {
 	int ret = -EINVAL;
@@ -2010,6 +2070,11 @@ static int diag_ioctl_query_pd_logging(struct diag_logging_mode_param_t *param)
 		"Invalid pd mask, returning EINVAL\n");
 		return -EINVAL;
 	}
+=======
+static int diag_ioctl_query_pd_logging(unsigned long ioarg)
+{
+	int ret = -EINVAL;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	DIAG_LOG(DIAG_DEBUG_USERSPACE,
 	"diag: %s: Untagging support on APPS is %s\n", __func__,
@@ -2017,6 +2082,7 @@ static int diag_ioctl_query_pd_logging(struct diag_logging_mode_param_t *param)
 	"present" : "absent"));
 
 	DIAG_LOG(DIAG_DEBUG_USERSPACE,
+<<<<<<< HEAD
 	"diag: %s: Tagging support on %s is %s\n",
 	__func__, p_str,
 	(driver->feature[peripheral].untag_header ?
@@ -2024,6 +2090,14 @@ static int diag_ioctl_query_pd_logging(struct diag_logging_mode_param_t *param)
 
 	if (driver->supports_apps_header_untagging &&
 		driver->feature[peripheral].untag_header)
+=======
+	"diag: %s: Tagging support on MODEM is %s\n", __func__,
+	(driver->feature[PERIPHERAL_MODEM].untag_header ?
+	"present" : "absent"));
+
+	if (driver->supports_apps_header_untagging &&
+		driver->feature[PERIPHERAL_MODEM].untag_header)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		ret = 0;
 
 	return ret;
@@ -2269,10 +2343,14 @@ long diagchar_compat_ioctl(struct file *filp,
 		result = diag_ioctl_hdlc_toggle(ioarg);
 		break;
 	case DIAG_IOCTL_QUERY_PD_LOGGING:
+<<<<<<< HEAD
 		if (copy_from_user((void *)&mode_param, (void __user *)ioarg,
 				   sizeof(mode_param)))
 			return -EFAULT;
 		result = diag_ioctl_query_pd_logging(&mode_param);
+=======
+		result = diag_ioctl_query_pd_logging(ioarg);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		break;
 	}
 	return result;
@@ -2398,10 +2476,14 @@ long diagchar_ioctl(struct file *filp,
 		result = diag_ioctl_hdlc_toggle(ioarg);
 		break;
 	case DIAG_IOCTL_QUERY_PD_LOGGING:
+<<<<<<< HEAD
 		if (copy_from_user((void *)&mode_param, (void __user *)ioarg,
 				   sizeof(mode_param)))
 			return -EFAULT;
 		result = diag_ioctl_query_pd_logging(&mode_param);
+=======
+		result = diag_ioctl_query_pd_logging(ioarg);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		break;
 	}
 	return result;
@@ -3543,10 +3625,14 @@ static int __init diagchar_init(void)
 			poolsize_usb_apps + 1 + (NUM_PERIPHERALS * 6));
 	driver->num_clients = max_clients;
 	driver->logging_mode = DIAG_USB_MODE;
+<<<<<<< HEAD
 	for (i = 0; i < NUM_UPD; i++) {
 		driver->pd_logging_mode[i] = 0;
 		driver->pd_session_clear[i] = 0;
 	}
+=======
+	driver->pd_logging_mode = 0;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	driver->num_pd_session = 0;
 	driver->mask_check = 0;
 	driver->in_busy_pktdata = 0;

@@ -763,13 +763,21 @@ static int __init_or_module do_one_initcall_debug(initcall_t fn)
 	unsigned long long duration;
 	int ret;
 
+<<<<<<< HEAD
 	printk(KERN_DEBUG "calling  %pF @ %i\n", fn, task_pid_nr(current));
+=======
+	printk("calling  %pF @ %i\n", fn, task_pid_nr(current));
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	calltime = ktime_get();
 	ret = fn();
 	rettime = ktime_get();
 	delta = ktime_sub(rettime, calltime);
 	duration = (unsigned long long) ktime_to_ns(delta) >> 10;
+<<<<<<< HEAD
 	printk(KERN_DEBUG "initcall %pF returned %d after %lld usecs\n",
+=======
+	printk("initcall %pF returned %d after %lld usecs\n",
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		 fn, ret, duration);
 
 	return ret;

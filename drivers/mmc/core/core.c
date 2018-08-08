@@ -2122,7 +2122,10 @@ int mmc_try_claim_host(struct mmc_host *host, unsigned int delay_ms)
 	int claimed_host = 0;
 	unsigned long flags;
 	int retry_cnt = delay_ms/10;
+<<<<<<< HEAD
 	bool pm = false;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	do {
 		spin_lock_irqsave(&host->lock, flags);
@@ -2131,17 +2134,23 @@ int mmc_try_claim_host(struct mmc_host *host, unsigned int delay_ms)
 			host->claimer = current;
 			host->claim_cnt += 1;
 			claimed_host = 1;
+<<<<<<< HEAD
 			if (host->claim_cnt == 1)
 				pm = true;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		}
 		spin_unlock_irqrestore(&host->lock, flags);
 		if (!claimed_host)
 			mmc_delay(10);
 	} while (!claimed_host && retry_cnt--);
+<<<<<<< HEAD
 
 	if (pm)
 		pm_runtime_get_sync(mmc_dev(host));
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (host->ops->enable && claimed_host && host->claim_cnt == 1)
 		host->ops->enable(host);
 	return claimed_host;

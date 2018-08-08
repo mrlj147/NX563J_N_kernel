@@ -19,7 +19,10 @@
 #include <linux/percpu.h>
 #include <linux/profile.h>
 #include <linux/sched.h>
+<<<<<<< HEAD
 #include <linux/timer.h>
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #include <linux/module.h>
 #include <linux/irq_work.h>
 #include <linux/posix-timers.h>
@@ -810,11 +813,14 @@ static void __tick_nohz_idle_enter(struct tick_sched *ts)
 
 	now = tick_nohz_start_idle(ts);
 
+<<<<<<< HEAD
 #ifdef CONFIG_SMP
 	if (check_pending_deferrable_timers(cpu))
 		raise_softirq_irqoff(TIMER_SOFTIRQ);
 #endif
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (can_stop_idle_tick(cpu, ts)) {
 		int was_stopped = ts->tick_stopped;
 

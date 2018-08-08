@@ -259,6 +259,11 @@ static ssize_t regmap_map_read_file(struct file *file, char __user *user_buf,
 				   count, ppos);
 }
 
+<<<<<<< HEAD
+=======
+#define REGMAP_ALLOW_QACT_READ //added by nubia, for qact read regmap
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #ifdef CONFIG_REGMAP_ALLOW_WRITE_DEBUGFS
 /*
  * This can be dangerous especially when we have clients such as
@@ -661,6 +666,15 @@ void regmap_debugfs_init(struct regmap *map, const char *name)
 		registers_mode = 0400;
 #endif
 
+<<<<<<< HEAD
+=======
+//added by nubia, for qact read regmap, begin
+#ifdef REGMAP_ALLOW_QACT_READ
+		registers_mode = 0606;
+#endif
+//added by nubia, for qact read regmap, end
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		debugfs_create_file("registers", registers_mode, map->debugfs,
 				    map, &regmap_map_fops);
 

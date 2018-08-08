@@ -31,8 +31,11 @@
 #define FG_MEM_INFO_PMI8998		0x0D
 
 /* SRAM address and offset in ascending order */
+<<<<<<< HEAD
 #define ESR_PULSE_THRESH_WORD		2
 #define ESR_PULSE_THRESH_OFFSET		3
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define SLOPE_LIMIT_WORD		3
 #define SLOPE_LIMIT_OFFSET		0
 #define CUTOFF_VOLT_WORD		5
@@ -47,14 +50,20 @@
 #define ESR_UPD_TIGHT_LOW_TEMP_OFFSET	2
 #define ESR_UPD_BROAD_LOW_TEMP_OFFSET	3
 #define KI_COEFF_MED_DISCHG_WORD	9
+<<<<<<< HEAD
 #define TIMEBASE_OFFSET			1
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define KI_COEFF_MED_DISCHG_OFFSET	3
 #define KI_COEFF_HI_DISCHG_WORD		10
 #define KI_COEFF_HI_DISCHG_OFFSET	0
 #define KI_COEFF_LOW_DISCHG_WORD	10
 #define KI_COEFF_LOW_DISCHG_OFFSET	2
+<<<<<<< HEAD
 #define KI_COEFF_FULL_SOC_WORD		12
 #define KI_COEFF_FULL_SOC_OFFSET	2
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define DELTA_MSOC_THR_WORD		12
 #define DELTA_MSOC_THR_OFFSET		3
 #define DELTA_BSOC_THR_WORD		13
@@ -131,7 +140,10 @@
 #define RECHARGE_SOC_THR_v2_WORD	14
 #define RECHARGE_SOC_THR_v2_OFFSET	1
 #define CHG_TERM_CURR_v2_WORD		15
+<<<<<<< HEAD
 #define CHG_TERM_BASE_CURR_v2_OFFSET	0
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define CHG_TERM_CURR_v2_OFFSET		1
 #define EMPTY_VOLT_v2_WORD		15
 #define EMPTY_VOLT_v2_OFFSET		3
@@ -222,17 +234,23 @@ static struct fg_sram_param pmi8998_v1_sram_params[] = {
 		ESR_TIMER_CHG_MAX_OFFSET, 2, 1, 1, 0, fg_encode_default, NULL),
 	PARAM(ESR_TIMER_CHG_INIT, ESR_TIMER_CHG_INIT_WORD,
 		ESR_TIMER_CHG_INIT_OFFSET, 2, 1, 1, 0, fg_encode_default, NULL),
+<<<<<<< HEAD
 	PARAM(ESR_PULSE_THRESH, ESR_PULSE_THRESH_WORD, ESR_PULSE_THRESH_OFFSET,
 		1, 100000, 390625, 0, fg_encode_default, NULL),
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	PARAM(KI_COEFF_MED_DISCHG, KI_COEFF_MED_DISCHG_WORD,
 		KI_COEFF_MED_DISCHG_OFFSET, 1, 1000, 244141, 0,
 		fg_encode_default, NULL),
 	PARAM(KI_COEFF_HI_DISCHG, KI_COEFF_HI_DISCHG_WORD,
 		KI_COEFF_HI_DISCHG_OFFSET, 1, 1000, 244141, 0,
 		fg_encode_default, NULL),
+<<<<<<< HEAD
 	PARAM(KI_COEFF_FULL_SOC, KI_COEFF_FULL_SOC_WORD,
 		KI_COEFF_FULL_SOC_OFFSET, 1, 1000, 244141, 0,
 		fg_encode_default, NULL),
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	PARAM(ESR_TIGHT_FILTER, ESR_FILTER_WORD, ESR_UPD_TIGHT_OFFSET,
 		1, 512, 1000000, 0, fg_encode_default, NULL),
 	PARAM(ESR_BROAD_FILTER, ESR_FILTER_WORD, ESR_UPD_BROAD_OFFSET,
@@ -262,8 +280,11 @@ static struct fg_sram_param pmi8998_v2_sram_params[] = {
 		fg_decode_cc_soc),
 	PARAM(ACT_BATT_CAP, ACT_BATT_CAP_BKUP_WORD, ACT_BATT_CAP_BKUP_OFFSET, 2,
 		1, 1, 0, NULL, fg_decode_default),
+<<<<<<< HEAD
 	PARAM(TIMEBASE, KI_COEFF_MED_DISCHG_WORD, TIMEBASE_OFFSET, 2, 1000,
 		61000, 0, fg_encode_default, NULL),
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* Entries below here are configurable during initialization */
 	PARAM(CUTOFF_VOLT, CUTOFF_VOLT_WORD, CUTOFF_VOLT_OFFSET, 2, 1000000,
 		244141, 0, fg_encode_voltage, NULL),
@@ -279,9 +300,12 @@ static struct fg_sram_param pmi8998_v2_sram_params[] = {
 		1000000, 122070, 0, fg_encode_current, NULL),
 	PARAM(CHG_TERM_CURR, CHG_TERM_CURR_v2_WORD, CHG_TERM_CURR_v2_OFFSET, 1,
 		100000, 390625, 0, fg_encode_current, NULL),
+<<<<<<< HEAD
 	PARAM(CHG_TERM_BASE_CURR, CHG_TERM_CURR_v2_WORD,
 		CHG_TERM_BASE_CURR_v2_OFFSET, 1, 1024, 1000, 0,
 		fg_encode_current, NULL),
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	PARAM(DELTA_MSOC_THR, DELTA_MSOC_THR_v2_WORD, DELTA_MSOC_THR_v2_OFFSET,
 		1, 2048, 100, 0, fg_encode_default, NULL),
 	PARAM(DELTA_BSOC_THR, DELTA_BSOC_THR_v2_WORD, DELTA_BSOC_THR_v2_OFFSET,
@@ -302,17 +326,23 @@ static struct fg_sram_param pmi8998_v2_sram_params[] = {
 		ESR_TIMER_CHG_MAX_OFFSET, 2, 1, 1, 0, fg_encode_default, NULL),
 	PARAM(ESR_TIMER_CHG_INIT, ESR_TIMER_CHG_INIT_WORD,
 		ESR_TIMER_CHG_INIT_OFFSET, 2, 1, 1, 0, fg_encode_default, NULL),
+<<<<<<< HEAD
 	PARAM(ESR_PULSE_THRESH, ESR_PULSE_THRESH_WORD, ESR_PULSE_THRESH_OFFSET,
 		1, 100000, 390625, 0, fg_encode_default, NULL),
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	PARAM(KI_COEFF_MED_DISCHG, KI_COEFF_MED_DISCHG_v2_WORD,
 		KI_COEFF_MED_DISCHG_v2_OFFSET, 1, 1000, 244141, 0,
 		fg_encode_default, NULL),
 	PARAM(KI_COEFF_HI_DISCHG, KI_COEFF_HI_DISCHG_v2_WORD,
 		KI_COEFF_HI_DISCHG_v2_OFFSET, 1, 1000, 244141, 0,
 		fg_encode_default, NULL),
+<<<<<<< HEAD
 	PARAM(KI_COEFF_FULL_SOC, KI_COEFF_FULL_SOC_WORD,
 		KI_COEFF_FULL_SOC_OFFSET, 1, 1000, 244141, 0,
 		fg_encode_default, NULL),
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	PARAM(ESR_TIGHT_FILTER, ESR_FILTER_WORD, ESR_UPD_TIGHT_OFFSET,
 		1, 512, 1000000, 0, fg_encode_default, NULL),
 	PARAM(ESR_BROAD_FILTER, ESR_FILTER_WORD, ESR_UPD_BROAD_OFFSET,
@@ -1002,6 +1032,7 @@ static inline void get_batt_temp_delta(int delta, u8 *val)
 	};
 }
 
+<<<<<<< HEAD
 static inline void get_esr_meas_current(int curr_ma, u8 *val)
 {
 	switch (curr_ma) {
@@ -1025,6 +1056,8 @@ static inline void get_esr_meas_current(int curr_ma, u8 *val)
 	*val <<= ESR_PULL_DOWN_IVAL_SHIFT;
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static int fg_set_esr_timer(struct fg_chip *chip, int cycles, bool charging,
 				int flags)
 {
@@ -1098,6 +1131,7 @@ static void fg_notify_charger(struct fg_chip *chip)
 	fg_dbg(chip, FG_STATUS, "Notified charger on float voltage and FCC\n");
 }
 
+<<<<<<< HEAD
 static int fg_delta_bsoc_irq_en_cb(struct votable *votable, void *data,
 					int enable, const char *client)
 {
@@ -1117,6 +1151,8 @@ static int fg_delta_bsoc_irq_en_cb(struct votable *votable, void *data,
 	return 0;
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static int fg_awake_cb(struct votable *votable, void *data, int awake,
 			const char *client)
 {
@@ -1497,6 +1533,7 @@ static int fg_adjust_ki_coeff_dischg(struct fg_chip *chip)
 	return 0;
 }
 
+<<<<<<< HEAD
 #define KI_COEFF_FULL_SOC_DEFAULT	733
 static int fg_adjust_ki_coeff_full_soc(struct fg_chip *chip, int batt_temp)
 {
@@ -1528,6 +1565,8 @@ static int fg_adjust_ki_coeff_full_soc(struct fg_chip *chip, int batt_temp)
 	return 0;
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static int fg_set_recharge_voltage(struct fg_chip *chip, int voltage_mv)
 {
 	u8 buf;
@@ -1571,8 +1610,21 @@ static int fg_charge_full_update(struct fg_chip *chip)
 		return 0;
 
 	mutex_lock(&chip->charge_full_lock);
+<<<<<<< HEAD
 	vote(chip->delta_bsoc_irq_en_votable, DELTA_BSOC_IRQ_VOTER,
 		chip->charge_done, 0);
+=======
+	if (!chip->charge_done && chip->bsoc_delta_irq_en) {
+		disable_irq_wake(fg_irqs[BSOC_DELTA_IRQ].irq);
+		disable_irq_nosync(fg_irqs[BSOC_DELTA_IRQ].irq);
+		chip->bsoc_delta_irq_en = false;
+	} else if (chip->charge_done && !chip->bsoc_delta_irq_en) {
+		enable_irq(fg_irqs[BSOC_DELTA_IRQ].irq);
+		enable_irq_wake(fg_irqs[BSOC_DELTA_IRQ].irq);
+		chip->bsoc_delta_irq_en = true;
+	}
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	rc = power_supply_get_property(chip->batt_psy, POWER_SUPPLY_PROP_HEALTH,
 		&prop);
 	if (rc < 0) {
@@ -2112,11 +2164,14 @@ static void status_change_work(struct work_struct *work)
 		if (rc < 0)
 			pr_err("Error in configuring slope limiter rc:%d\n",
 				rc);
+<<<<<<< HEAD
 
 		rc = fg_adjust_ki_coeff_full_soc(chip, batt_temp);
 		if (rc < 0)
 			pr_err("Error in configuring ki_coeff_full_soc rc:%d\n",
 				rc);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 
 	fg_batt_avg_update(chip);
@@ -2269,6 +2324,7 @@ static int fg_get_cycle_count(struct fg_chip *chip)
 	return count;
 }
 
+<<<<<<< HEAD
 static int fg_bp_params_config(struct fg_chip *chip)
 {
 	int rc = 0;
@@ -2298,6 +2354,8 @@ static int fg_bp_params_config(struct fg_chip *chip)
 	return rc;
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define PROFILE_LOAD_BIT	BIT(0)
 #define BOOTLOADER_LOAD_BIT	BIT(1)
 #define BOOTLOADER_RESTART_BIT	BIT(2)
@@ -2318,6 +2376,7 @@ static bool is_profile_load_required(struct fg_chip *chip)
 	/* Check if integrity bit is set */
 	if (val & PROFILE_LOAD_BIT) {
 		fg_dbg(chip, FG_STATUS, "Battery profile integrity bit is set\n");
+<<<<<<< HEAD
 
 		/* Whitelist the values */
 		val &= ~PROFILE_LOAD_BIT;
@@ -2329,6 +2388,8 @@ static bool is_profile_load_required(struct fg_chip *chip)
 			return true;
 		}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		rc = fg_sram_read(chip, PROFILE_LOAD_WORD, PROFILE_LOAD_OFFSET,
 				buf, PROFILE_COMP_LEN, FG_IMA_DEFAULT);
 		if (rc < 0) {
@@ -2476,11 +2537,14 @@ static void profile_load_work(struct work_struct *work)
 	}
 
 done:
+<<<<<<< HEAD
 	rc = fg_bp_params_config(chip);
 	if (rc < 0)
 		pr_err("Error in configuring battery profile params, rc:%d\n",
 			rc);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	rc = fg_sram_read(chip, NOM_CAP_WORD, NOM_CAP_OFFSET, buf, 2,
 			FG_IMA_DEFAULT);
 	if (rc < 0) {
@@ -3132,6 +3196,30 @@ static int fg_hw_init(struct fg_chip *chip)
 		return rc;
 	}
 
+<<<<<<< HEAD
+=======
+	/* This SRAM register is only present in v2.0 and above */
+	if (!(chip->wa_flags & PMI8998_V1_REV_WA) &&
+					chip->bp.float_volt_uv > 0) {
+		fg_encode(chip->sp, FG_SRAM_FLOAT_VOLT,
+			chip->bp.float_volt_uv / 1000, buf);
+		rc = fg_sram_write(chip, chip->sp[FG_SRAM_FLOAT_VOLT].addr_word,
+			chip->sp[FG_SRAM_FLOAT_VOLT].addr_byte, buf,
+			chip->sp[FG_SRAM_FLOAT_VOLT].len, FG_IMA_DEFAULT);
+		if (rc < 0) {
+			pr_err("Error in writing float_volt, rc=%d\n", rc);
+			return rc;
+		}
+	}
+
+	if (chip->bp.vbatt_full_mv > 0) {
+		rc = fg_set_constant_chg_voltage(chip,
+				chip->bp.vbatt_full_mv * 1000);
+		if (rc < 0)
+			return rc;
+	}
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	fg_encode(chip->sp, FG_SRAM_CHG_TERM_CURR, chip->dt.chg_term_curr_ma,
 		buf);
 	rc = fg_sram_write(chip, chip->sp[FG_SRAM_CHG_TERM_CURR].addr_word,
@@ -3152,6 +3240,7 @@ static int fg_hw_init(struct fg_chip *chip)
 		return rc;
 	}
 
+<<<<<<< HEAD
 	if (!(chip->wa_flags & PMI8998_V1_REV_WA)) {
 		fg_encode(chip->sp, FG_SRAM_CHG_TERM_BASE_CURR,
 			chip->dt.chg_term_base_curr_ma, buf);
@@ -3167,6 +3256,8 @@ static int fg_hw_init(struct fg_chip *chip)
 		}
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (chip->dt.vbatt_low_thr_mv > 0) {
 		fg_encode(chip->sp, FG_SRAM_VBATT_LOW,
 			chip->dt.vbatt_low_thr_mv, buf);
@@ -3342,6 +3433,7 @@ static int fg_hw_init(struct fg_chip *chip)
 		return rc;
 	}
 
+<<<<<<< HEAD
 	fg_encode(chip->sp, FG_SRAM_ESR_PULSE_THRESH,
 		chip->dt.esr_pulse_thresh_ma, buf);
 	rc = fg_sram_write(chip, chip->sp[FG_SRAM_ESR_PULSE_THRESH].addr_word,
@@ -3360,6 +3452,8 @@ static int fg_hw_init(struct fg_chip *chip)
 		return rc;
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return 0;
 }
 
@@ -3368,6 +3462,7 @@ static int fg_memif_init(struct fg_chip *chip)
 	return fg_ima_init(chip);
 }
 
+<<<<<<< HEAD
 static int fg_adjust_timebase(struct fg_chip *chip)
 {
 	int rc = 0, die_temp;
@@ -3402,6 +3497,8 @@ static int fg_adjust_timebase(struct fg_chip *chip)
 	return 0;
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /* INTERRUPT HANDLERS STAY HERE */
 
 static irqreturn_t fg_mem_xcp_irq_handler(int irq, void *data)
@@ -3509,10 +3606,13 @@ static irqreturn_t fg_delta_batt_temp_irq_handler(int irq, void *data)
 	if (rc < 0)
 		pr_err("Error in configuring slope limiter rc:%d\n", rc);
 
+<<<<<<< HEAD
 	rc = fg_adjust_ki_coeff_full_soc(chip, batt_temp);
 	if (rc < 0)
 		pr_err("Error in configuring ki_coeff_full_soc rc:%d\n", rc);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (!batt_psy_initialized(chip)) {
 		chip->last_batt_temp = batt_temp;
 		return IRQ_HANDLED;
@@ -3523,10 +3623,13 @@ static irqreturn_t fg_delta_batt_temp_irq_handler(int irq, void *data)
 	chip->health = prop.intval;
 
 	if (chip->last_batt_temp != batt_temp) {
+<<<<<<< HEAD
 		rc = fg_adjust_timebase(chip);
 		if (rc < 0)
 			pr_err("Error in adjusting timebase, rc=%d\n", rc);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		chip->last_batt_temp = batt_temp;
 		power_supply_changed(chip->batt_psy);
 	}
@@ -3596,10 +3699,13 @@ static irqreturn_t fg_delta_msoc_irq_handler(int irq, void *data)
 	if (rc < 0)
 		pr_err("Error in validating ESR, rc=%d\n", rc);
 
+<<<<<<< HEAD
 	rc = fg_adjust_timebase(chip);
 	if (rc < 0)
 		pr_err("Error in adjusting timebase, rc=%d\n", rc);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (batt_psy_initialized(chip))
 		power_supply_changed(chip->batt_psy);
 
@@ -3654,7 +3760,11 @@ static struct fg_irq_info fg_irqs[FG_IRQ_MAX] = {
 	},
 	[MSOC_DELTA_IRQ] = {
 		.name		= "msoc-delta",
+<<<<<<< HEAD
 		.handler	= fg_delta_msoc_irq_handler,
+=======
+		.handler        = fg_delta_msoc_irq_handler,
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		.wakeable	= true,
 	},
 	[BSOC_DELTA_IRQ] = {
@@ -3867,7 +3977,10 @@ static int fg_parse_ki_coefficients(struct fg_chip *chip)
 #define DEFAULT_EMPTY_VOLT_MV		2800
 #define DEFAULT_RECHARGE_VOLT_MV	4250
 #define DEFAULT_CHG_TERM_CURR_MA	100
+<<<<<<< HEAD
 #define DEFAULT_CHG_TERM_BASE_CURR_MA	75
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define DEFAULT_SYS_TERM_CURR_MA	-125
 #define DEFAULT_DELTA_SOC_THR		1
 #define DEFAULT_RECHARGE_SOC_THR	95
@@ -3890,8 +4003,11 @@ static int fg_parse_ki_coefficients(struct fg_chip *chip)
 #define DEFAULT_ESR_TIGHT_LT_FLT_UPCT	48829
 #define DEFAULT_ESR_BROAD_LT_FLT_UPCT	148438
 #define DEFAULT_ESR_CLAMP_MOHMS		20
+<<<<<<< HEAD
 #define DEFAULT_ESR_PULSE_THRESH_MA	110
 #define DEFAULT_ESR_MEAS_CURR_MA	120
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static int fg_parse_dt(struct fg_chip *chip)
 {
 	struct device_node *child, *revid_node, *node = chip->dev->of_node;
@@ -3942,8 +4058,11 @@ static int fg_parse_dt(struct fg_chip *chip)
 		chip->sp = pmi8998_v2_sram_params;
 		chip->alg_flags = pmi8998_v2_alg_flags;
 		chip->use_ima_single_mode = true;
+<<<<<<< HEAD
 		if (chip->pmic_rev_id->fab_id == PM660_FAB_ID_TSMC)
 			chip->wa_flags |= PM660_TSMC_OSC_WA;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		break;
 	default:
 		return -EINVAL;
@@ -4024,12 +4143,15 @@ static int fg_parse_dt(struct fg_chip *chip)
 	else
 		chip->dt.sys_term_curr_ma = temp;
 
+<<<<<<< HEAD
 	rc = of_property_read_u32(node, "qcom,fg-chg-term-base-current", &temp);
 	if (rc < 0)
 		chip->dt.chg_term_base_curr_ma = DEFAULT_CHG_TERM_BASE_CURR_MA;
 	else
 		chip->dt.chg_term_base_curr_ma = temp;
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	rc = of_property_read_u32(node, "qcom,fg-delta-soc-thr", &temp);
 	if (rc < 0)
 		chip->dt.delta_soc_thr = DEFAULT_DELTA_SOC_THR;
@@ -4218,6 +4340,7 @@ static int fg_parse_dt(struct fg_chip *chip)
 	else
 		chip->dt.esr_clamp_mohms = temp;
 
+<<<<<<< HEAD
 	chip->dt.esr_pulse_thresh_ma = DEFAULT_ESR_PULSE_THRESH_MA;
 	rc = of_property_read_u32(node, "qcom,fg-esr-pulse-thresh-ma", &temp);
 	if (!rc) {
@@ -4234,6 +4357,8 @@ static int fg_parse_dt(struct fg_chip *chip)
 			chip->dt.esr_meas_curr_ma = temp;
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return 0;
 }
 
@@ -4244,9 +4369,12 @@ static void fg_cleanup(struct fg_chip *chip)
 	if (chip->awake_votable)
 		destroy_votable(chip->awake_votable);
 
+<<<<<<< HEAD
 	if (chip->delta_bsoc_irq_en_votable)
 		destroy_votable(chip->delta_bsoc_irq_en_votable);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (chip->batt_id_chan)
 		iio_channel_release(chip->batt_id_chan);
 
@@ -4268,7 +4396,10 @@ static int fg_gen3_probe(struct platform_device *pdev)
 	chip->irqs = fg_irqs;
 	chip->charge_status = -EINVAL;
 	chip->prev_charge_status = -EINVAL;
+<<<<<<< HEAD
 	chip->ki_coeff_full_soc = -EINVAL;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	chip->regmap = dev_get_regmap(chip->dev->parent, NULL);
 	if (!chip->regmap) {
 		dev_err(chip->dev, "Parent regmap is unavailable\n");
@@ -4285,6 +4416,7 @@ static int fg_gen3_probe(struct platform_device *pdev)
 		return rc;
 	}
 
+<<<<<<< HEAD
 	rc = of_property_match_string(chip->dev->of_node,
 				"io-channel-names", "rradc_die_temp");
 	if (rc >= 0) {
@@ -4300,10 +4432,13 @@ static int fg_gen3_probe(struct platform_device *pdev)
 		}
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	chip->awake_votable = create_votable("FG_WS", VOTE_SET_ANY, fg_awake_cb,
 					chip);
 	if (IS_ERR(chip->awake_votable)) {
 		rc = PTR_ERR(chip->awake_votable);
+<<<<<<< HEAD
 		goto exit;
 	}
 
@@ -4313,6 +4448,9 @@ static int fg_gen3_probe(struct platform_device *pdev)
 	if (IS_ERR(chip->delta_bsoc_irq_en_votable)) {
 		rc = PTR_ERR(chip->delta_bsoc_irq_en_votable);
 		goto exit;
+=======
+		return rc;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 
 	rc = fg_parse_dt(chip);
@@ -4339,7 +4477,11 @@ static int fg_gen3_probe(struct platform_device *pdev)
 	rc = fg_get_batt_id(chip);
 	if (rc < 0) {
 		pr_err("Error in getting battery id, rc:%d\n", rc);
+<<<<<<< HEAD
 		goto exit;
+=======
+		return rc;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 
 	rc = fg_get_batt_profile(chip);
@@ -4397,7 +4539,15 @@ static int fg_gen3_probe(struct platform_device *pdev)
 		disable_irq_nosync(fg_irqs[SOC_UPDATE_IRQ].irq);
 
 	/* Keep BSOC_DELTA_IRQ irq disabled until we require it */
+<<<<<<< HEAD
 	rerun_election(chip->delta_bsoc_irq_en_votable);
+=======
+	if (fg_irqs[BSOC_DELTA_IRQ].irq) {
+		disable_irq_wake(fg_irqs[BSOC_DELTA_IRQ].irq);
+		disable_irq_nosync(fg_irqs[BSOC_DELTA_IRQ].irq);
+		chip->bsoc_delta_irq_en = false;
+	}
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	rc = fg_debugfs_create(chip);
 	if (rc < 0) {

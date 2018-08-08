@@ -189,6 +189,15 @@ enum msm_flash_cfg_type_t {
 	CFG_FLASH_OFF,
 	CFG_FLASH_LOW,
 	CFG_FLASH_HIGH,
+<<<<<<< HEAD
+=======
+    //ZTEMT: added by congshan for front camera flash start
+	CFG_LCD_BKL_NORM,
+	CFG_LCD_BKL_LOW,
+	CFG_LCD_BKL_HIGH,
+	CFG_LCD_BKL_SET,
+	//ZTEMT: added by congshan for front camera flash end
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 enum msm_ir_led_cfg_type_t {
@@ -249,6 +258,23 @@ struct msm_sensor_i2c_sync_params {
 	unsigned short delay;
 };
 
+<<<<<<< HEAD
+=======
+/*ZTEMT: fengxun add for AL3200--------Start*/
+struct msm_camera_spi_reg_setting{
+	uint16_t opcode;
+	uint32_t size;
+	uint8_t *param;
+};
+
+struct msm_camera_spi_reg_setting32{
+	uint16_t opcode;
+	uint32_t size;
+	uint32_t param;
+};
+/*ZTEMT: fengxun add for AL3200--------End*/
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 struct msm_camera_reg_settings_t {
 	uint16_t reg_addr;
 	enum msm_camera_i2c_reg_addr_type addr_type;

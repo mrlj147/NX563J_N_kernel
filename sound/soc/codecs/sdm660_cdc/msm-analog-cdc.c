@@ -1400,6 +1400,7 @@ static int msm_anlg_cdc_codec_enable_on_demand_supply(
 	}
 	switch (event) {
 	case SND_SOC_DAPM_PRE_PMU:
+<<<<<<< HEAD
 		if (atomic_inc_return(&supply->ref) == 1) {
 			ret = regulator_set_voltage(supply->supply,
 						    supply->min_uv,
@@ -1420,6 +1421,10 @@ static int msm_anlg_cdc_codec_enable_on_demand_supply(
 			}
 			ret = regulator_enable(supply->supply);
 		}
+=======
+		if (atomic_inc_return(&supply->ref) == 1)
+			ret = regulator_enable(supply->supply);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		if (ret)
 			dev_err(codec->dev, "%s: Failed to enable %s\n",
 				__func__,
@@ -1431,12 +1436,17 @@ static int msm_anlg_cdc_codec_enable_on_demand_supply(
 				 __func__, on_demand_supply_name[w->shift]);
 			goto out;
 		}
+<<<<<<< HEAD
 		if (atomic_dec_return(&supply->ref) == 0) {
+=======
+		if (atomic_dec_return(&supply->ref) == 0)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			ret = regulator_disable(supply->supply);
 			if (ret)
 				dev_err(codec->dev, "%s: Failed to disable %s\n",
 					__func__,
 					on_demand_supply_name[w->shift]);
+<<<<<<< HEAD
 			ret = regulator_set_voltage(supply->supply,
 						    0,
 						    supply->max_uv);
@@ -1452,6 +1462,8 @@ static int msm_anlg_cdc_codec_enable_on_demand_supply(
 					"Setting regulator optimum mode(dis) failed for micbias with err = %d\n",
 					ret);
 		}
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		break;
 	default:
 		break;
@@ -3718,6 +3730,7 @@ static struct regulator *msm_anlg_cdc_find_regulator(
 	return NULL;
 }
 
+<<<<<<< HEAD
 static void msm_anlg_cdc_update_micbias_regulator(
 				const struct sdm660_cdc_priv *sdm660_cdc,
 				const char *name,
@@ -3742,6 +3755,8 @@ static void msm_anlg_cdc_update_micbias_regulator(
 	dev_err(sdm660_cdc->dev, "Error: regulator not found:%s\n", name);
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static int msm_anlg_cdc_device_down(struct snd_soc_codec *codec)
 {
 	struct msm_asoc_mach_data *pdata = NULL;
@@ -4185,10 +4200,17 @@ static int msm_anlg_cdc_soc_probe(struct snd_soc_codec *codec)
 
 	wcd9xxx_spmi_set_codec(codec);
 
+<<<<<<< HEAD
 	msm_anlg_cdc_update_micbias_regulator(
 				sdm660_cdc,
 				on_demand_supply_name[ON_DEMAND_MICBIAS],
 				&sdm660_cdc->on_demand_list[ON_DEMAND_MICBIAS]);
+=======
+	sdm660_cdc->on_demand_list[ON_DEMAND_MICBIAS].supply =
+				msm_anlg_cdc_find_regulator(
+				sdm660_cdc,
+				on_demand_supply_name[ON_DEMAND_MICBIAS]);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	atomic_set(&sdm660_cdc->on_demand_list[ON_DEMAND_MICBIAS].ref,
 		   0);
 
@@ -4254,7 +4276,11 @@ static int msm_anlg_cdc_enable_static_supplies_to_optimum(
 		if (pdata->regulator[i].ondemand)
 			continue;
 		if (regulator_count_voltages(
+<<<<<<< HEAD
 				sdm660_cdc->supplies[i].consumer) <= 0)
+=======
+				sdm660_cdc->supplies[i].consumer) <=	0)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			continue;
 
 		ret = regulator_set_voltage(
@@ -4287,7 +4313,11 @@ static int msm_anlg_cdc_disable_static_supplies_to_optimum(
 		if (pdata->regulator[i].ondemand)
 			continue;
 		if (regulator_count_voltages(
+<<<<<<< HEAD
 				sdm660_cdc->supplies[i].consumer) <= 0)
+=======
+				sdm660_cdc->supplies[i].consumer) <=	0)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			continue;
 		regulator_set_voltage(sdm660_cdc->supplies[i].consumer, 0,
 				pdata->regulator[i].max_uv);
@@ -4388,6 +4418,7 @@ static int msm_anlg_cdc_init_supplies(struct sdm660_cdc_priv *sdm660_cdc,
 		if (regulator_count_voltages(
 			sdm660_cdc->supplies[i].consumer) <= 0)
 			continue;
+<<<<<<< HEAD
 		if (pdata->regulator[i].ondemand) {
 			ret = regulator_set_voltage(
 					sdm660_cdc->supplies[i].consumer,
@@ -4410,6 +4441,8 @@ static int msm_anlg_cdc_init_supplies(struct sdm660_cdc_priv *sdm660_cdc,
 				continue;
 			}
 		}
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		ret = regulator_set_voltage(sdm660_cdc->supplies[i].consumer,
 					    pdata->regulator[i].min_uv,
 					    pdata->regulator[i].max_uv);

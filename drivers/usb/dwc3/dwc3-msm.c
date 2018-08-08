@@ -764,7 +764,10 @@ static int dwc3_msm_ep_queue(struct usb_ep *ep,
 	return 0;
 
 err:
+<<<<<<< HEAD
 	list_del(&req_complete->list_item);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	spin_unlock_irqrestore(&dwc->lock, flags);
 	kfree(req_complete);
 	return ret;
@@ -2054,9 +2057,12 @@ static int dwc3_msm_suspend(struct dwc3_msm *mdwc)
 	if (dwc->irq)
 		disable_irq(dwc->irq);
 
+<<<<<<< HEAD
 	if (work_busy(&dwc->bh_work))
 		dbg_event(0xFF, "pend evt", 0);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* disable power event irq, hs and ss phy irq is used as wake up src */
 	disable_irq(mdwc->pwr_event_irq);
 

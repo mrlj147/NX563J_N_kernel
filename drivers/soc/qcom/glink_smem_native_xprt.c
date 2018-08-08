@@ -678,8 +678,12 @@ static void process_rx_data(struct edge_info *einfo, uint16_t cmd_id,
 		err = true;
 	} else if (intent->data == NULL) {
 		if (einfo->intentless) {
+<<<<<<< HEAD
 			intent->data = kmalloc(cmd.frag_size,
 						__GFP_ATOMIC | __GFP_HIGH);
+=======
+			intent->data = kmalloc(cmd.frag_size, GFP_ATOMIC);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			if (!intent->data) {
 				err = true;
 				GLINK_ERR(

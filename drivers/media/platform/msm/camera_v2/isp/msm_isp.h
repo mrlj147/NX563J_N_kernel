@@ -497,7 +497,10 @@ struct msm_vfe_src_info {
 	enum msm_vfe_dual_hw_type dual_hw_type;
 	struct msm_vfe_dual_hw_ms_info dual_hw_ms_info;
 	bool accept_frame;
+<<<<<<< HEAD
 	uint32_t lpm;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 struct msm_vfe_fetch_engine_info {
@@ -600,7 +603,11 @@ struct msm_vfe_tasklet_queue_cmd {
 	struct vfe_device *vfe_dev;
 };
 
+<<<<<<< HEAD
 #define MSM_VFE_TASKLETQ_SIZE 400
+=======
+#define MSM_VFE_TASKLETQ_SIZE 200
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 enum msm_vfe_overflow_state {
 	NO_OVERFLOW,

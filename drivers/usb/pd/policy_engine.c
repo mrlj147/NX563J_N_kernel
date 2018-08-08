@@ -406,7 +406,15 @@ static inline void start_usb_host(struct usbpd *pd, bool ss)
 
 	extcon_set_cable_state_(pd->extcon, EXTCON_USB_CC,
 			cc == ORIENTATION_CC2);
+<<<<<<< HEAD
 	extcon_set_cable_state_(pd->extcon, EXTCON_USB_SPEED, ss);
+=======
+#ifdef CONFIG_NUBIA_USB_MAXIMUM_SPEED_HIGH
+	extcon_set_cable_state_(pd->extcon, EXTCON_USB_SPEED, 0);
+#else
+	extcon_set_cable_state_(pd->extcon, EXTCON_USB_SPEED, ss);
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	extcon_set_cable_state_(pd->extcon, EXTCON_USB_HOST, 1);
 }
 
@@ -421,7 +429,15 @@ static inline void start_usb_peripheral(struct usbpd *pd)
 
 	extcon_set_cable_state_(pd->extcon, EXTCON_USB_CC,
 			cc == ORIENTATION_CC2);
+<<<<<<< HEAD
 	extcon_set_cable_state_(pd->extcon, EXTCON_USB_SPEED, 1);
+=======
+#ifdef CONFIG_NUBIA_USB_MAXIMUM_SPEED_HIGH
+	extcon_set_cable_state_(pd->extcon, EXTCON_USB_SPEED, 0);
+#else
+	extcon_set_cable_state_(pd->extcon, EXTCON_USB_SPEED, 1);
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	extcon_set_cable_state_(pd->extcon, EXTCON_USB, 1);
 }
 

@@ -73,6 +73,7 @@ static int dp_buf_trailing(struct edp_buf *eb)
 	return (int)(eb->end - eb->data);
 }
 
+<<<<<<< HEAD
 static void mdss_dp_aux_clear_hw_interrupts(void __iomem *phy_base)
 {
 	u32 data;
@@ -88,6 +89,8 @@ static void mdss_dp_aux_clear_hw_interrupts(void __iomem *phy_base)
 	wmb();
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /*
  * edp aux dp_buf_add_cmd:
  * NO native and i2c command mix allowed
@@ -138,6 +141,7 @@ static int dp_buf_add_cmd(struct edp_buf *eb, struct edp_cmd *cmd)
 	return cmd->len - 1;
 }
 
+<<<<<<< HEAD
 static int dp_cmd_fifo_tx(struct mdss_dp_drv_pdata *dp)
 {
 	u32 data;
@@ -146,22 +150,37 @@ static int dp_cmd_fifo_tx(struct mdss_dp_drv_pdata *dp)
 	struct edp_buf *tp = &dp->txp;
 	void __iomem *base = dp->base;
 
+=======
+static int dp_cmd_fifo_tx(struct edp_buf *tp, unsigned char *base)
+{
+	u32 data;
+	char *dp;
+	int len, cnt;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	len = tp->len;	/* total byte to cmd fifo */
 	if (len == 0)
 		return 0;
 
 	cnt = 0;
+<<<<<<< HEAD
 	datap = tp->start;
 
 	while (cnt < len) {
 		data = *datap; /* data byte */
+=======
+	dp = tp->start;
+
+	while (cnt < len) {
+		data = *dp; /* data byte */
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		data <<= 8;
 		data &= 0x00ff00; /* index = 0, write */
 		if (cnt == 0)
 			data |= BIT(31);  /* INDEX_WRITE */
 		dp_write(base + DP_AUX_DATA, data);
 		cnt++;
+<<<<<<< HEAD
 		datap++;
 	}
 
@@ -178,6 +197,16 @@ static int dp_cmd_fifo_tx(struct mdss_dp_drv_pdata *dp)
 			data |= BIT(10); /* NO SEND ADDR */
 		if (tp->no_send_stop)
 			data |= BIT(11); /* NO SEND STOP */
+=======
+		dp++;
+	}
+
+	data = (tp->trans_num - 1);
+	if (tp->i2c) {
+		data |= BIT(8); /* I2C */
+		data |= BIT(10); /* NO SEND ADDR */
+		data |= BIT(11); /* NO SEND STOP */
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 
 	data |= BIT(9); /* GO */
@@ -190,7 +219,11 @@ static int dp_cmd_fifo_rx(struct edp_buf *rp, int len, unsigned char *base)
 {
 	u32 data;
 	char *dp;
+<<<<<<< HEAD
 	int i, actual_i;
+=======
+	int i;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	data = 0; /* index = 0 */
 	data |= BIT(31);  /* INDEX_WRITE */
@@ -203,12 +236,16 @@ static int dp_cmd_fifo_rx(struct edp_buf *rp, int len, unsigned char *base)
 	data = dp_read(base + DP_AUX_DATA);
 	for (i = 0; i < len; i++) {
 		data = dp_read(base + DP_AUX_DATA);
+<<<<<<< HEAD
 		*dp++ = (char)((data >> 8) & 0xFF);
 
 		actual_i = (data >> 16) & 0xFF;
 		if (i != actual_i)
 			pr_warn("Index mismatch: expected %d, found %d\n",
 				i, actual_i);
+=======
+		*dp++ = (char)((data >> 8) & 0xff);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 
 	rp->len = len;
@@ -245,6 +282,7 @@ static int dp_aux_write_cmds(struct mdss_dp_drv_pdata *ep,
 
 	reinit_completion(&ep->aux_comp);
 
+<<<<<<< HEAD
 	tp->no_send_addr = true;
 	tp->no_send_stop = true;
 	len = dp_cmd_fifo_tx(ep);
@@ -255,6 +293,11 @@ static int dp_aux_write_cmds(struct mdss_dp_drv_pdata *ep,
 		/* Reset the AUX controller state machine */
 		mdss_dp_aux_reset(&ep->ctrl_io);
 	}
+=======
+	len = dp_cmd_fifo_tx(&ep->txp, ep->base);
+
+	wait_for_completion_timeout(&ep->aux_comp, HZ/4);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	if (ep->aux_error_num == EDP_AUX_ERR_NONE)
 		ret = len;
@@ -266,6 +309,16 @@ static int dp_aux_write_cmds(struct mdss_dp_drv_pdata *ep,
 	return  ret;
 }
 
+<<<<<<< HEAD
+=======
+int dp_aux_write(void *ep, struct edp_cmd *cmd)
+{
+	int rc = dp_aux_write_cmds(ep, cmd);
+
+	return rc < 0 ? -EINVAL : 0;
+}
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static int dp_aux_read_cmds(struct mdss_dp_drv_pdata *ep,
 				struct edp_cmd *cmds)
 {
@@ -273,7 +326,10 @@ static int dp_aux_read_cmds(struct mdss_dp_drv_pdata *ep,
 	struct edp_buf *tp;
 	struct edp_buf *rp;
 	int len, ret;
+<<<<<<< HEAD
 	u32 data;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	mutex_lock(&ep->aux_mutex);
 	ep->aux_cmd_busy = 1;
@@ -302,6 +358,7 @@ static int dp_aux_read_cmds(struct mdss_dp_drv_pdata *ep,
 
 	reinit_completion(&ep->aux_comp);
 
+<<<<<<< HEAD
 	tp->no_send_addr = true;
 	tp->no_send_stop = false;
 	dp_cmd_fifo_tx(ep);
@@ -319,6 +376,12 @@ static int dp_aux_read_cmds(struct mdss_dp_drv_pdata *ep,
 	data = dp_read(ep->base + DP_AUX_TRANS_CTRL);
 	data &= (~BIT(9));
 	dp_write(ep->base + DP_AUX_TRANS_CTRL, data);
+=======
+	dp_cmd_fifo_tx(tp, ep->base);
+
+	wait_for_completion_timeout(&ep->aux_comp, HZ/4);
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (ep->aux_error_num == EDP_AUX_ERR_NONE) {
 		ret = dp_cmd_fifo_rx(rp, len, ep->base);
 
@@ -329,13 +392,17 @@ static int dp_aux_read_cmds(struct mdss_dp_drv_pdata *ep,
 		ret = ep->aux_error_num;
 	}
 
+<<<<<<< HEAD
 end:
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	ep->aux_cmd_busy = 0;
 	mutex_unlock(&ep->aux_mutex);
 
 	return ret;
 }
 
+<<<<<<< HEAD
 void dp_aux_native_handler(struct mdss_dp_drv_pdata *ep, u32 isr)
 {
 	pr_debug("isr=0x%08x\n", isr);
@@ -353,19 +420,42 @@ void dp_aux_native_handler(struct mdss_dp_drv_pdata *ep, u32 isr)
 	} else {
 		ep->aux_error_num = EDP_AUX_ERR_NONE;
 	}
+=======
+int dp_aux_read(void *ep, struct edp_cmd *cmds)
+{
+	int rc = dp_aux_read_cmds(ep, cmds);
+
+	return rc  < 0 ? -EINVAL : 0;
+}
+
+void dp_aux_native_handler(struct mdss_dp_drv_pdata *ep, u32 isr)
+{
+	if (isr & EDP_INTR_AUX_I2C_DONE)
+		ep->aux_error_num = EDP_AUX_ERR_NONE;
+	else if (isr & EDP_INTR_WRONG_ADDR)
+		ep->aux_error_num = EDP_AUX_ERR_ADDR;
+	else if (isr & EDP_INTR_TIMEOUT)
+		ep->aux_error_num = EDP_AUX_ERR_TOUT;
+	if (isr & EDP_INTR_NACK_DEFER)
+		ep->aux_error_num = EDP_AUX_ERR_NACK;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	complete(&ep->aux_comp);
 }
 
 void dp_aux_i2c_handler(struct mdss_dp_drv_pdata *ep, u32 isr)
 {
+<<<<<<< HEAD
 	pr_debug("isr=0x%08x\n", isr);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (isr & EDP_INTR_AUX_I2C_DONE) {
 		if (isr & (EDP_INTR_I2C_NACK | EDP_INTR_I2C_DEFER))
 			ep->aux_error_num = EDP_AUX_ERR_NACK;
 		else
 			ep->aux_error_num = EDP_AUX_ERR_NONE;
 	} else {
+<<<<<<< HEAD
 		if (isr & EDP_INTR_WRONG_ADDR) {
 			ep->aux_error_num = EDP_AUX_ERR_ADDR;
 		} else if (isr & EDP_INTR_TIMEOUT) {
@@ -382,11 +472,24 @@ void dp_aux_i2c_handler(struct mdss_dp_drv_pdata *ep, u32 isr)
 		} else {
 			ep->aux_error_num = EDP_AUX_ERR_NONE;
 		}
+=======
+		if (isr & EDP_INTR_WRONG_ADDR)
+			ep->aux_error_num = EDP_AUX_ERR_ADDR;
+		else if (isr & EDP_INTR_TIMEOUT)
+			ep->aux_error_num = EDP_AUX_ERR_TOUT;
+		if (isr & EDP_INTR_NACK_DEFER)
+			ep->aux_error_num = EDP_AUX_ERR_NACK_DEFER;
+		if (isr & EDP_INTR_I2C_NACK)
+			ep->aux_error_num = EDP_AUX_ERR_NACK;
+		if (isr & EDP_INTR_I2C_DEFER)
+			ep->aux_error_num = EDP_AUX_ERR_DEFER;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 
 	complete(&ep->aux_comp);
 }
 
+<<<<<<< HEAD
 static int dp_aux_rw_cmds_retry(struct mdss_dp_drv_pdata *dp,
 	struct edp_cmd *cmd, enum dp_aux_transaction transaction)
 {
@@ -451,6 +554,10 @@ end:
  */
 static int dp_aux_write_buf_retry(struct mdss_dp_drv_pdata *dp, u32 addr,
 	char *buf, int len, int i2c, bool retry)
+=======
+static int dp_aux_write_buf(struct mdss_dp_drv_pdata *ep, u32 addr,
+				char *buf, int len, int i2c)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 {
 	struct edp_cmd	cmd;
 
@@ -461,6 +568,7 @@ static int dp_aux_write_buf_retry(struct mdss_dp_drv_pdata *dp, u32 addr,
 	cmd.len = len & 0x0ff;
 	cmd.next = 0;
 
+<<<<<<< HEAD
 	if (retry)
 		return dp_aux_rw_cmds_retry(dp, &cmd, DP_AUX_WRITE);
 	else
@@ -497,6 +605,13 @@ int dp_aux_write(void *dp, struct edp_cmd *cmd)
  */
 static int dp_aux_read_buf_retry(struct mdss_dp_drv_pdata *dp, u32 addr,
 		int len, int i2c, bool retry)
+=======
+	return dp_aux_write_cmds(ep, &cmd);
+}
+
+static int dp_aux_read_buf(struct mdss_dp_drv_pdata *ep, u32 addr,
+				int len, int i2c)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 {
 	struct edp_cmd cmd = {0};
 
@@ -507,6 +622,7 @@ static int dp_aux_read_buf_retry(struct mdss_dp_drv_pdata *dp, u32 addr,
 	cmd.len = len & 0x0ff;
 	cmd.next = 0;
 
+<<<<<<< HEAD
 	if (retry)
 		return dp_aux_rw_cmds_retry(dp, &cmd, DP_AUX_READ);
 	else
@@ -524,6 +640,9 @@ int dp_aux_read(void *dp, struct edp_cmd *cmds)
 	int rc = dp_aux_read_cmds(dp, cmds);
 
 	return rc  < 0 ? -EINVAL : 0;
+=======
+	return dp_aux_read_cmds(ep, &cmd);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 /*
@@ -895,6 +1014,7 @@ static void dp_aux_send_checksum(struct mdss_dp_drv_pdata *dp, u32 checksum)
 	dp_aux_write_buf(dp, 0x260, data, 1, 0);
 }
 
+<<<<<<< HEAD
 int mdss_dp_aux_read_edid(struct mdss_dp_drv_pdata *dp,
 	u8 *buf, int size, int blk_num)
 {
@@ -957,6 +1077,18 @@ int mdss_dp_edid_read(struct mdss_dp_drv_pdata *dp)
 	u32 checksum = 0;
 	bool phy_aux_update_requested = false;
 	bool ext_block_parsing_done = false;
+=======
+int mdss_dp_edid_read(struct mdss_dp_drv_pdata *dp)
+{
+	struct edp_buf *rp = &dp->rxp;
+	int rlen, ret = 0;
+	int edid_blk = 0, blk_num = 0, retries = 10;
+	bool edid_parsing_done = false;
+	const u8 cea_tag = 0x02, start_ext_blk = 0x1;
+	u32 const segment_addr = 0x30;
+	u32 checksum = 0;
+	char segment = 0x1;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	ret = dp_aux_chan_ready(dp);
 	if (ret) {
@@ -964,14 +1096,18 @@ int mdss_dp_edid_read(struct mdss_dp_drv_pdata *dp)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	memset(dp->edid_buf, 0, dp->edid_buf_size);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/**
 	 * Parse the test request vector to see whether there is a
 	 * TEST_EDID_READ test request.
 	 */
 	dp_sink_parse_test_request(dp);
 
+<<<<<<< HEAD
 	while (retries) {
 		u8 segment;
 		u8 edid_buf[EDID_BLOCK_SIZE] = {0};
@@ -1006,10 +1142,28 @@ int mdss_dp_edid_read(struct mdss_dp_drv_pdata *dp)
 				mdss_dp_phy_aux_update_config(dp, PHY_AUX_CFG1);
 				phy_aux_update_requested = true;
 				retries--;
+=======
+	do {
+		rlen = dp_aux_read_buf(dp, EDID_START_ADDRESS +
+				(blk_num * EDID_BLOCK_SIZE),
+				EDID_BLOCK_SIZE, 1);
+		if (rlen != EDID_BLOCK_SIZE) {
+			pr_err("Read failed. rlen=%d\n", rlen);
+			continue;
+		}
+
+		pr_debug("blk_num=%d, rlen=%d\n", blk_num, rlen);
+
+		if (dp_edid_is_valid_header(rp->data)) {
+			ret = dp_edid_buf_error(rp->data, rp->len);
+			if (ret) {
+				pr_err("corrupt edid block detected\n");
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				continue;
 			}
 
 			if (edid_parsing_done) {
+<<<<<<< HEAD
 				pr_debug("block 0 parsed already\n");
 				blk_num++;
 				retries--;
@@ -1049,6 +1203,49 @@ int mdss_dp_edid_read(struct mdss_dp_drv_pdata *dp)
 			break;
 		}
 	}
+=======
+				blk_num++;
+				continue;
+			}
+
+			dp_extract_edid_manufacturer(&dp->edid, rp->data);
+			dp_extract_edid_product(&dp->edid, rp->data);
+			dp_extract_edid_version(&dp->edid, rp->data);
+			dp_extract_edid_ext_block_cnt(&dp->edid, rp->data);
+			dp_extract_edid_video_support(&dp->edid, rp->data);
+			dp_extract_edid_feature(&dp->edid, rp->data);
+			dp_extract_edid_detailed_timing_description(&dp->edid,
+				rp->data);
+
+			edid_parsing_done = true;
+		} else {
+			edid_blk++;
+			blk_num++;
+
+			/* fix dongle byte shift issue */
+			if (edid_blk == 1 && rp->data[0] != cea_tag) {
+				u8 tmp[EDID_BLOCK_SIZE - 1];
+
+				memcpy(tmp, rp->data, EDID_BLOCK_SIZE - 1);
+				rp->data[0] = cea_tag;
+				memcpy(rp->data + 1, tmp, EDID_BLOCK_SIZE - 1);
+			}
+		}
+
+		memcpy(dp->edid_buf + (edid_blk * EDID_BLOCK_SIZE),
+			rp->data, EDID_BLOCK_SIZE);
+
+		checksum = rp->data[rp->len - 1];
+
+		/* break if no more extension blocks present */
+		if (edid_blk == dp->edid.ext_block_cnt)
+			break;
+
+		/* write segment number to read block 3 onwards */
+		if (edid_blk == start_ext_blk)
+			dp_aux_write_buf(dp, segment_addr, &segment, 1, 1);
+	} while (retries--);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	if (dp->test_data.test_requested == TEST_EDID_READ) {
 		pr_debug("sending checksum %d\n", checksum);
@@ -1056,6 +1253,7 @@ int mdss_dp_edid_read(struct mdss_dp_drv_pdata *dp)
 		dp->test_data = (const struct dpcd_test_request){ 0 };
 	}
 
+<<<<<<< HEAD
 	/*
 	 * Trigger the reading of DPCD if there was a change in the AUX
 	 * configuration caused by a failure while reading the EDID.
@@ -1068,6 +1266,8 @@ int mdss_dp_edid_read(struct mdss_dp_drv_pdata *dp)
 		dp->dpcd_read_required = true;
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return ret;
 }
 
@@ -1079,10 +1279,13 @@ int mdss_dp_dpcd_cap_read(struct mdss_dp_drv_pdata *ep)
 	struct dpcd_cap *cap;
 	struct edp_buf *rp;
 	int rlen;
+<<<<<<< HEAD
 	int i;
 
 	cap = &ep->dpcd;
 	memset(cap, 0, sizeof(*cap));
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	rlen = dp_aux_read_buf(ep, 0, len, 0);
 	if (rlen <= 0) {
@@ -1097,8 +1300,16 @@ int mdss_dp_dpcd_cap_read(struct mdss_dp_drv_pdata *ep)
 	}
 
 	rp = &ep->rxp;
+<<<<<<< HEAD
 	bp = rp->data;
 
+=======
+	cap = &ep->dpcd;
+	bp = rp->data;
+
+	memset(cap, 0, sizeof(*cap));
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	data = *bp++; /* byte 0 */
 	cap->major = (data >> 4) & 0x0f;
 	cap->minor = data & 0x0f;
@@ -1155,11 +1366,14 @@ int mdss_dp_dpcd_cap_read(struct mdss_dp_drv_pdata *ep)
 
 	data = *bp++; /* Byte 7: DOWN_STREAM_PORT_COUNT */
 	cap->downstream_port.dfp_count = data & 0x7;
+<<<<<<< HEAD
 	if (cap->downstream_port.dfp_count > DP_MAX_DS_PORT_COUNT) {
 		pr_debug("DS port count %d greater that max (%d) supported\n",
 			cap->downstream_port.dfp_count, DP_MAX_DS_PORT_COUNT);
 		cap->downstream_port.dfp_count = DP_MAX_DS_PORT_COUNT;
 	}
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	cap->downstream_port.msa_timing_par_ignored = data & BIT(6);
 	cap->downstream_port.oui_support = data & BIT(7);
 	pr_debug("dfp_count = %d, msa_timing_par_ignored = %d\n",
@@ -1167,6 +1381,7 @@ int mdss_dp_dpcd_cap_read(struct mdss_dp_drv_pdata *ep)
 			cap->downstream_port.msa_timing_par_ignored);
 	pr_debug("oui_support = %d\n", cap->downstream_port.oui_support);
 
+<<<<<<< HEAD
 	for (i = 0; i < DP_MAX_DS_PORT_COUNT; i++) {
 		data = *bp++; /* byte 8 + i*2 */
 		pr_debug("parsing capabilities for DS port %d\n", i);
@@ -1185,6 +1400,20 @@ int mdss_dp_dpcd_cap_read(struct mdss_dp_drv_pdata *ep)
 		pr_debug("lane_buf_size=%d\n", cap->rx_port_buf_size[i]);
 	}
 
+=======
+	data = *bp++; /* byte 8 */
+	if (data & BIT(1)) {
+		cap->flags |= DPCD_PORT_0_EDID_PRESENTED;
+		pr_debug("edid presented\n");
+	}
+
+	data = *bp++; /* byte 9 */
+	cap->rx_port0_buf_size = (data + 1) * 32;
+	pr_debug("lane_buf_size=%d\n", cap->rx_port0_buf_size);
+
+	bp += 2; /* skip 10, 11 port1 capability */
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	data = *bp++;	/* byte 12 */
 	cap->i2c_speed_ctrl = data;
 	if (cap->i2c_speed_ctrl > 0)
@@ -1515,8 +1744,11 @@ static void dp_sink_parse_sink_count(struct mdss_dp_drv_pdata *ep)
 	int const param_len = 0x1;
 	int const sink_count_addr = 0x200;
 
+<<<<<<< HEAD
 	ep->prev_sink_count = ep->sink_count;
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	rlen = dp_aux_read_buf(ep, sink_count_addr, param_len, 0);
 	if (rlen < param_len) {
 		pr_err("failed to read sink count\n");
@@ -2622,8 +2854,13 @@ clear:
 void mdss_dp_aux_parse_sink_status_field(struct mdss_dp_drv_pdata *ep)
 {
 	dp_sink_parse_sink_count(ep);
+<<<<<<< HEAD
 	mdss_dp_aux_link_status_read(ep, 6);
 	dp_sink_parse_test_request(ep);
+=======
+	dp_sink_parse_test_request(ep);
+	mdss_dp_aux_link_status_read(ep, 6);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 int mdss_dp_dpcd_status_read(struct mdss_dp_drv_pdata *ep)

@@ -1296,6 +1296,10 @@ bool is_cma_pageblock(struct page *page)
 	return get_pageblock_migratetype(page) == MIGRATE_CMA;
 }
 
+<<<<<<< HEAD
+=======
+EXPORT_SYMBOL(is_cma_pageblock);       //NUBIA: For Tuxera exfat
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /* Free whole pageblock and set its migration type to MIGRATE_CMA. */
 void __init init_cma_reserved_pageblock(struct page *page)
 {

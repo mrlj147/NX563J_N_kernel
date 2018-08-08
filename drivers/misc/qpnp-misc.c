@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2013-2014,2016-2017, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2013-2014,2016, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -14,7 +18,11 @@
 #include <linux/module.h>
 #include <linux/err.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
 #include <linux/regmap.h>
+=======
+#include <linux/spmi.h>
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #include <linux/of.h>
 #include <linux/of_device.h>
 #include <linux/qpnp-misc.h>
@@ -45,7 +53,12 @@ struct qpnp_misc_version {
  *				exclusion between probing and accessing misc
  *				driver information
  * @dev:			Device pointer to the misc device
+<<<<<<< HEAD
  * @regmap:			Regmap pointer to the misc device
+=======
+ * @resource:			Resource pointer that holds base address
+ * @spmi:			Spmi pointer which holds spmi information
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  * @version:			struct that holds the subtype and dig_major_rev
  *				of the chip.
  */
@@ -53,10 +66,17 @@ struct qpnp_misc_dev {
 	struct list_head		list;
 	struct mutex			mutex;
 	struct device			*dev;
+<<<<<<< HEAD
 	struct regmap			*regmap;
 	struct qpnp_misc_version	version;
 
 	u32				base;
+=======
+	struct resource			*resource;
+	struct spmi_device		*spmi;
+	struct qpnp_misc_version	version;
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	u8				pwm_sel;
 	bool				enable_gp_driver;
 };
@@ -82,6 +102,7 @@ static struct qpnp_misc_version irq_support_version[] = {
 	{0x16, 0x00}, /* PMDCALIFORNIUM */
 };
 
+<<<<<<< HEAD
 static int qpnp_write_byte(struct qpnp_misc_dev *mdev, u16 addr, u8 val)
 {
 	int rc;
@@ -89,10 +110,20 @@ static int qpnp_write_byte(struct qpnp_misc_dev *mdev, u16 addr, u8 val)
 	rc = regmap_write(mdev->regmap, mdev->base + addr, val);
 	if (rc)
 		pr_err("regmap write failed rc=%d\n", rc);
+=======
+static int qpnp_write_byte(struct spmi_device *spmi, u16 addr, u8 val)
+{
+	int rc;
+
+	rc = spmi_ext_register_writel(spmi->ctrl, spmi->sid, addr, &val, 1);
+	if (rc)
+		pr_err("SPMI write failed rc=%d\n", rc);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	return rc;
 }
 
+<<<<<<< HEAD
 static int qpnp_read_byte(struct qpnp_misc_dev *mdev, u16 addr, u8 *val)
 {
 	unsigned int temp;
@@ -105,6 +136,17 @@ static int qpnp_read_byte(struct qpnp_misc_dev *mdev, u16 addr, u8 *val)
 	}
 
 	*val = (u8)temp;
+=======
+static int qpnp_read_byte(struct spmi_device *spmi, u16 addr, u8 *val)
+{
+	int rc;
+
+	rc = spmi_ext_register_readl(spmi->ctrl, spmi->sid, addr, val, 1);
+	if (rc) {
+		pr_err("SPMI read failed rc=%d\n", rc);
+		return rc;
+	}
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return rc;
 }
 
@@ -130,6 +172,7 @@ static bool __misc_irqs_available(struct qpnp_misc_dev *dev)
 	return 1;
 }
 
+<<<<<<< HEAD
 int qpnp_misc_read_reg(struct device_node *node, u16 addr, u8 *val)
 {
 	struct qpnp_misc_dev *mdev = NULL;
@@ -171,6 +214,8 @@ int qpnp_misc_read_reg(struct device_node *node, u16 addr, u8 *val)
 	return 0;
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 int qpnp_misc_irqs_available(struct device *consumer_dev)
 {
 	struct device_node *misc_node = NULL;
@@ -211,6 +256,7 @@ int qpnp_misc_irqs_available(struct device *consumer_dev)
 
 static int qpnp_misc_dt_init(struct qpnp_misc_dev *mdev)
 {
+<<<<<<< HEAD
 	struct device_node *node = mdev->dev->of_node;
 	u32 val;
 	int rc;
@@ -222,13 +268,22 @@ static int qpnp_misc_dt_init(struct qpnp_misc_dev *mdev)
 	}
 
 	if (!of_property_read_u32(node, "qcom,pwm-sel", &val)) {
+=======
+	u32 val;
+
+	if (!of_property_read_u32(mdev->dev->of_node, "qcom,pwm-sel", &val)) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		if (val > PWM_SEL_MAX) {
 			dev_err(mdev->dev, "Invalid value for pwm-sel\n");
 			return -EINVAL;
 		}
 		mdev->pwm_sel = (u8)val;
 	}
+<<<<<<< HEAD
 	mdev->enable_gp_driver = of_property_read_bool(node,
+=======
+	mdev->enable_gp_driver = of_property_read_bool(mdev->dev->of_node,
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 						"qcom,enable-gp-driver");
 
 	WARN((mdev->pwm_sel > 0 && !mdev->enable_gp_driver),
@@ -248,15 +303,27 @@ static int qpnp_misc_config(struct qpnp_misc_dev *mdev)
 	switch (version_name) {
 	case PMDCALIFORNIUM:
 		if (mdev->pwm_sel > 0 && mdev->enable_gp_driver) {
+<<<<<<< HEAD
 			rc = qpnp_write_byte(mdev, REG_PWM_SEL, mdev->pwm_sel);
+=======
+			rc = qpnp_write_byte(mdev->spmi,
+				mdev->resource->start + REG_PWM_SEL,
+				mdev->pwm_sel);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			if (rc < 0) {
 				dev_err(mdev->dev,
 					"Failed to write PWM_SEL reg\n");
 				return rc;
 			}
 
+<<<<<<< HEAD
 			rc = qpnp_write_byte(mdev, REG_GP_DRIVER_EN,
 					GP_DRIVER_EN_BIT);
+=======
+			rc = qpnp_write_byte(mdev->spmi,
+				mdev->resource->start + REG_GP_DRIVER_EN,
+				GP_DRIVER_EN_BIT);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			if (rc < 0) {
 				dev_err(mdev->dev,
 					"Failed to write GP_DRIVER_EN reg\n");
@@ -271,6 +338,7 @@ static int qpnp_misc_config(struct qpnp_misc_dev *mdev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int qpnp_misc_probe(struct platform_device *pdev)
 {
 	struct qpnp_misc_dev *mdev = ERR_PTR(-EINVAL);
@@ -296,13 +364,42 @@ static int qpnp_misc_probe(struct platform_device *pdev)
 
 
 	rc = qpnp_read_byte(mdev, REG_SUBTYPE, &mdev->version.subtype);
+=======
+static int qpnp_misc_probe(struct spmi_device *spmi)
+{
+	struct resource *resource;
+	struct qpnp_misc_dev *mdev = ERR_PTR(-EINVAL);
+	int rc;
+
+	resource = spmi_get_resource(spmi, NULL, IORESOURCE_MEM, 0);
+	if (!resource) {
+		pr_err("Unable to get spmi resource for MISC\n");
+		return -EINVAL;
+	}
+
+	mdev = kzalloc(sizeof(*mdev), GFP_KERNEL);
+	if (!mdev)
+		return -ENOMEM;
+
+	mdev->spmi = spmi;
+	mdev->dev = &(spmi->dev);
+	mdev->resource = resource;
+
+	rc = qpnp_read_byte(spmi, resource->start + REG_SUBTYPE,
+				&mdev->version.subtype);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (rc < 0) {
 		dev_err(mdev->dev, "Failed to read subtype, rc=%d\n", rc);
 		return rc;
 	}
 
+<<<<<<< HEAD
 	rc = qpnp_read_byte(mdev, REG_DIG_MAJOR_REV,
 			&mdev->version.dig_major_rev);
+=======
+	rc = qpnp_read_byte(spmi, resource->start + REG_DIG_MAJOR_REV,
+				&mdev->version.dig_major_rev);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (rc < 0) {
 		dev_err(mdev->dev, "Failed to read dig_major_rev, rc=%d\n", rc);
 		return rc;
@@ -312,6 +409,16 @@ static int qpnp_misc_probe(struct platform_device *pdev)
 	list_add_tail(&mdev->list, &qpnp_misc_dev_list);
 	mutex_unlock(&qpnp_misc_dev_list_mutex);
 
+<<<<<<< HEAD
+=======
+	rc = qpnp_misc_dt_init(mdev);
+	if (rc < 0) {
+		dev_err(mdev->dev,
+			"Error reading device tree properties, rc=%d\n", rc);
+		return rc;
+	}
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	rc = qpnp_misc_config(mdev);
 	if (rc < 0) {
 		dev_err(mdev->dev,
@@ -323,7 +430,11 @@ static int qpnp_misc_probe(struct platform_device *pdev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static struct platform_driver qpnp_misc_driver = {
+=======
+static struct spmi_driver qpnp_misc_driver = {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	.probe	= qpnp_misc_probe,
 	.driver	= {
 		.name		= QPNP_MISC_DEV_NAME,
@@ -334,15 +445,26 @@ static struct platform_driver qpnp_misc_driver = {
 
 static int __init qpnp_misc_init(void)
 {
+<<<<<<< HEAD
 	return platform_driver_register(&qpnp_misc_driver);
+=======
+	return spmi_driver_register(&qpnp_misc_driver);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 static void __exit qpnp_misc_exit(void)
 {
+<<<<<<< HEAD
 	return platform_driver_unregister(&qpnp_misc_driver);
 }
 
 subsys_initcall(qpnp_misc_init);
+=======
+	return spmi_driver_unregister(&qpnp_misc_driver);
+}
+
+module_init(qpnp_misc_init);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 module_exit(qpnp_misc_exit);
 
 MODULE_DESCRIPTION(QPNP_MISC_DEV_NAME);

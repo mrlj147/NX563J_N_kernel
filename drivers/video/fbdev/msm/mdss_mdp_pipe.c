@@ -2292,9 +2292,12 @@ static int mdss_mdp_src_addr_setup(struct mdss_mdp_pipe *pipe,
 		mdss_mdp_pipe_write(pipe, MDSS_MDP_REG_SSPP_SRC3_ADDR, addr[2]);
 	}
 
+<<<<<<< HEAD
 	MDSS_XLOG(pipe->num, pipe->multirect.num, pipe->mixer_left->num,
 		pipe->play_cnt, addr[0], addr[1], addr[2], addr[3]);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return 0;
 }
 
@@ -2737,6 +2740,12 @@ int mdss_mdp_pipe_queue_data(struct mdss_mdp_pipe *pipe,
 		goto update_nobuf;
 	}
 
+<<<<<<< HEAD
+=======
+	MDSS_XLOG(pipe->num, pipe->multirect.num, pipe->mixer_left->num,
+		pipe->play_cnt, 0x222);
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (params_changed) {
 		pipe->params_changed = 0;
 

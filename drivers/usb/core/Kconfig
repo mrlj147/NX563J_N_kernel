@@ -103,3 +103,11 @@ config USB_ULPI_BUS
 
 	  To compile this driver as a module, choose M here: the module will
 	  be called ulpi.
+<<<<<<< HEAD
+=======
+config NUBIA_LINK_PM
+        bool "nubia link PM"
+        default n
+        help
+          some USB3.0 otg disks works abnormally when Link PM is enabled
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf

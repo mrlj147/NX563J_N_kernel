@@ -32,6 +32,13 @@ unsigned int pm_wakeup_irq __read_mostly;
 /* If set and the system is suspending, terminate the suspend. */
 static bool pm_abort_suspend __read_mostly;
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_ZTEMT_POWER_DEBUG
+extern bool wakeup_wake_lock_debug;
+#endif
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /*
  * Combined counters of registered wakeup events and wakeup events in progress.
  * They need to be modified together atomically, so it's better to use one
@@ -557,6 +564,16 @@ static void wakeup_source_report_event(struct wakeup_source *ws)
 	if (events_check_enabled)
 		ws->wakeup_count++;
 
+<<<<<<< HEAD
+=======
+	#ifdef CONFIG_ZTEMT_POWER_DEBUG
+	if (wakeup_wake_lock_debug){
+	    wakeup_wake_lock_debug = false;
+	    printk("First wakeup lock:%s\n", ws->name);
+	}
+	#endif //CONFIG_ZTEMT_POWER_DEBUG
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (!ws->active)
 		wakeup_source_activate(ws);
 }
@@ -1006,6 +1023,34 @@ void pm_wakep_autosleep_enabled(bool set)
 
 static struct dentry *wakeup_sources_stats_dentry;
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_ZTEMT_POWER_DEBUG
+void global_print_active_locks_debug(struct wakeup_source *ws)
+{
+	unsigned long flags;
+
+	spin_lock_irqsave(&ws->lock, flags);
+
+	if (ws->active) {
+		printk("active wake lock %s\n", ws->name);
+	}
+	spin_unlock_irqrestore(&ws->lock, flags);
+}
+
+void global_print_active_locks(void *unused)
+{
+	struct wakeup_source *ws;
+
+	rcu_read_lock();
+	list_for_each_entry_rcu(ws, &wakeup_sources, entry)
+		global_print_active_locks_debug(ws);
+	rcu_read_unlock();
+}
+#endif //CONFIG_ZTEMT_POWER_DEBUG
+
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /**
  * print_wakeup_source_stats - Print wakeup source statistics information.
  * @m: seq_file to print the statistics into.

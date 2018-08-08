@@ -9,6 +9,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+<<<<<<< HEAD
+=======
+#define DEBUG
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/slab.h>
@@ -45,7 +49,15 @@
 #define MBHC_BUTTON_PRESS_THRESHOLD_MIN 250
 #define GND_MIC_SWAP_THRESHOLD 4
 #define WCD_FAKE_REMOVAL_MIN_PERIOD_MS 100
+<<<<<<< HEAD
 #define HS_VREF_MIN_VAL 1400
+=======
+#ifdef CONFIG_ZTEMT_AUDIO
+#define HS_VREF_MIN_VAL 1300
+#else
+#define HS_VREF_MIN_VAL 1400
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define FW_READ_ATTEMPTS 15
 #define FW_READ_TIMEOUT 4000000
 #define FAKE_REM_RETRY_ATTEMPTS 3
@@ -1225,6 +1237,13 @@ static void wcd_correct_swch_plug(struct work_struct *work)
 		pr_debug("%s: cross con found, start polling\n",
 			 __func__);
 		plug_type = MBHC_PLUG_TYPE_GND_MIC_SWAP;
+<<<<<<< HEAD
+=======
+		if (mbhc->mbhc_cfg->msm_swap_set &&
+			mbhc->mbhc_cfg->msm_swap_set(codec,1,1)) {
+			pr_debug("%s: msm_swap_set to (1,1)\n", __func__);
+		}
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		pr_debug("%s: Plug found, plug type is %d\n",
 			 __func__, plug_type);
 		goto correct_plug_type;
@@ -1348,10 +1367,16 @@ correct_plug_type:
 				 * if switch is toggled, check again,
 				 * otherwise report unsupported plug
 				 */
+<<<<<<< HEAD
 				if (mbhc->mbhc_cfg->swap_gnd_mic &&
 					mbhc->mbhc_cfg->swap_gnd_mic(codec)) {
 					pr_debug("%s: US_EU gpio present,flip switch\n"
 						, __func__);
+=======
+				if (mbhc->mbhc_cfg->msm_swap_set &&
+					mbhc->mbhc_cfg->msm_swap_set(codec,1,1)) {
+					pr_debug("%s: msm_swap_set to (1,1)\n", __func__);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 					continue;
 				}
 			}
@@ -1563,6 +1588,15 @@ static void wcd_mbhc_swch_irq_handler(struct wcd_mbhc *mbhc)
 
 	if ((mbhc->current_plug == MBHC_PLUG_TYPE_NONE) &&
 	    detection_type) {
+<<<<<<< HEAD
+=======
+	       //wangchong:open switch, set 00 (default US)
+	       if (mbhc->mbhc_cfg->msm_swap_set){
+			pr_debug("%s: msm_swap_set to (0,0)\n", __func__);
+			mbhc->mbhc_cfg->msm_swap_set(codec,0,0);
+		}
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		/* Make sure MASTER_BIAS_CTL is enabled */
 		mbhc->mbhc_cb->mbhc_bias(codec, true);
 
@@ -1650,6 +1684,15 @@ static void wcd_mbhc_swch_irq_handler(struct wcd_mbhc *mbhc)
 			WCD_MBHC_REG_UPDATE_BITS(WCD_MBHC_ELECT_SCHMT_ISRC, 0);
 			wcd_mbhc_report_plug(mbhc, 0, SND_JACK_ANC_HEADPHONE);
 		}
+<<<<<<< HEAD
+=======
+
+		//wangchong:close switch
+		if (mbhc->mbhc_cfg->msm_swap_set) {
+			pr_debug("%s: msm_swap_set to (0,1)\n", __func__);
+			mbhc->mbhc_cfg->msm_swap_set(codec,0,1);
+		}
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	} else if (!detection_type) {
 		/* Disable external voltage source to micbias if present */
 		if (mbhc->mbhc_cb->enable_mb_source)
@@ -2198,8 +2241,18 @@ static int wcd_mbhc_initialise(struct wcd_mbhc *mbhc)
 		WCD_MBHC_REG_UPDATE_BITS(WCD_MBHC_INSREM_DBNC, 6);
 	}
 
+<<<<<<< HEAD
 	/* Button Debounce set to 16ms */
 	WCD_MBHC_REG_UPDATE_BITS(WCD_MBHC_BTN_DBNC, 2);
+=======
+#ifdef CONFIG_ZTEMT_AUDIO
+	/* Button Debounce set to 32ms */
+	WCD_MBHC_REG_UPDATE_BITS(WCD_MBHC_BTN_DBNC, 3);
+#else
+	/* Button Debounce set to 16ms */
+	WCD_MBHC_REG_UPDATE_BITS(WCD_MBHC_BTN_DBNC, 2);
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	/* Enable micbias ramp */
 	if (mbhc->mbhc_cb->mbhc_micb_ramp_control)
@@ -2217,7 +2270,11 @@ static int wcd_mbhc_initialise(struct wcd_mbhc *mbhc)
 
 	INIT_WORK(&mbhc->correct_plug_swch, wcd_correct_swch_plug);
 
+<<<<<<< HEAD
 	reinit_completion(&mbhc->btn_press_compl);
+=======
+	init_completion(&mbhc->btn_press_compl);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	WCD_MBHC_RSC_UNLOCK(mbhc);
 	pr_debug("%s: leave\n", __func__);
@@ -2854,7 +2911,10 @@ int wcd_mbhc_init(struct wcd_mbhc *mbhc, struct snd_soc_codec *codec,
 	}
 	mutex_init(&mbhc->hphl_pa_lock);
 	mutex_init(&mbhc->hphr_pa_lock);
+<<<<<<< HEAD
 	init_completion(&mbhc->btn_press_compl);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	/* Register event notifier */
 	mbhc->nblock.notifier_call = wcd_event_notify;

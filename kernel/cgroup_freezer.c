@@ -40,10 +40,19 @@ enum freezer_state_flags {
 	CGROUP_FREEZING		= CGROUP_FREEZING_SELF | CGROUP_FREEZING_PARENT,
 };
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NUBIA_CGF_NOTIFY_EVENT
+#else
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 struct freezer {
 	struct cgroup_subsys_state	css;
 	unsigned int			state;
 };
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 static DEFINE_MUTEX(freezer_mutex);
 
@@ -82,6 +91,58 @@ static const char *freezer_state_strs(unsigned int state)
 	return "THAWED";
 };
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NUBIA_CGF_NOTIFY_EVENT
+static struct workqueue_struct *cgf_notify_wq = NULL;
+static void cgf_event_work(struct work_struct *work)
+{
+	struct freezer *freezer = container_of(work, struct freezer, cgf_notify_work);
+	struct task_struct *t;
+	int ret = 0;
+
+	if(!freezer->event.data) {
+		ret = -EINVAL;
+		goto out_failed;
+	}
+
+	t = freezer->event.data;
+	ret = cgf_attach_task_group(&freezer->event);
+out_failed:
+	if(ret == -EINVAL)
+		printk(KERN_ERR"[CGF] %s, Attaching an invalid group code: %d\n", __func__, ret);
+}
+
+static int cgf_event_notify(struct notifier_block *self,
+			      unsigned long action, void *data)
+{
+	struct freezer *freezer = container_of(self, struct freezer, nf);
+	struct cgf_event *event;
+	int ret = -EPERM;
+
+	event = data;
+	if(event == NULL || event->data == NULL){
+		ret = -EINVAL;
+		goto out_invalid_data;
+	}
+
+	freezer->event.info = event->info;
+	freezer->event.data = event->data;
+	if(cgf_notify_wq)
+		ret = queue_work(cgf_notify_wq, &freezer->cgf_notify_work);
+
+	if (ret)
+		return 0;
+out_invalid_data:
+	return ret;
+}
+
+static struct notifier_block cgf_event_notifier = {
+	.notifier_call	= cgf_event_notify,
+};
+#endif
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static struct cgroup_subsys_state *
 freezer_css_alloc(struct cgroup_subsys_state *parent_css)
 {
@@ -116,6 +177,27 @@ static int freezer_css_online(struct cgroup_subsys_state *css)
 		atomic_inc(&system_freezing_cnt);
 	}
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NUBIA_CGF_NOTIFY_EVENT
+	if (!strcmp(css->ss->name, NUBIA_FREEZER_SS_NAME)
+		&& !strcmp(css->cgroup->kn->name, NUBIA_FREEZER_KN_NAME) ) {
+		if(freezer->cgf_notify_work.func == NULL) {
+			INIT_WORK(&freezer->cgf_notify_work, cgf_event_work);
+			printk(KERN_DEBUG"[CGF] %s, cgf_notify_work initialized for %s\n",
+				__func__, NUBIA_FREEZER_SS_NAME);
+		}
+		if(freezer->nf.notifier_call == NULL) {
+			memcpy(&freezer->nf,  &cgf_event_notifier, sizeof(struct notifier_block));
+			cgf_register_notifier(&freezer ->nf);
+			printk(KERN_DEBUG"[CGF] %s, cgf_event_notifier registered for %s\n",
+				__func__, css->cgroup->kn->name);
+		}
+	}
+	spin_lock_init(&freezer->lock);
+#endif
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	mutex_unlock(&freezer_mutex);
 	return 0;
 }
@@ -138,6 +220,21 @@ static void freezer_css_offline(struct cgroup_subsys_state *css)
 
 	freezer->state = 0;
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NUBIA_CGF_NOTIFY_EVENT
+
+	if(freezer->nf.notifier_call)
+		cgf_unregister_notifier(&freezer->nf);
+	if(freezer->cgf_notify_work.func)
+		cancel_work_sync(&freezer->cgf_notify_work);
+	if(cgf_notify_wq) {
+		destroy_workqueue(cgf_notify_wq);
+		cgf_notify_wq = NULL;
+	}
+#endif
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	mutex_unlock(&freezer_mutex);
 }
 
@@ -426,7 +523,24 @@ static ssize_t freezer_write(struct kernfs_open_file *of,
 	if (strcmp(buf, freezer_state_strs(0)) == 0)
 		freeze = false;
 	else if (strcmp(buf, freezer_state_strs(CGROUP_FROZEN)) == 0)
+<<<<<<< HEAD
 		freeze = true;
+=======
+#ifdef CONFIG_NUBIA_CGF_NOTIFY_EVENT
+	{
+		/* only create workqueue for bg freezer cgroup */
+		struct cgroup *cgroup = of->kn->parent->priv;
+
+		if (!strcmp(cgroup->kn->name, NUBIA_FREEZER_BG_KN_NAME)
+			&& !cgf_notify_wq) {
+			cgf_notify_wq = create_singlethread_workqueue("cgf_bg_wq");
+		}
+#endif
+		freeze = true;
+#ifdef CONFIG_NUBIA_CGF_NOTIFY_EVENT
+	}
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	else
 		return -EINVAL;
 

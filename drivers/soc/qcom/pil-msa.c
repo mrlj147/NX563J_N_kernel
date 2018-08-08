@@ -616,6 +616,7 @@ int pil_mss_reset_load_mba(struct pil_desc *pil)
 
 	/* Load the MBA image into memory */
 	count = fw->size;
+<<<<<<< HEAD
 	if (count <= SZ_1M) {
 		/* Ensures memcpy is done for max 1MB fw size */
 		memcpy(mba_dp_virt, data, count);
@@ -625,6 +626,9 @@ int pil_mss_reset_load_mba(struct pil_desc *pil)
 		 ret = -EINVAL;
 		 goto err_mba_data;
 	}
+=======
+	memcpy(mba_dp_virt, data, count);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* Ensure memcpy of the MBA memory is done before loading the DP */
 	wmb();
 

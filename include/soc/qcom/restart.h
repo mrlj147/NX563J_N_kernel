@@ -18,6 +18,12 @@
 #define RESTART_DLOAD  0x1
 
 void msm_set_restart_mode(int mode);
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NUBIA_INPUT_KEYRESET
+void msm_set_dload_mode(int mode);
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 extern int pmic_reset_irq;
 
 #endif

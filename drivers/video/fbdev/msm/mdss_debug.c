@@ -44,6 +44,7 @@
 
 #define INVALID_XIN_ID     0xFF
 
+<<<<<<< HEAD
 static u32 dsi_dbg_bus_sdm660[] = {
 	0x0001, 0x1001, 0x0001, 0x0011,
 	0x1021, 0x0021, 0x0031, 0x0041,
@@ -80,6 +81,8 @@ static u32 dsi_dbg_bus_sdm660[] = {
 	0x03C1, 0x03D1, 0x03E1, 0x03F1,
 };
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static DEFINE_MUTEX(mdss_debug_lock);
 
 static char panel_reg[2] = {DEFAULT_READ_PANEL_POWER_MODE_REG, 0x00};
@@ -95,13 +98,19 @@ static int panel_debug_base_open(struct inode *inode, struct file *file)
 static int panel_debug_base_release(struct inode *inode, struct file *file)
 {
 	struct mdss_debug_base *dbg = file->private_data;
+<<<<<<< HEAD
 	mutex_lock(&mdss_debug_lock);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (dbg && dbg->buf) {
 		kfree(dbg->buf);
 		dbg->buf_len = 0;
 		dbg->buf = NULL;
 	}
+<<<<<<< HEAD
 	mutex_unlock(&mdss_debug_lock);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return 0;
 }
 
@@ -423,13 +432,19 @@ static int mdss_debug_base_open(struct inode *inode, struct file *file)
 static int mdss_debug_base_release(struct inode *inode, struct file *file)
 {
 	struct mdss_debug_base *dbg = file->private_data;
+<<<<<<< HEAD
 	mutex_lock(&mdss_debug_lock);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (dbg && dbg->buf) {
 		kfree(dbg->buf);
 		dbg->buf_len = 0;
 		dbg->buf = NULL;
 	}
+<<<<<<< HEAD
 	mutex_unlock(&mdss_debug_lock);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return 0;
 }
 
@@ -1828,6 +1843,7 @@ void mdss_misr_crc_collect(struct mdss_data_type *mdata, int block_id,
 
 }
 
+<<<<<<< HEAD
 void mdss_dsi_debug_bus_init(struct mdss_dsi_data *sdata)
 {
 	if (!sdata)
@@ -1846,6 +1862,8 @@ void mdss_dsi_debug_bus_init(struct mdss_dsi_data *sdata)
 	}
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 int mdss_dump_misr_data(char **buf, u32 size)
 {
 	struct mdss_mdp_misr_map  *dsi0_map;

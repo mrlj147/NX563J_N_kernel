@@ -77,7 +77,11 @@
 #define EDP_INTR_I2C_NACK	BIT(18)
 #define EDP_INTR_I2C_DEFER	BIT(21)
 #define EDP_INTR_PLL_UNLOCKED	BIT(24)
+<<<<<<< HEAD
 #define EDP_INTR_PHY_AUX_ERR	BIT(27)
+=======
+#define EDP_INTR_AUX_ERROR	BIT(27)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 
 #define EDP_INTR_STATUS1 \
@@ -85,7 +89,11 @@
 	EDP_INTR_WRONG_ADDR | EDP_INTR_TIMEOUT | \
 	EDP_INTR_NACK_DEFER | EDP_INTR_WRONG_DATA_CNT | \
 	EDP_INTR_I2C_NACK | EDP_INTR_I2C_DEFER | \
+<<<<<<< HEAD
 	EDP_INTR_PLL_UNLOCKED | EDP_INTR_PHY_AUX_ERR)
+=======
+	EDP_INTR_PLL_UNLOCKED | EDP_INTR_AUX_ERROR)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 #define EDP_INTR_MASK1		(EDP_INTR_STATUS1 << 2)
 
@@ -110,8 +118,11 @@ struct edp_buf {
 	int len;	/* dara length */
 	char trans_num;	/* transaction number */
 	char i2c;	/* 1 == i2c cmd, 0 == native cmd */
+<<<<<<< HEAD
 	bool no_send_addr;
 	bool no_send_stop;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 /* USBPD-TypeC specific Macros */
@@ -188,7 +199,10 @@ struct dp_alt_mode {
 #define DPCD_MAX_DOWNSPREAD_0_5	BIT(2)
 #define DPCD_NO_AUX_HANDSHAKE	BIT(3)
 #define DPCD_PORT_0_EDID_PRESENTED	BIT(4)
+<<<<<<< HEAD
 #define DPCD_PORT_1_EDID_PRESENTED	BIT(5)
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 /* event */
 #define EV_EDP_AUX_SETUP		BIT(0)
@@ -242,8 +256,11 @@ struct downstream_port_config {
 	bool oui_support;
 };
 
+<<<<<<< HEAD
 #define DP_MAX_DS_PORT_COUNT 2
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 struct dpcd_cap {
 	char major;
 	char minor;
@@ -254,7 +271,11 @@ struct dpcd_cap {
 	char enhanced_frame;
 	u32 max_link_rate;  /* 162, 270 and 540 Mb, divided by 10 */
 	u32 flags;
+<<<<<<< HEAD
 	u32 rx_port_buf_size[DP_MAX_DS_PORT_COUNT];
+=======
+	u32 rx_port0_buf_size;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	u32 training_read_interval;/* us */
 	struct downstream_port_config downstream_port;
 };
@@ -431,6 +452,7 @@ struct mdss_dp_crc_data {
 	u32 b_cb;
 };
 
+<<<<<<< HEAD
 #define MDSS_DP_MAX_PHY_CFG_VALUE_CNT 3
 struct mdss_dp_phy_cfg {
 	u32 cfg_cnt;
@@ -527,6 +549,8 @@ static inline char *mdss_dp_aux_transaction_to_string(u32 transaction)
 	}
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 struct mdss_dp_drv_pdata {
 	/* device driver */
 	int (*on) (struct mdss_panel_data *pdata);
@@ -550,11 +574,18 @@ struct mdss_dp_drv_pdata {
 	bool core_clks_on;
 	bool link_clks_on;
 	bool power_on;
+<<<<<<< HEAD
+=======
+	bool sink_info_read;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	u32 suspend_vic;
 	bool hpd;
 	bool psm_enabled;
 	bool audio_test_req;
+<<<<<<< HEAD
 	bool dpcd_read_required;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	/* dp specific */
 	unsigned char *base;
@@ -614,9 +645,16 @@ struct mdss_dp_drv_pdata {
 	struct completion aux_comp;
 	struct completion idle_comp;
 	struct completion video_comp;
+<<<<<<< HEAD
 	struct completion notification_comp;
 	struct mutex aux_mutex;
 	struct mutex train_mutex;
+=======
+	struct completion irq_comp;
+	struct mutex aux_mutex;
+	struct mutex train_mutex;
+	struct mutex pd_msg_mutex;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	struct mutex attention_lock;
 	struct mutex hdcp_mutex;
 	bool cable_connected;
@@ -640,14 +678,21 @@ struct mdss_dp_drv_pdata {
 	struct dp_statistic dp_stat;
 	bool hpd_irq_on;
 	u32 hpd_notification_status;
+<<<<<<< HEAD
 	atomic_t notification_pending;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	struct mdss_dp_event_data dp_event;
 	struct task_struct *ev_thread;
 
 	/* dt settings */
 	char l_map[4];
+<<<<<<< HEAD
 	struct mdss_dp_phy_cfg aux_cfg[PHY_AUX_CFG_MAX];
+=======
+	u32 aux_cfg[AUX_CFG_LEN];
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	struct workqueue_struct *workq;
 	struct delayed_work hdcp_cb_work;
@@ -663,7 +708,10 @@ struct mdss_dp_drv_pdata {
 
 	struct dpcd_test_request test_data;
 	struct dpcd_sink_count sink_count;
+<<<<<<< HEAD
 	struct dpcd_sink_count prev_sink_count;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	struct list_head attention_head;
 };
@@ -790,7 +838,10 @@ enum dp_aux_error {
 	EDP_AUX_ERR_NACK	= -3,
 	EDP_AUX_ERR_DEFER	= -4,
 	EDP_AUX_ERR_NACK_DEFER	= -5,
+<<<<<<< HEAD
 	EDP_AUX_ERR_PHY		= -6,
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 static inline char *mdss_dp_get_aux_error(u32 aux_error)

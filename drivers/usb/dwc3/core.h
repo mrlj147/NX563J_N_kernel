@@ -66,7 +66,10 @@
 #define DWC3_DEVICE_EVENT_OVERFLOW		11
 
 #define DWC3_GEVNTCOUNT_MASK	0xfffc
+<<<<<<< HEAD
 #define DWC3_GEVNTCOUNT_EHB	(1 << 31)
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define DWC3_GSNPSID_MASK	0xffff0000
 #define DWC3_GSNPSREV_MASK	0xffff
 
@@ -150,8 +153,11 @@
 #define DWC3_DEPCMDPAR0(n)	(0xc808 + (n * 0x10))
 #define DWC3_DEPCMD(n)		(0xc80c + (n * 0x10))
 
+<<<<<<< HEAD
 #define DWC3_DEV_IMOD(n)	(0xca00 + (n * 0x4))
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /* OTG Registers */
 #define DWC3_OCFG		0xcc00
 #define DWC3_OCTL		0xcc04
@@ -436,11 +442,14 @@
 #define DWC3_DEPCMD_TYPE_BULK		2
 #define DWC3_DEPCMD_TYPE_INTR		3
 
+<<<<<<< HEAD
 #define DWC3_DEV_IMOD_COUNT_SHIFT	16
 #define DWC3_DEV_IMOD_COUNT_MASK	(0xffff << 16)
 #define DWC3_DEV_IMOD_INTERVAL_SHIFT	0
 #define DWC3_DEV_IMOD_INTERVAL_MASK	(0xffff << 0)
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /* Structures */
 
 struct dwc3_trb;
@@ -845,8 +854,11 @@ struct dwc3_scratchpad_array {
  * @bh_dbg_index: index for capturing bh_completion_time and bh_handled_evt_cnt
  * @wait_linkstate: waitqueue for waiting LINK to move into required state
  * @vbus_draw: current to be drawn from USB
+<<<<<<< HEAD
  * @imod_interval: set the interrupt moderation interval in 250ns
  *			increments or 0 to disable.
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  */
 struct dwc3 {
 	struct usb_ctrlrequest	*ctrl_req;
@@ -930,7 +942,10 @@ struct dwc3 {
 #define DWC3_REVISION_260A	0x5533260a
 #define DWC3_REVISION_270A	0x5533270a
 #define DWC3_REVISION_280A	0x5533280a
+<<<<<<< HEAD
 #define DWC3_REVISION_300A	0x5533300a
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define DWC3_REVISION_310A	0x5533310a
 
 /*
@@ -939,7 +954,10 @@ struct dwc3 {
  */
 #define DWC3_REVISION_IS_DWC31		0x80000000
 #define DWC3_USB31_REVISION_110A	(0x3131302a | DWC3_REVISION_IS_USB31)
+<<<<<<< HEAD
 #define DWC3_USB31_REVISION_120A	(0x3132302a | DWC3_REVISION_IS_DWC31)
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	enum dwc3_ep0_next	ep0_next_event;
 	enum dwc3_ep0_state	ep0state;
@@ -1020,11 +1038,14 @@ struct dwc3 {
 	bool			b_suspend;
 	unsigned		vbus_draw;
 
+<<<<<<< HEAD
 	u16			imod_interval;
 
 	struct workqueue_struct	*dwc_wq;
 	struct work_struct	bh_work;
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* IRQ timing statistics */
 	int			irq;
 	unsigned long		irq_cnt;
@@ -1192,6 +1213,7 @@ struct dwc3_gadget_ep_cmd_params {
 void dwc3_set_mode(struct dwc3 *dwc, u32 mode);
 int dwc3_gadget_resize_tx_fifos(struct dwc3 *dwc);
 
+<<<<<<< HEAD
 /* check whether we are on the DWC_usb3 core */
 static inline bool dwc3_is_usb3(struct dwc3 *dwc)
 {
@@ -1206,6 +1228,8 @@ static inline bool dwc3_is_usb31(struct dwc3 *dwc)
 
 bool dwc3_has_imod(struct dwc3 *dwc);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #if IS_ENABLED(CONFIG_USB_DWC3_HOST) || IS_ENABLED(CONFIG_USB_DWC3_DUAL_ROLE)
 int dwc3_host_init(struct dwc3 *dwc);
 void dwc3_host_exit(struct dwc3 *dwc);

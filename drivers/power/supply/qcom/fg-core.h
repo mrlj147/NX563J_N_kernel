@@ -46,6 +46,7 @@
 			&& (value) <= (right)))
 
 /* Awake votable reasons */
+<<<<<<< HEAD
 #define SRAM_READ		"fg_sram_read"
 #define SRAM_WRITE		"fg_sram_write"
 #define PROFILE_LOAD		"fg_profile_load"
@@ -53,6 +54,12 @@
 
 /* Delta BSOC votable reasons */
 #define DELTA_BSOC_IRQ_VOTER	"fg_delta_bsoc_irq"
+=======
+#define SRAM_READ	"fg_sram_read"
+#define SRAM_WRITE	"fg_sram_write"
+#define PROFILE_LOAD	"fg_profile_load"
+#define DELTA_SOC	"fg_delta_soc"
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 #define DEBUG_PRINT_BUFFER_SIZE		64
 /* 3 byte address + 1 space character */
@@ -128,6 +135,14 @@ enum fg_irq_index {
 	FG_IRQ_MAX,
 };
 
+<<<<<<< HEAD
+=======
+/* WA flags */
+enum {
+	DELTA_SOC_IRQ_WA = BIT(0),
+};
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /*
  * List of FG_SRAM parameters. Please add a parameter only if it is an entry
  * that will be used either to configure an entity (e.g. termination current)
@@ -147,7 +162,10 @@ enum fg_sram_param_id {
 	FG_SRAM_CC_SOC,
 	FG_SRAM_CC_SOC_SW,
 	FG_SRAM_ACT_BATT_CAP,
+<<<<<<< HEAD
 	FG_SRAM_TIMEBASE,
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* Entries below here are configurable during initialization */
 	FG_SRAM_CUTOFF_VOLT,
 	FG_SRAM_EMPTY_VOLT,
@@ -158,17 +176,25 @@ enum fg_sram_param_id {
 	FG_SRAM_ESR_TIMER_DISCHG_INIT,
 	FG_SRAM_ESR_TIMER_CHG_MAX,
 	FG_SRAM_ESR_TIMER_CHG_INIT,
+<<<<<<< HEAD
 	FG_SRAM_ESR_PULSE_THRESH,
 	FG_SRAM_SYS_TERM_CURR,
 	FG_SRAM_CHG_TERM_CURR,
 	FG_SRAM_CHG_TERM_BASE_CURR,
+=======
+	FG_SRAM_SYS_TERM_CURR,
+	FG_SRAM_CHG_TERM_CURR,
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	FG_SRAM_DELTA_MSOC_THR,
 	FG_SRAM_DELTA_BSOC_THR,
 	FG_SRAM_RECHARGE_SOC_THR,
 	FG_SRAM_RECHARGE_VBATT_THR,
 	FG_SRAM_KI_COEFF_MED_DISCHG,
 	FG_SRAM_KI_COEFF_HI_DISCHG,
+<<<<<<< HEAD
 	FG_SRAM_KI_COEFF_FULL_SOC,
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	FG_SRAM_ESR_TIGHT_FILTER,
 	FG_SRAM_ESR_BROAD_FILTER,
 	FG_SRAM_SLOPE_LIMIT,
@@ -208,7 +234,10 @@ struct fg_alg_flag {
 
 enum wa_flags {
 	PMI8998_V1_REV_WA = BIT(0),
+<<<<<<< HEAD
 	PM660_TSMC_OSC_WA = BIT(1),
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 enum slope_limit_status {
@@ -228,7 +257,10 @@ struct fg_dt_props {
 	int	empty_volt_mv;
 	int	vbatt_low_thr_mv;
 	int	chg_term_curr_ma;
+<<<<<<< HEAD
 	int	chg_term_base_curr_ma;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	int	sys_term_curr_ma;
 	int	delta_soc_thr;
 	int	recharge_soc_thr;
@@ -254,8 +286,11 @@ struct fg_dt_props {
 	int	esr_tight_lt_flt_upct;
 	int	esr_broad_lt_flt_upct;
 	int	slope_limit_temp;
+<<<<<<< HEAD
 	int	esr_pulse_thresh_ma;
 	int	esr_meas_curr_ma;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	int	jeita_thresholds[NUM_JEITA_LEVELS];
 	int	ki_coeff_soc[KI_COEFF_SOC_LEVELS];
 	int	ki_coeff_med_dischg[KI_COEFF_SOC_LEVELS];
@@ -322,6 +357,7 @@ static const struct fg_pt fg_ln_table[] = {
 	{ 128000,	4852 },
 };
 
+<<<<<<< HEAD
 /* each tuple is - <temperature in degC, Timebase> */
 static const struct fg_pt fg_tsmc_osc_table[] = {
 	{ -20,		395064 },
@@ -339,6 +375,8 @@ static const struct fg_pt fg_tsmc_osc_table[] = {
 	{  90,		444992 },
 };
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 struct fg_chip {
 	struct device		*dev;
 	struct pmic_revid_data	*pmic_rev_id;
@@ -350,11 +388,17 @@ struct fg_chip {
 	struct power_supply	*dc_psy;
 	struct power_supply	*parallel_psy;
 	struct iio_channel	*batt_id_chan;
+<<<<<<< HEAD
 	struct iio_channel	*die_temp_chan;
 	struct fg_memif		*sram;
 	struct fg_irq_info	*irqs;
 	struct votable		*awake_votable;
 	struct votable		*delta_bsoc_irq_en_votable;
+=======
+	struct fg_memif		*sram;
+	struct fg_irq_info	*irqs;
+	struct votable		*awake_votable;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	struct fg_sram_param	*sp;
 	struct fg_alg_flag	*alg_flags;
 	int			*debug_mask;
@@ -374,7 +418,10 @@ struct fg_chip {
 	u32			rradc_base;
 	u32			wa_flags;
 	int			batt_id_ohms;
+<<<<<<< HEAD
 	int			ki_coeff_full_soc;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	int			charge_status;
 	int			prev_charge_status;
 	int			charge_done;
@@ -396,6 +443,10 @@ struct fg_chip {
 	bool			esr_fcc_ctrl_en;
 	bool			soc_reporting_ready;
 	bool			esr_flt_cold_temp_en;
+<<<<<<< HEAD
+=======
+	bool			bsoc_delta_irq_en;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	bool			slope_limit_en;
 	bool			use_ima_single_mode;
 	struct completion	soc_update;

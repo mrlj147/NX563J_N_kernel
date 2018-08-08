@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 /* Copyright (c) 2012-2014, 2016-2017, The Linux Foundation. All
  * rights reserved.
+=======
+/* Copyright (c) 2012-2014, 2016, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -20,6 +24,10 @@
 #include <sound/control.h>
 #include <sound/q6adm-v2.h>
 #include <sound/asound.h>
+<<<<<<< HEAD
+=======
+#include <sound/msm-dts-eagle.h>
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #include "msm-dts-srs-tm-config.h"
 #include "msm-pcm-routing-v2.h"
 

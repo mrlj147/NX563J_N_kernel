@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2015, 2017, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2015, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -16,9 +20,13 @@
 #define PON_POWER_OFF_RESERVED		0x00
 #define PON_POWER_OFF_WARM_RESET	0x01
 #define PON_POWER_OFF_SHUTDOWN		0x04
+<<<<<<< HEAD
 #define PON_POWER_OFF_DVDD_SHUTDOWN	0x05
 #define PON_POWER_OFF_HARD_RESET	0x07
 #define PON_POWER_OFF_DVDD_HARD_RESET	0x08
+=======
+#define PON_POWER_OFF_HARD_RESET	0x07
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define PON_POWER_OFF_MAX_TYPE		0x10
 
 #endif

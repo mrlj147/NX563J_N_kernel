@@ -241,12 +241,23 @@ int ocfs2_set_acl(handle_t *handle,
 	case ACL_TYPE_ACCESS:
 		name_index = OCFS2_XATTR_INDEX_POSIX_ACL_ACCESS;
 		if (acl) {
+<<<<<<< HEAD
 			umode_t mode;
 
 			ret = posix_acl_update_mode(inode, &mode, &acl);
 			if (ret)
 				return ret;
 
+=======
+			umode_t mode = inode->i_mode;
+			ret = posix_acl_equiv_mode(acl, &mode);
+			if (ret < 0)
+				return ret;
+
+			if (ret == 0)
+				acl = NULL;
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			ret = ocfs2_acl_set_mode(inode, di_bh,
 						 handle, mode);
 			if (ret)

@@ -164,6 +164,12 @@ obj-$(CONFIG_SENSORS_EPM_ADC)	+= epm_adc.o
 obj-$(CONFIG_SENSORS_QPNP_ADC_VOLTAGE)	+= qpnp-adc-voltage.o qpnp-adc-common.o
 obj-$(CONFIG_SENSORS_QPNP_ADC_CURRENT)	+= qpnp-adc-current.o qpnp-adc-common.o
 
+<<<<<<< HEAD
+=======
+################################################# NUBIA SENSOR START
+obj-$(CONFIG_NUBIA_SENSORS)			+= nubia_sensors/
+################################################# NUBIA SENSOR END
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 obj-$(CONFIG_PMBUS)		+= pmbus/
 
 ccflags-$(CONFIG_HWMON_DEBUG_CHIP) := -DDEBUG

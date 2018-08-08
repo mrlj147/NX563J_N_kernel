@@ -192,6 +192,17 @@ config HIGH_RES_TIMERS
 	  This option enables high resolution timer support. If your
 	  hardware is not capable then this option only increases
 	  the size of the kernel image.
+<<<<<<< HEAD
+=======
+	  
+config NUBIA_POWEROFF_CHARGE_MODE_POWEROFF_ALARM
+	bool "Power off charge mode alarm reboot support"
+	default y
+	help
+	  nubia feature: if set,in power off charge mode,
+	  when poweroff alarm trigger,
+	  kernel will reboot with rtc
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 endmenu
 endif

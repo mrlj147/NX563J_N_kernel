@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2015-2017, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2015-2016, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -322,12 +326,15 @@ int mdss_mdp_wb_import_data(struct device *device,
 	if (wfd_data->layer.flags & MDP_LAYER_SECURE_SESSION)
 		flags = MDP_SECURE_OVERLAY_SESSION;
 
+<<<<<<< HEAD
 	if (buffer->plane_count > MAX_PLANES) {
 		pr_err("buffer plane_count exceeds MAX_PLANES limit:%d",
 				buffer->plane_count);
 		return -EINVAL;
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	memset(planes, 0, sizeof(planes));
 
 	for (i = 0; i < buffer->plane_count; i++) {

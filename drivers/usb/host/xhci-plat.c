@@ -248,13 +248,21 @@ static int xhci_plat_probe(struct platform_device *pdev)
 			goto put_usb3_hcd;
 	}
 
+<<<<<<< HEAD
 	ret = usb_add_hcd(hcd, irq, IRQF_SHARED);
+=======
+	ret = usb_add_hcd(hcd, irq, IRQF_SHARED | IRQF_ONESHOT);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (ret)
 		goto disable_usb_phy;
 
 	device_wakeup_enable(&hcd->self.root_hub->dev);
 
+<<<<<<< HEAD
 	ret = usb_add_hcd(xhci->shared_hcd, irq, IRQF_SHARED);
+=======
+	ret = usb_add_hcd(xhci->shared_hcd, irq, IRQF_SHARED | IRQF_ONESHOT);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (ret)
 		goto dealloc_usb2_hcd;
 

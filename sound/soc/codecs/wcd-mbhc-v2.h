@@ -265,6 +265,10 @@ struct wcd_mbhc_config {
 	bool detect_extn_cable;
 	bool mono_stero_detection;
 	bool (*swap_gnd_mic)(struct snd_soc_codec *codec);
+<<<<<<< HEAD
+=======
+	bool (*msm_swap_set)(struct snd_soc_codec *codec, int value1, int value2);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	bool hs_ext_micbias;
 	bool gnd_det_en;
 	int key_code[WCD_MBHC_KEYCODE_NUM];

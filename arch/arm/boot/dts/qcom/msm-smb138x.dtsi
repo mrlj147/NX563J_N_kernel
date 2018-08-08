@@ -128,6 +128,7 @@
 		};
 	};
 };
+<<<<<<< HEAD
 
 &smb138x_parallel_slave {
 	smb138x_vbus: qcom,smb138x-vbus {
@@ -135,3 +136,5 @@
 		regulator-name = "smb138x-vbus";
 	};
 };
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf

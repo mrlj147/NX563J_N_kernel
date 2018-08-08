@@ -851,7 +851,10 @@ static long audio_aio_process_event_req_compat(struct q6audio_aio *audio,
 	long rc;
 	struct msm_audio_event32 usr_evt_32;
 	struct msm_audio_event usr_evt;
+<<<<<<< HEAD
 	memset(&usr_evt, 0, sizeof(struct msm_audio_event));
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	if (copy_from_user(&usr_evt_32, arg,
 				sizeof(struct msm_audio_event32))) {
@@ -861,11 +864,14 @@ static long audio_aio_process_event_req_compat(struct q6audio_aio *audio,
 	usr_evt.timeout_ms = usr_evt_32.timeout_ms;
 
 	rc = audio_aio_process_event_req_common(audio, &usr_evt);
+<<<<<<< HEAD
 	if (rc < 0) {
 		pr_err("%s: audio process event failed, rc = %ld",
 			__func__, rc);
 		return rc;
 	}
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	usr_evt_32.event_type = usr_evt.event_type;
 	switch (usr_evt_32.event_type) {

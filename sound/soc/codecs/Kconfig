@@ -727,6 +727,28 @@ config SND_SOC_WCD9335
         tristate
 	depends on WCD9335_CODEC
 
+<<<<<<< HEAD
+=======
+config SND_SOC_TAS2555_GENERIC
+	bool "basic Support for TI TAS2555"
+	help
+	This option enables support for TI TAS2555 common drivers.
+
+config TAS2555_CODEC
+	bool "basic Support for TI TAS2555"
+	help
+	This option enables support for TI TAS2555 common drivers.
+
+config TAS2555_REGMAP
+	bool "basic Support for TI TAS2555"
+	help
+	This option enables support for TI TAS2555 common drivers.
+config  TAS2555_MISC
+	bool "basic Support for TI TAS2555"
+	help
+	This option enables support for TI TAS2555 common drivers.
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 config SND_SOC_WCD934X
         tristate
 	depends on WCD934X_CODEC

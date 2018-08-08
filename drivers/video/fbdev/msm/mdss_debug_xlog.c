@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2014-2017, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2014-2016, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -32,7 +36,10 @@
 #define XLOG_DEFAULT_REGDUMP 0x2 /* dump in RAM */
 #define XLOG_DEFAULT_DBGBUSDUMP 0x2 /* dump in RAM */
 #define XLOG_DEFAULT_VBIF_DBGBUSDUMP 0x2 /* dump in RAM */
+<<<<<<< HEAD
 #define XLOG_DEFAULT_DSI_DBGBUSDUMP 0x2 /* dump in RAM */
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 /*
  * xlog will print this number of entries when it is called through
@@ -74,17 +81,26 @@ struct mdss_dbg_xlog {
 	u32 enable_reg_dump;
 	u32 enable_dbgbus_dump;
 	u32 enable_vbif_dbgbus_dump;
+<<<<<<< HEAD
 	u32 enable_dsi_dbgbus_dump;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	struct work_struct xlog_dump_work;
 	struct mdss_debug_base *blk_arr[MDSS_DEBUG_BASE_MAX];
 	bool work_panic;
 	bool work_dbgbus;
 	bool work_vbif_dbgbus;
+<<<<<<< HEAD
 	bool work_dsi_dbgbus;
 	u32 *dbgbus_dump; /* address for the debug bus dump */
 	u32 *vbif_dbgbus_dump; /* address for the vbif debug bus dump */
 	u32 *nrt_vbif_dbgbus_dump; /* address for the nrt vbif debug bus dump */
 	u32 *dsi_dbgbus_dump; /* address for the dsi debug bus dump */
+=======
+	u32 *dbgbus_dump; /* address for the debug bus dump */
+	u32 *vbif_dbgbus_dump; /* address for the vbif debug bus dump */
+	u32 *nrt_vbif_dbgbus_dump; /* address for the nrt vbif debug bus dump */
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 } mdss_dbg_xlog;
 
 static inline bool mdss_xlog_is_enabled(u32 flag)
@@ -93,6 +109,7 @@ static inline bool mdss_xlog_is_enabled(u32 flag)
 		(flag == MDSS_XLOG_ALL && mdss_dbg_xlog.xlog_enable);
 }
 
+<<<<<<< HEAD
 static void __halt_vbif_xin(void)
 {
 	struct mdss_data_type *mdata = mdss_mdp_get_mdata();
@@ -135,6 +152,8 @@ static void __dump_vbif_state(void)
 			reg_vbif_axi_halt_ctrl0, reg_vbif_axi_halt_ctrl1);
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 void mdss_xlog(const char *name, int line, int flag, ...)
 {
 	unsigned long flags;
@@ -625,7 +644,11 @@ struct mdss_debug_base *get_dump_blk_addr(const char *blk_name)
 
 static void mdss_xlog_dump_array(struct mdss_debug_base *blk_arr[],
 	u32 len, bool dead, const char *name, bool dump_dbgbus,
+<<<<<<< HEAD
 	bool dump_vbif_dbgbus, bool dump_dsi_dbgbus)
+=======
+	bool dump_vbif_dbgbus)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 {
 	int i;
 
@@ -649,6 +672,7 @@ static void mdss_xlog_dump_array(struct mdss_debug_base *blk_arr[],
 			&mdss_dbg_xlog.nrt_vbif_dbgbus_dump, false);
 	}
 
+<<<<<<< HEAD
 	if (dump_dsi_dbgbus)
 		mdss_dump_dsi_debug_bus(mdss_dbg_xlog.enable_dsi_dbgbus_dump,
 			&mdss_dbg_xlog.dsi_dbgbus_dump);
@@ -664,6 +688,10 @@ static void mdss_xlog_dump_array(struct mdss_debug_base *blk_arr[],
 		mdss_mdp_clk_ctrl(MDP_BLOCK_POWER_OFF);
 		panic(name);
 	}
+=======
+	if (dead && mdss_dbg_xlog.panic_on_err)
+		panic(name);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 static void xlog_debug_work(struct work_struct *work)
@@ -673,8 +701,12 @@ static void xlog_debug_work(struct work_struct *work)
 		ARRAY_SIZE(mdss_dbg_xlog.blk_arr),
 		mdss_dbg_xlog.work_panic, "xlog_workitem",
 		mdss_dbg_xlog.work_dbgbus,
+<<<<<<< HEAD
 		mdss_dbg_xlog.work_vbif_dbgbus,
 		mdss_dbg_xlog.work_dsi_dbgbus);
+=======
+		mdss_dbg_xlog.work_vbif_dbgbus);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 void mdss_xlog_tout_handler_default(bool queue, const char *name, ...)
@@ -682,7 +714,10 @@ void mdss_xlog_tout_handler_default(bool queue, const char *name, ...)
 	int i, index = 0;
 	bool dead = false;
 	bool dump_dbgbus = false, dump_vbif_dbgbus = false;
+<<<<<<< HEAD
 	bool dump_dsi_dbgbus = false;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	va_list args;
 	char *blk_name = NULL;
 	struct mdss_debug_base *blk_base = NULL;
@@ -718,9 +753,12 @@ void mdss_xlog_tout_handler_default(bool queue, const char *name, ...)
 		if (!strcmp(blk_name, "vbif_dbg_bus"))
 			dump_vbif_dbgbus = true;
 
+<<<<<<< HEAD
 		if (!strcmp(blk_name, "dsi_dbg_bus"))
 			dump_dsi_dbgbus = true;
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		if (!strcmp(blk_name, "panic"))
 			dead = true;
 	}
@@ -731,11 +769,18 @@ void mdss_xlog_tout_handler_default(bool queue, const char *name, ...)
 		mdss_dbg_xlog.work_panic = dead;
 		mdss_dbg_xlog.work_dbgbus = dump_dbgbus;
 		mdss_dbg_xlog.work_vbif_dbgbus = dump_vbif_dbgbus;
+<<<<<<< HEAD
 		mdss_dbg_xlog.work_dsi_dbgbus = dump_dsi_dbgbus;
 		schedule_work(&mdss_dbg_xlog.xlog_dump_work);
 	} else {
 		mdss_xlog_dump_array(blk_arr, blk_len, dead, name, dump_dbgbus,
 			dump_vbif_dbgbus, dump_dsi_dbgbus);
+=======
+		schedule_work(&mdss_dbg_xlog.xlog_dump_work);
+	} else {
+		mdss_xlog_dump_array(blk_arr, blk_len, dead, name, dump_dbgbus,
+			dump_vbif_dbgbus);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 }
 
@@ -819,7 +864,10 @@ int mdss_create_xlog_debug(struct mdss_debug_data *mdd)
 	mdss_dbg_xlog.enable_reg_dump = XLOG_DEFAULT_REGDUMP;
 	mdss_dbg_xlog.enable_dbgbus_dump = XLOG_DEFAULT_DBGBUSDUMP;
 	mdss_dbg_xlog.enable_vbif_dbgbus_dump = XLOG_DEFAULT_VBIF_DBGBUSDUMP;
+<<<<<<< HEAD
 	mdss_dbg_xlog.enable_dsi_dbgbus_dump = XLOG_DEFAULT_DSI_DBGBUSDUMP;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	pr_info("xlog_status: enable:%d, panic:%d, dump:%d\n",
 		mdss_dbg_xlog.xlog_enable, mdss_dbg_xlog.panic_on_err,

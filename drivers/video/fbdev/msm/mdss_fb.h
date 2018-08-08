@@ -232,12 +232,22 @@ struct msm_mdp_interface {
 	int (*configure_panel)(struct msm_fb_data_type *mfd, int mode,
 				int dest_ctrl);
 	int (*input_event_handler)(struct msm_fb_data_type *mfd);
+<<<<<<< HEAD
 	void (*footswitch_ctrl)(bool on);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	int (*pp_release_fnc)(struct msm_fb_data_type *mfd);
 	void *private1;
 };
 
 #define IS_CALIB_MODE_BL(mfd) (((mfd)->calib_mode) & MDSS_CALIB_MODE_BL)
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NUBIA_LCD_BACKLIGHT_CURVE
+int nubia_backlight_covert(struct msm_fb_data_type *mfd,
+				      int value);
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define MDSS_BRIGHT_TO_BL(out, v, bl_max, max_bright) do {\
 				out = (2 * (v) * (bl_max) + max_bright);\
 				do_div(out, 2 * max_bright);\
@@ -393,12 +403,15 @@ static inline void mdss_fb_update_notify_update(struct msm_fb_data_type *mfd)
 	}
 }
 
+<<<<<<< HEAD
 /* Function returns true for split link */
 static inline bool is_panel_split_link(struct msm_fb_data_type *mfd)
 {
 	return mfd && mfd->panel_info && mfd->panel_info->split_link_enabled;
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /* Function returns true for either any kind of dual display */
 static inline bool is_panel_split(struct msm_fb_data_type *mfd)
 {

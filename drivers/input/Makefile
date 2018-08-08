@@ -27,5 +27,9 @@ obj-$(CONFIG_INPUT_MISC)	+= misc/
 
 obj-$(CONFIG_INPUT_APMPOWER)	+= apm-power.o
 obj-$(CONFIG_INPUT_KEYRESET)	+= keyreset.o
+<<<<<<< HEAD
+=======
+obj-$(CONFIG_NUBIA_INPUT_KEYRESET)	+= keyreset_nubia.o
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 obj-$(CONFIG_INPUT_KEYCOMBO)	+= keycombo.o
 

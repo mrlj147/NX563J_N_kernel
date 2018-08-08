@@ -167,7 +167,10 @@
 
 /* BATT_INFO_ESR_PULL_DN_CFG */
 #define ESR_PULL_DOWN_IVAL_MASK			GENMASK(3, 2)
+<<<<<<< HEAD
 #define ESR_PULL_DOWN_IVAL_SHIFT		2
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define ESR_MEAS_CUR_60MA			0x0
 #define ESR_MEAS_CUR_120MA			0x1
 #define ESR_MEAS_CUR_180MA			0x2

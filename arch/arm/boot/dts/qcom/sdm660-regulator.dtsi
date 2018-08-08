@@ -28,7 +28,11 @@
 	rpm-regulator-smpa5 {
 		status = "okay";
 		pm660_s5: regulator-s5 {
+<<<<<<< HEAD
 			regulator-min-microvolt = <1224000>;
+=======
+			regulator-min-microvolt = <1350000>;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			regulator-max-microvolt = <1350000>;
 			status = "okay";
 		};

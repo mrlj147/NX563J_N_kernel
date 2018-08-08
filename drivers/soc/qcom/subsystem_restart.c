@@ -28,6 +28,10 @@
 #include <linux/spinlock.h>
 #include <linux/device.h>
 #include <linux/idr.h>
+<<<<<<< HEAD
+=======
+#include <linux/debugfs.h>
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #include <linux/interrupt.h>
 #include <linux/of_gpio.h>
 #include <linux/cdev.h>
@@ -148,6 +152,10 @@ struct restart_log {
  * @restart_level: restart level (0 - panic, 1 - related, 2 - independent, etc.)
  * @restart_order: order of other devices this devices restarts with
  * @crash_count: number of times the device has crashed
+<<<<<<< HEAD
+=======
+ * @dentry: debugfs directory for this device
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  * @do_ramdump_on_put: ramdump on subsystem_put() if true
  * @err_ready: completion variable to record error ready from subsystem
  * @crashed: indicates if subsystem has crashed
@@ -169,6 +177,12 @@ struct subsys_device {
 	int restart_level;
 	int crash_count;
 	struct subsys_soc_restart_order *restart_order;
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_DEBUG_FS
+	struct dentry *dentry;
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	bool do_ramdump_on_put;
 	struct cdev char_dev;
 	dev_t dev_no;
@@ -347,11 +361,18 @@ static struct device_attribute subsys_attrs[] = {
 	__ATTR_NULL,
 };
 
+<<<<<<< HEAD
 struct bus_type subsys_bus_type = {
 	.name		= "msm_subsys",
 	.dev_attrs	= subsys_attrs,
 };
 EXPORT_SYMBOL(subsys_bus_type);
+=======
+static struct bus_type subsys_bus_type = {
+	.name		= "msm_subsys",
+	.dev_attrs	= subsys_attrs,
+};
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 static DEFINE_IDA(subsys_ida);
 
@@ -1165,6 +1186,90 @@ void notify_proxy_unvote(struct device *device)
 		notify_each_subsys_device(&dev, 1, SUBSYS_PROXY_UNVOTE, NULL);
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_DEBUG_FS
+static ssize_t subsys_debugfs_read(struct file *filp, char __user *ubuf,
+		size_t cnt, loff_t *ppos)
+{
+	int r;
+	char buf[40];
+	struct subsys_device *subsys = filp->private_data;
+
+	r = snprintf(buf, sizeof(buf), "%d\n", subsys->count);
+	return simple_read_from_buffer(ubuf, cnt, ppos, buf, r);
+}
+
+static ssize_t subsys_debugfs_write(struct file *filp,
+		const char __user *ubuf, size_t cnt, loff_t *ppos)
+{
+	struct subsys_device *subsys = filp->private_data;
+	char buf[10];
+	char *cmp;
+
+	cnt = min(cnt, sizeof(buf) - 1);
+	if (copy_from_user(&buf, ubuf, cnt))
+		return -EFAULT;
+	buf[cnt] = '\0';
+	cmp = strstrip(buf);
+
+	if (!strcmp(cmp, "restart")) {
+		if (subsystem_restart_dev(subsys))
+			return -EIO;
+	} else if (!strcmp(cmp, "get")) {
+		if (subsystem_get(subsys->desc->name))
+			return -EIO;
+	} else if (!strcmp(cmp, "put")) {
+		subsystem_put(subsys);
+	} else {
+		return -EINVAL;
+	}
+
+	return cnt;
+}
+
+static const struct file_operations subsys_debugfs_fops = {
+	.open	= simple_open,
+	.read	= subsys_debugfs_read,
+	.write	= subsys_debugfs_write,
+};
+
+static struct dentry *subsys_base_dir;
+
+static int __init subsys_debugfs_init(void)
+{
+	subsys_base_dir = debugfs_create_dir("msm_subsys", NULL);
+	return !subsys_base_dir ? -ENOMEM : 0;
+}
+
+static void subsys_debugfs_exit(void)
+{
+	debugfs_remove_recursive(subsys_base_dir);
+}
+
+static int subsys_debugfs_add(struct subsys_device *subsys)
+{
+	if (!subsys_base_dir)
+		return -ENOMEM;
+
+	subsys->dentry = debugfs_create_file(subsys->desc->name,
+				S_IRUGO | S_IWUSR, subsys_base_dir,
+				subsys, &subsys_debugfs_fops);
+	return !subsys->dentry ? -ENOMEM : 0;
+}
+
+static void subsys_debugfs_remove(struct subsys_device *subsys)
+{
+	debugfs_remove(subsys->dentry);
+}
+#else
+static int __init subsys_debugfs_init(void) { return 0; };
+static void subsys_debugfs_exit(void) { }
+static int subsys_debugfs_add(struct subsys_device *subsys) { return 0; }
+static void subsys_debugfs_remove(struct subsys_device *subsys) { }
+#endif
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static int subsys_device_open(struct inode *inode, struct file *file)
 {
 	struct subsys_device *device, *subsys_dev = 0;
@@ -1601,8 +1706,22 @@ struct subsys_device *subsys_register(struct subsys_desc *desc)
 
 	mutex_init(&subsys->track.lock);
 
+<<<<<<< HEAD
 	ret = device_register(&subsys->dev);
 	if (ret) {
+=======
+	ret = subsys_debugfs_add(subsys);
+	if (ret) {
+		ida_simple_remove(&subsys_ida, subsys->id);
+		wakeup_source_trash(&subsys->ssr_wlock);
+		kfree(subsys);
+		return ERR_PTR(ret);
+	}
+
+	ret = device_register(&subsys->dev);
+	if (ret) {
+		subsys_debugfs_remove(subsys);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		put_device(&subsys->dev);
 		return ERR_PTR(ret);
 	}
@@ -1664,6 +1783,10 @@ err_setup_irqs:
 	if (ofnode)
 		subsys_remove_restart_order(ofnode);
 err_register:
+<<<<<<< HEAD
+=======
+	subsys_debugfs_remove(subsys);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	device_unregister(&subsys->dev);
 	return ERR_PTR(ret);
 }
@@ -1692,6 +1815,10 @@ void subsys_unregister(struct subsys_device *subsys)
 		WARN_ON(subsys->count);
 		device_unregister(&subsys->dev);
 		mutex_unlock(&subsys->track.lock);
+<<<<<<< HEAD
+=======
+		subsys_debugfs_remove(subsys);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		subsys_char_device_remove(subsys);
 		sysmon_notifier_unregister(subsys->desc);
 		if (subsys->desc->edge)
@@ -1731,6 +1858,12 @@ static int __init subsys_restart_init(void)
 	ret = bus_register(&subsys_bus_type);
 	if (ret)
 		goto err_bus;
+<<<<<<< HEAD
+=======
+	ret = subsys_debugfs_init();
+	if (ret)
+		goto err_debugfs;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	char_class = class_create(THIS_MODULE, "subsys");
 	if (IS_ERR(char_class)) {
@@ -1749,6 +1882,11 @@ static int __init subsys_restart_init(void)
 err_soc:
 	class_destroy(char_class);
 err_class:
+<<<<<<< HEAD
+=======
+	subsys_debugfs_exit();
+err_debugfs:
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	bus_unregister(&subsys_bus_type);
 err_bus:
 	destroy_workqueue(ssr_wq);

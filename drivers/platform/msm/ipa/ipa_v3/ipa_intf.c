@@ -572,8 +572,11 @@ ssize_t ipa3_read(struct file *filp, char __user *buf, size_t count,
 			if (copy_to_user(buf, &msg->meta,
 					  sizeof(struct ipa_msg_meta))) {
 				ret = -EFAULT;
+<<<<<<< HEAD
 				kfree(msg);
 				msg = NULL;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				break;
 			}
 			buf += sizeof(struct ipa_msg_meta);
@@ -582,8 +585,11 @@ ssize_t ipa3_read(struct file *filp, char __user *buf, size_t count,
 				if (copy_to_user(buf, msg->buff,
 						  msg->meta.msg_len)) {
 					ret = -EFAULT;
+<<<<<<< HEAD
 					kfree(msg);
 					msg = NULL;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 					break;
 				}
 				buf += msg->meta.msg_len;

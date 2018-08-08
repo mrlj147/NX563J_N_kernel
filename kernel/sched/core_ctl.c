@@ -35,7 +35,10 @@ struct cluster_data {
 	unsigned int busy_down_thres[MAX_CPUS_PER_CLUSTER];
 	unsigned int active_cpus;
 	unsigned int num_cpus;
+<<<<<<< HEAD
 	unsigned int nr_isolated_cpus;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	cpumask_t cpu_mask;
 	unsigned int need_cpus;
 	unsigned int task_thres;
@@ -261,7 +264,10 @@ static ssize_t show_global_state(const struct cluster_data *state, char *buf)
 	ssize_t count = 0;
 	unsigned int cpu;
 
+<<<<<<< HEAD
 	spin_lock_irq(&state_lock);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	for_each_possible_cpu(cpu) {
 		c = &per_cpu(cpu_state, cpu);
 		cluster = c->cluster;
@@ -295,12 +301,17 @@ static ssize_t show_global_state(const struct cluster_data *state, char *buf)
 		count += snprintf(buf + count, PAGE_SIZE - count,
 				"\tNeed CPUs: %u\n", cluster->need_cpus);
 		count += snprintf(buf + count, PAGE_SIZE - count,
+<<<<<<< HEAD
 				"\tNr isolated CPUs: %u\n",
 						cluster->nr_isolated_cpus);
 		count += snprintf(buf + count, PAGE_SIZE - count,
 				"\tBoost: %u\n", (unsigned int) cluster->boost);
 	}
 	spin_unlock_irq(&state_lock);
+=======
+				"\tBoost: %u\n", (unsigned int) cluster->boost);
+	}
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	return count;
 }
@@ -531,7 +542,11 @@ static bool adjustment_possible(const struct cluster_data *cluster,
 							unsigned int need)
 {
 	return (need < cluster->active_cpus || (need > cluster->active_cpus &&
+<<<<<<< HEAD
 						cluster->nr_isolated_cpus));
+=======
+	    sched_isolate_count(&cluster->cpu_mask, false)));
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 static bool eval_need(struct cluster_data *cluster)
@@ -541,8 +556,14 @@ static bool eval_need(struct cluster_data *cluster)
 	unsigned int need_cpus = 0, last_need, thres_idx;
 	int ret = 0;
 	bool need_flag = false;
+<<<<<<< HEAD
 	unsigned int new_need;
 	s64 now, elapsed;
+=======
+	unsigned int active_cpus;
+	unsigned int new_need;
+	s64 now;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	if (unlikely(!cluster->inited))
 		return 0;
@@ -552,8 +573,13 @@ static bool eval_need(struct cluster_data *cluster)
 	if (cluster->boost) {
 		need_cpus = cluster->max_cpus;
 	} else {
+<<<<<<< HEAD
 		cluster->active_cpus = get_active_cpu_count(cluster);
 		thres_idx = cluster->active_cpus ? cluster->active_cpus - 1 : 0;
+=======
+		active_cpus = get_active_cpu_count(cluster);
+		thres_idx = active_cpus ? active_cpus - 1 : 0;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		list_for_each_entry(c, &cluster->lru, sib) {
 			if (c->busy >= cluster->busy_up_thres[thres_idx])
 				c->is_busy = true;
@@ -569,6 +595,7 @@ static bool eval_need(struct cluster_data *cluster)
 	last_need = cluster->need_cpus;
 	now = ktime_to_ms(ktime_get());
 
+<<<<<<< HEAD
 	if (new_need > cluster->active_cpus) {
 		ret = 1;
 	} else {
@@ -579,6 +606,19 @@ static bool eval_need(struct cluster_data *cluster)
 		}
 
 		elapsed =  now - cluster->need_ts;
+=======
+	if (new_need == last_need) {
+		cluster->need_ts = now;
+		spin_unlock_irqrestore(&state_lock, flags);
+		return 0;
+	}
+
+	if (need_cpus > cluster->active_cpus) {
+		ret = 1;
+	} else if (need_cpus < cluster->active_cpus) {
+		s64 elapsed = now - cluster->need_ts;
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		ret = elapsed >= cluster->offline_delay_ms;
 	}
 
@@ -586,7 +626,11 @@ static bool eval_need(struct cluster_data *cluster)
 		cluster->need_ts = now;
 		cluster->need_cpus = new_need;
 	}
+<<<<<<< HEAD
 	trace_core_ctl_eval_need(cluster->first_cpu, last_need, new_need,
+=======
+	trace_core_ctl_eval_need(cluster->first_cpu, last_need, need_cpus,
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				 ret && need_flag);
 	spin_unlock_irqrestore(&state_lock, flags);
 
@@ -722,7 +766,10 @@ static void try_to_isolate(struct cluster_data *cluster, unsigned int need)
 	struct cpu_data *c, *tmp;
 	unsigned long flags;
 	unsigned int num_cpus = cluster->num_cpus;
+<<<<<<< HEAD
 	unsigned int nr_isolated = 0;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	/*
 	 * Protect against entry being removed (and added at tail) by other
@@ -747,14 +794,20 @@ static void try_to_isolate(struct cluster_data *cluster, unsigned int need)
 		if (!sched_isolate_cpu(c->cpu)) {
 			c->isolated_by_us = true;
 			move_cpu_lru(c);
+<<<<<<< HEAD
 			nr_isolated++;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		} else {
 			pr_debug("Unable to isolate CPU%u\n", c->cpu);
 		}
 		cluster->active_cpus = get_active_cpu_count(cluster);
 		spin_lock_irqsave(&state_lock, flags);
 	}
+<<<<<<< HEAD
 	cluster->nr_isolated_cpus += nr_isolated;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	spin_unlock_irqrestore(&state_lock, flags);
 
 	/*
@@ -764,7 +817,10 @@ static void try_to_isolate(struct cluster_data *cluster, unsigned int need)
 	if (cluster->active_cpus <= cluster->max_cpus)
 		return;
 
+<<<<<<< HEAD
 	nr_isolated = 0;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	num_cpus = cluster->num_cpus;
 	spin_lock_irqsave(&state_lock, flags);
 	list_for_each_entry_safe(c, tmp, &cluster->lru, sib) {
@@ -782,14 +838,20 @@ static void try_to_isolate(struct cluster_data *cluster, unsigned int need)
 		if (!sched_isolate_cpu(c->cpu)) {
 			c->isolated_by_us = true;
 			move_cpu_lru(c);
+<<<<<<< HEAD
 			nr_isolated++;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		} else {
 			pr_debug("Unable to isolate CPU%u\n", c->cpu);
 		}
 		cluster->active_cpus = get_active_cpu_count(cluster);
 		spin_lock_irqsave(&state_lock, flags);
 	}
+<<<<<<< HEAD
 	cluster->nr_isolated_cpus += nr_isolated;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	spin_unlock_irqrestore(&state_lock, flags);
 
 }
@@ -800,7 +862,10 @@ static void __try_to_unisolate(struct cluster_data *cluster,
 	struct cpu_data *c, *tmp;
 	unsigned long flags;
 	unsigned int num_cpus = cluster->num_cpus;
+<<<<<<< HEAD
 	unsigned int nr_unisolated = 0;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	/*
 	 * Protect against entry being removed (and added at tail) by other
@@ -825,14 +890,20 @@ static void __try_to_unisolate(struct cluster_data *cluster,
 		if (!sched_unisolate_cpu(c->cpu)) {
 			c->isolated_by_us = false;
 			move_cpu_lru(c);
+<<<<<<< HEAD
 			nr_unisolated++;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		} else {
 			pr_debug("Unable to unisolate CPU%u\n", c->cpu);
 		}
 		cluster->active_cpus = get_active_cpu_count(cluster);
 		spin_lock_irqsave(&state_lock, flags);
 	}
+<<<<<<< HEAD
 	cluster->nr_isolated_cpus -= nr_unisolated;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	spin_unlock_irqrestore(&state_lock, flags);
 }
 
@@ -898,11 +969,18 @@ static int __ref cpu_callback(struct notifier_block *nfb,
 	struct cpu_data *state = &per_cpu(cpu_state, cpu);
 	struct cluster_data *cluster = state->cluster;
 	unsigned int need;
+<<<<<<< HEAD
 	bool do_wakeup, unisolated = false;
 	unsigned long flags;
 
 	if (unlikely(!cluster || !cluster->inited))
 		return NOTIFY_DONE;
+=======
+	int ret = NOTIFY_OK;
+
+	if (unlikely(!cluster || !cluster->inited))
+		return NOTIFY_OK;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	switch (action & ~CPU_TASKS_FROZEN) {
 	case CPU_ONLINE:
@@ -925,7 +1003,10 @@ static int __ref cpu_callback(struct notifier_block *nfb,
 		if (state->isolated_by_us) {
 			sched_unisolate_cpu_unlocked(cpu);
 			state->isolated_by_us = false;
+<<<<<<< HEAD
 			unisolated = true;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		}
 
 		/* Move a CPU to the end of the LRU when it goes offline. */
@@ -934,6 +1015,7 @@ static int __ref cpu_callback(struct notifier_block *nfb,
 		state->busy = 0;
 		cluster->active_cpus = get_active_cpu_count(cluster);
 		break;
+<<<<<<< HEAD
 	default:
 		return NOTIFY_DONE;
 	}
@@ -948,6 +1030,15 @@ static int __ref cpu_callback(struct notifier_block *nfb,
 		wake_up_core_ctl_thread(cluster);
 
 	return NOTIFY_OK;
+=======
+	}
+
+	need = apply_limits(cluster, cluster->need_cpus);
+	if (adjustment_possible(cluster, need))
+		wake_up_core_ctl_thread(cluster);
+
+	return ret;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 static struct notifier_block __refdata cpu_notifier = {

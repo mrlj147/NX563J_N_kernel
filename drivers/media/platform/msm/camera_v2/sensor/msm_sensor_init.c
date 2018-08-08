@@ -42,7 +42,11 @@ static const struct v4l2_subdev_internal_ops msm_sensor_init_internal_ops;
 static int msm_sensor_wait_for_probe_done(struct msm_sensor_init_t *s_init)
 {
 	int rc;
+<<<<<<< HEAD
 	int tm = 20000;
+=======
+	int tm = 2000;//ZTEMT:fengxun modfiy from 20000 to 2000
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (s_init->module_init_status == 1) {
 		CDBG("msm_cam_get_module_init_status -2\n");
 		return 0;

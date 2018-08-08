@@ -16,7 +16,10 @@
 #include "dsi-panel-truly-1080p-cmd.dtsi"
 #include "dsi-panel-truly-1080p-video.dtsi"
 #include "dsi-panel-rm67195-amoled-fhd-cmd.dtsi"
+<<<<<<< HEAD
 #include "dsi-panel-sharp-split-link-wuxga-video.dtsi"
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 &soc {
 	dsi_panel_pwr_supply: dsi_panel_pwr_supply {
@@ -52,6 +55,7 @@
 		};
 	};
 
+<<<<<<< HEAD
 	dsi_panel_split_link_pwr_supply: dsi_panel_split_link_pwr_supply {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -94,6 +98,8 @@
 		};
 	};
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	dsi_panel_pwr_supply_labibb_amoled:
 			dsi_panel_pwr_supply_labibb_amoled {
 		#address-cells = <1>;
@@ -157,6 +163,7 @@
 	qcom,mdss-dsi-pan-enable-dynamic-fps;
 	qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_vfp";
 	qcom,esd-check-enabled;
+<<<<<<< HEAD
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
 	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
 	qcom,mdss-dsi-panel-status-command-state = "dsi_hs_mode";
@@ -165,6 +172,9 @@
 	qcom,mdss-dsi-panel-status-read-length = <1>;
 	qcom,mdss-dsi-panel-max-error-count = <3>;
 
+=======
+	qcom,mdss-dsi-panel-status-check-mode = "bta_check";
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 &dsi_nt35695b_truly_fhd_cmd {
@@ -174,6 +184,7 @@
 		24 1e 08 09 05 03 04 a0
 		24 1a 08 09 05 03 04 a0];
 	qcom,esd-check-enabled;
+<<<<<<< HEAD
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
 	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
 	qcom,mdss-dsi-panel-status-command-state = "dsi_hs_mode";
@@ -182,6 +193,9 @@
 	qcom,mdss-dsi-panel-status-read-length = <1>;
 	qcom,mdss-dsi-panel-max-error-count = <3>;
 
+=======
+	qcom,mdss-dsi-panel-status-check-mode = "bta_check";
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 &dsi_truly_1080_vid {
@@ -195,6 +209,7 @@
 	qcom,mdss-dsi-pan-enable-dynamic-fps;
 	qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_vfp";
 	qcom,esd-check-enabled;
+<<<<<<< HEAD
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
 	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
 	qcom,mdss-dsi-panel-status-command-state = "dsi_hs_mode";
@@ -203,6 +218,9 @@
 	qcom,mdss-dsi-panel-status-read-length = <1>;
 	qcom,mdss-dsi-panel-max-error-count = <3>;
 
+=======
+	qcom,mdss-dsi-panel-status-check-mode = "bta_check";
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 &dsi_truly_1080_cmd {
@@ -212,6 +230,7 @@
 		23 1e 08 09 05 03 04 a0
 		23 1a 08 09 05 03 04 a0];
 	qcom,esd-check-enabled;
+<<<<<<< HEAD
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
 	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
 	qcom,mdss-dsi-panel-status-command-state = "dsi_hs_mode";
@@ -220,6 +239,9 @@
 	qcom,mdss-dsi-panel-status-read-length = <1>;
 	qcom,mdss-dsi-panel-max-error-count = <3>;
 
+=======
+	qcom,mdss-dsi-panel-status-check-mode = "bta_check";
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 &dsi_rm67195_amoled_fhd_cmd {
@@ -231,6 +253,7 @@
 	qcom,mdss-dsi-t-clk-post = <0x0d>;
 	qcom,mdss-dsi-t-clk-pre = <0x2f>;
 };
+<<<<<<< HEAD
 
 &dsi_sharp_split_link_wuxga_video {
 	qcom,mdss-dsi-panel-timings-phy-v2 = [25 1f 09 0a 06 03 04 a0
@@ -243,3 +266,5 @@
 	qcom,mdss-dsi-pan-enable-dynamic-fps;
 	qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_vfp";
 };
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf

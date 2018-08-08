@@ -181,7 +181,10 @@
 				"cfg_ahb_clk", "xo";
 
 		qcom,core-clk-rate = <133330000>;
+<<<<<<< HEAD
 		qcom,core-clk-rate-hs = <66666667>;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 		resets = <&clock_gcc GCC_USB_30_BCR>;
 		reset-names = "core_reset";
@@ -193,7 +196,10 @@
 			interrupts = <0 131 0>;
 			usb-phy = <&qusb_phy0>, <&ssphy>;
 			tx-fifo-resize;
+<<<<<<< HEAD
 			snps,usb3-u1u2-disable;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			snps,nominal-elastic-buffer;
 			snps,disable-clk-gating;
 			snps,has-lpm-erratum;
@@ -377,8 +383,11 @@
 				 0x8f8 0x77 0x00
 				 0x4fc 0x80 0x00
 				 0x8fc 0x80 0x00
+<<<<<<< HEAD
 				 0x564 0x00 0x00
 				 0x964 0x00 0x00
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				 0x4c0 0x0a 0x00
 				 0x8c0 0x0a 0x00
 				 0x504 0x03 0x00
@@ -456,6 +465,7 @@
 		qcom,reset-ep-after-lpm-resume;
 	};
 
+<<<<<<< HEAD
 	qusb_phy1: qusb@c014000 {
 		compatible = "qcom,qusb2phy";
 		reg = <0x0c014000 0x180>,
@@ -490,6 +500,8 @@
 		reset-names = "phy_reset";
 	};
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	sdhc_1: sdhci@c0c4000 {
 		compatible = "qcom,sdhci-msm-v5";
 		reg = <0xc0c4000 0x1000>, <0xc0c5000 0x1000>;

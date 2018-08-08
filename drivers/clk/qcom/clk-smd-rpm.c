@@ -30,7 +30,10 @@
 #include <dt-bindings/mfd/qcom-rpm.h>
 
 #include "clk-voter.h"
+<<<<<<< HEAD
 #include "clk-debug.h"
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 #define QCOM_RPM_KEY_SOFTWARE_ENABLE			0x6e657773
 #define QCOM_RPM_KEY_PIN_CTRL_CLK_BUFFER_ENABLE_KEY	0x62636370
@@ -464,7 +467,10 @@ static const struct clk_ops clk_smd_rpm_ops = {
 	.round_rate	= clk_smd_rpm_round_rate,
 	.recalc_rate	= clk_smd_rpm_recalc_rate,
 	.is_enabled	= clk_smd_rpm_is_enabled,
+<<<<<<< HEAD
 	.debug_init	= clk_debug_measure_add,
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 static const struct clk_ops clk_smd_rpm_branch_ops = {
@@ -473,7 +479,10 @@ static const struct clk_ops clk_smd_rpm_branch_ops = {
 	.round_rate	= clk_smd_rpm_round_rate,
 	.recalc_rate	= clk_smd_rpm_recalc_rate,
 	.is_enabled	= clk_smd_rpm_is_enabled,
+<<<<<<< HEAD
 	.debug_init	= clk_debug_measure_add,
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 /* msm8916 */

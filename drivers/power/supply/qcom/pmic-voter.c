@@ -20,7 +20,11 @@
 
 #include <linux/pmic-voter.h>
 
+<<<<<<< HEAD
 #define NUM_MAX_CLIENTS		16
+=======
+#define NUM_MAX_CLIENTS	8
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #define DEBUG_FORCE_CLIENT	"DEBUG_FORCE_CLIENT"
 
 static DEFINE_SPINLOCK(votable_list_slock);

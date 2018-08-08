@@ -206,7 +206,11 @@ if ARM64_DMA_USE_IOMMU
 config ARM64_DMA_IOMMU_ALIGNMENT
 	int "Maximum PAGE_SIZE order of alignment for DMA IOMMU buffers"
 	range 4 9
+<<<<<<< HEAD
 	default 9
+=======
+	default 8
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	help
 	  DMA mapping framework by default aligns all buffers to the smallest
 	  PAGE_SIZE order which is greater than or equal to the requested buffer

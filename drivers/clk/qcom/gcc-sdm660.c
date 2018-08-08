@@ -27,7 +27,10 @@
 
 #include "clk-alpha-pll.h"
 #include "clk-branch.h"
+<<<<<<< HEAD
 #include "clk-debug.h"
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #include "common.h"
 #include "clk-pll.h"
 #include "clk-regmap.h"
@@ -732,7 +735,10 @@ static struct clk_rcg2 gp3_clk_src = {
 };
 
 static const struct freq_tbl ftbl_hmss_gpll0_clk_src[] = {
+<<<<<<< HEAD
 	F(300000000, P_GPLL0_OUT_MAIN, 2, 0, 0),
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	F(600000000, P_GPLL0_OUT_MAIN, 1, 0, 0),
 	{ }
 };
@@ -2756,9 +2762,12 @@ static int gcc_660_probe(struct platform_device *pdev)
 	/* Keep bimc gfx clock port on all the time */
 	clk_prepare_enable(gcc_bimc_gfx_clk.clkr.hw.clk);
 
+<<<<<<< HEAD
 	/* Set the HMSS_GPLL0_SRC for 300MHz to CPU subsystem */
 	clk_set_rate(hmss_gpll0_clk_src.clkr.hw.clk, 300000000);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	dev_info(&pdev->dev, "Registered GCC clocks\n");
 
 	return ret;
@@ -2958,9 +2967,12 @@ static const char *const debug_mux_parent_names[] = {
 	"mmss_video_axi_clk",
 	"mmss_video_core_clk",
 	"mmss_video_subcore0_clk",
+<<<<<<< HEAD
 	"mmss_throttle_camss_axi_clk",
 	"mmss_throttle_mdss_axi_clk",
 	"mmss_throttle_video_axi_clk",
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	"gpucc_gfx3d_clk",
 	"gpucc_rbbmtimer_clk",
 	"gpucc_rbcpr_clk",
@@ -3226,12 +3238,15 @@ static struct clk_debug_mux gcc_debug_mux = {
 					0x00E, 0, 0, 0x1000, BM(14, 13) },
 		{ "mmss_video_subcore0_clk",	0x22,	MMCC,
 					0x01A, 0, 0, 0x1000, BM(14, 13) },
+<<<<<<< HEAD
 		{ "mmss_throttle_camss_axi_clk", 0x22,	MMCC,
 					0x0AA, 0, 0, 0x1000, BM(14, 13) },
 		{ "mmss_throttle_mdss_axi_clk",	0x22,	MMCC,
 					0x0AB, 0, 0, 0x1000, BM(14, 13) },
 		{ "mmss_throttle_video_axi_clk", 0x22,	MMCC,
 					0x0AC, 0, 0, 0x1000, BM(14, 13) },
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		{ "gpucc_gfx3d_clk",		0x13d,	GPU,
 					0x008, 0, 0, 0, BM(18, 17) },
 		{ "gpucc_rbbmtimer_clk",	0x13d,	GPU,
@@ -3342,11 +3357,15 @@ static int clk_debug_660_probe(struct platform_device *pdev)
 		return PTR_ERR(clk);
 	}
 
+<<<<<<< HEAD
 	ret = clk_register_debug(&gcc_debug_mux.hw);
 	if (ret)
 		dev_err(&pdev->dev, "Could not register Measure clock\n");
 	else
 		dev_info(&pdev->dev, "Registered debug mux successfully\n");
+=======
+	dev_info(&pdev->dev, "Registered debug mux successfully\n");
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	return ret;
 }

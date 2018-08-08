@@ -709,8 +709,11 @@ int mdss_mdp_get_panel_params(struct mdss_mdp_pipe *pipe,
 			*h_total += mdss_panel_get_htotal(
 				&mixer->ctl->panel_data->next->panel_info,
 				false);
+<<<<<<< HEAD
 		else if (is_panel_split_link(mixer->ctl->mfd))
 			*h_total *= pinfo->mipi.num_of_sublinks;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	} else {
 		*v_total = mixer->height;
 		*xres = mixer->width;
@@ -4092,6 +4095,7 @@ static void mdss_mdp_ctl_split_display_enable(int enable,
 			if (is_pingpong_split(main_ctl->mfd))
 				lower |= BIT(2);
 			upper = lower;
+<<<<<<< HEAD
 
 			/*
 			 * align command mode stream0 output for
@@ -4099,6 +4103,8 @@ static void mdss_mdp_ctl_split_display_enable(int enable,
 			 */
 			if (main_ctl->mdata->mdp_rev >= MDSS_MDP_HW_REV_320)
 				lower |= BIT(12);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		} else {
 			/* interface controlling sw trigger (video mode) */
 			if (main_ctl->intf_num == MDSS_MDP_INTF2) {
@@ -4110,9 +4116,12 @@ static void mdss_mdp_ctl_split_display_enable(int enable,
 			}
 		}
 	}
+<<<<<<< HEAD
 
 	if (is_panel_split_link(main_ctl->mfd))
 		upper = lower = 0;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	writel_relaxed(upper, main_ctl->mdata->mdp_base +
 		MDSS_MDP_REG_SPLIT_DISPLAY_UPPER_PIPE_CTRL);
 	writel_relaxed(lower, main_ctl->mdata->mdp_base +
@@ -4281,8 +4290,12 @@ void mdss_mdp_ctl_restore(bool locked)
 		if (sctl) {
 			mdss_mdp_ctl_restore_sub(sctl);
 			mdss_mdp_ctl_split_display_enable(1, ctl, sctl);
+<<<<<<< HEAD
 		} else if (is_pingpong_split(ctl->mfd) ||
 				is_panel_split_link(ctl->mfd)) {
+=======
+		} else if (is_pingpong_split(ctl->mfd)) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			mdss_mdp_ctl_pp_split_display_enable(1, ctl);
 		}
 
@@ -4409,8 +4422,11 @@ int mdss_mdp_ctl_start(struct mdss_mdp_ctl *ctl, bool handoff)
 		} else if (is_pingpong_split(ctl->mfd)) {
 			ctl->slave_intf_num = (ctl->intf_num + 1);
 			mdss_mdp_ctl_pp_split_display_enable(true, ctl);
+<<<<<<< HEAD
 		} else if (is_panel_split_link(ctl->mfd)) {
 			mdss_mdp_ctl_pp_split_display_enable(true, ctl);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		}
 	}
 
@@ -4585,7 +4601,11 @@ void mdss_mdp_check_ctl_reset_status(struct mdss_mdp_ctl *ctl)
 		pr_err("hw recovery is not complete for ctl:%d status:0x%x\n",
 			ctl->num, status);
 		MDSS_XLOG_TOUT_HANDLER("mdp", "vbif", "vbif_nrt", "dbg_bus",
+<<<<<<< HEAD
 			"vbif_dbg_bus", "dsi_dbg_bus", "panic");
+=======
+			"vbif_dbg_bus", "panic");
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 }
 
@@ -5752,9 +5772,12 @@ int mdss_mdp_display_commit(struct mdss_mdp_ctl *ctl, void *arg,
 	bool is_bw_released, split_lm_valid;
 	struct mdss_data_type *mdata = mdss_mdp_get_mdata();
 	u32 ctl_flush_bits = 0, sctl_flush_bits = 0;
+<<<<<<< HEAD
 	/* Must initialize pp_program_info */
 	struct mdss_mdp_pp_program_info pp_program_info = {
 						PP_PROGRAM_ALL, 0, 0};
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	if (!ctl) {
 		pr_err("display function not set\n");
@@ -5867,6 +5890,7 @@ int mdss_mdp_display_commit(struct mdss_mdp_ctl *ctl, void *arg,
 		mdss_mdp_ctl_split_display_enable(split_lm_valid, ctl, sctl);
 
 	ATRACE_BEGIN("postproc_programming");
+<<<<<<< HEAD
 	if (ctl->mfd && ctl->mfd->dcm_state != DTM_ENTER) {
 		/* postprocessing setup, including dspp */
 		if (!ctl->is_video_mode)
@@ -5874,6 +5898,11 @@ int mdss_mdp_display_commit(struct mdss_mdp_ctl *ctl, void *arg,
 							PP_NORMAL_PROGRAM_MASK;
 		mdss_mdp_pp_setup_locked(ctl, &pp_program_info);
 	}
+=======
+	if (ctl->is_video_mode && ctl->mfd && ctl->mfd->dcm_state != DTM_ENTER)
+		/* postprocessing setup, including dspp */
+		mdss_mdp_pp_setup_locked(ctl);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	if (sctl) {
 		if (ctl->split_flush_en) {
@@ -5929,17 +5958,24 @@ int mdss_mdp_display_commit(struct mdss_mdp_ctl *ctl, void *arg,
 	}
 
 	/* Moved pp programming to post ping pong */
+<<<<<<< HEAD
 	ATRACE_BEGIN("postproc_programming_deferred");
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (!ctl->is_video_mode && ctl->mfd &&
 			ctl->mfd->dcm_state != DTM_ENTER) {
 		/* postprocessing setup, including dspp */
 		mutex_lock(&ctl->flush_lock);
+<<<<<<< HEAD
 		pp_program_info.pp_program_mask = PP_DEFER_PROGRAM_MASK;
 		/*
 		 * pp_program_info should not be modified beween normal and
 		 * deferred stage calls.
 		 */
 		mdss_mdp_pp_setup_locked(ctl, &pp_program_info);
+=======
+		mdss_mdp_pp_setup_locked(ctl);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		if (sctl) {
 			if (ctl->split_flush_en) {
 				ctl->flush_bits |= sctl->flush_bits;
@@ -5952,7 +5988,10 @@ int mdss_mdp_display_commit(struct mdss_mdp_ctl *ctl, void *arg,
 		ctl_flush_bits |= ctl->flush_bits;
 		mutex_unlock(&ctl->flush_lock);
 	}
+<<<<<<< HEAD
 	ATRACE_END("postproc_programming_deferred");
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/*
 	 * if serialize_wait4pp is false then roi_bkup used in wait4pingpong
 	 * will be of previous frame as expected.
@@ -6046,10 +6085,13 @@ int mdss_mdp_display_commit(struct mdss_mdp_ctl *ctl, void *arg,
 	ctl_flush_bits |= ctl->flush_bits;
 
 	ATRACE_BEGIN("flush_kickoff");
+<<<<<<< HEAD
 
 	MDSS_XLOG(ctl->intf_num, ctl_flush_bits, sctl_flush_bits,
 		mdss_mdp_ctl_read(ctl, MDSS_MDP_REG_CTL_FLUSH), split_lm_valid);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	mdss_mdp_ctl_write(ctl, MDSS_MDP_REG_CTL_FLUSH, ctl_flush_bits);
 	if (sctl) {
 		if (sctl_flush_bits) {
@@ -6061,6 +6103,11 @@ int mdss_mdp_display_commit(struct mdss_mdp_ctl *ctl, void *arg,
 	}
 	ctl->commit_in_progress = false;
 
+<<<<<<< HEAD
+=======
+	MDSS_XLOG(ctl->intf_num, ctl_flush_bits, sctl_flush_bits,
+		split_lm_valid);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	wmb();
 	ctl->flush_reg_data = ctl_flush_bits;
 	ctl->flush_bits = 0;

@@ -559,7 +559,10 @@ struct lab_regulator {
 	int				step_size;
 	int				slew_rate;
 	int				soft_start;
+<<<<<<< HEAD
 	int				sc_wait_time_ms;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	int				vreg_enabled;
 };
@@ -609,8 +612,11 @@ struct qpnp_labibb {
 	bool				skip_2nd_swire_cmd;
 	bool				pfm_enable;
 	bool				notify_lab_vreg_ok_sts;
+<<<<<<< HEAD
 	bool				detect_lab_sc;
 	bool				sc_detected;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	u32				swire_2nd_cmd_delay;
 	u32				swire_ibb_ps_enable_delay;
 };
@@ -2141,10 +2147,15 @@ static void qpnp_lab_vreg_notifier_work(struct work_struct *work)
 	u8 val;
 	struct qpnp_labibb *labibb  = container_of(work, struct qpnp_labibb,
 							lab_vreg_ok_work);
+<<<<<<< HEAD
 	if (labibb->lab_vreg.sc_wait_time_ms != -EINVAL)
 		retries = labibb->lab_vreg.sc_wait_time_ms / 5;
 
 	while (retries) {
+=======
+
+	while (retries--) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		rc = qpnp_labibb_read(labibb, labibb->lab_base +
 					REG_LAB_STATUS1, &val, 1);
 		if (rc < 0) {
@@ -2160,6 +2171,7 @@ static void qpnp_lab_vreg_notifier_work(struct work_struct *work)
 		}
 
 		usleep_range(dly, dly + 100);
+<<<<<<< HEAD
 		retries--;
 	}
 
@@ -2184,6 +2196,12 @@ static void qpnp_lab_vreg_notifier_work(struct work_struct *work)
 			pr_err("LAB_VREG_OK not set, failed to notify\n");
 		}
 	}
+=======
+	}
+
+	if (!retries)
+		pr_err("LAB_VREG_OK not set, failed to notify\n");
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 static int qpnp_labibb_regulator_enable(struct qpnp_labibb *labibb)
@@ -2348,11 +2366,14 @@ static int qpnp_lab_regulator_enable(struct regulator_dev *rdev)
 
 	struct qpnp_labibb *labibb  = rdev_get_drvdata(rdev);
 
+<<<<<<< HEAD
 	if (labibb->sc_detected) {
 		pr_info("Short circuit detected: disabled LAB/IBB rails\n");
 		return 0;
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (labibb->skip_2nd_swire_cmd) {
 		rc = qpnp_ibb_ps_config(labibb, false);
 		if (rc < 0) {
@@ -2393,7 +2414,11 @@ static int qpnp_lab_regulator_enable(struct regulator_dev *rdev)
 		labibb->lab_vreg.vreg_enabled = 1;
 	}
 
+<<<<<<< HEAD
 	if (labibb->notify_lab_vreg_ok_sts || labibb->detect_lab_sc)
+=======
+	if (labibb->notify_lab_vreg_ok_sts)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		schedule_work(&labibb->lab_vreg_ok_work);
 
 	return 0;
@@ -2651,12 +2676,15 @@ static int register_qpnp_lab_regulator(struct qpnp_labibb *labibb,
 	labibb->notify_lab_vreg_ok_sts = of_property_read_bool(of_node,
 					"qcom,notify-lab-vreg-ok-sts");
 
+<<<<<<< HEAD
 	labibb->lab_vreg.sc_wait_time_ms = -EINVAL;
 	if (labibb->pmic_rev_id->pmic_subtype == PM660L_SUBTYPE &&
 					labibb->detect_lab_sc)
 		of_property_read_u32(of_node, "qcom,qpnp-lab-sc-wait-time-ms",
 					&labibb->lab_vreg.sc_wait_time_ms);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	rc = of_property_read_u32(of_node, "qcom,qpnp-lab-soft-start",
 					&(labibb->lab_vreg.soft_start));
 	if (!rc) {
@@ -3291,11 +3319,14 @@ static int qpnp_ibb_regulator_enable(struct regulator_dev *rdev)
 	u8 val;
 	struct qpnp_labibb *labibb  = rdev_get_drvdata(rdev);
 
+<<<<<<< HEAD
 	if (labibb->sc_detected) {
 		pr_info("Short circuit detected: disabled LAB/IBB rails\n");
 		return 0;
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (!labibb->ibb_vreg.vreg_enabled && !labibb->swire_control) {
 
 		if (!labibb->standalone)
@@ -3772,8 +3803,11 @@ static int qpnp_labibb_regulator_probe(struct platform_device *pdev)
 
 	if (labibb->pmic_rev_id->pmic_subtype == PM660L_SUBTYPE) {
 		labibb->mode = QPNP_LABIBB_AMOLED_MODE;
+<<<<<<< HEAD
 		/* Enable polling for LAB short circuit detection for PM660A */
 		labibb->detect_lab_sc = true;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	} else {
 		rc = of_property_read_string(labibb->dev->of_node,
 				"qcom,qpnp-labibb-mode", &mode_name);

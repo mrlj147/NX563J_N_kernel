@@ -4237,6 +4237,11 @@ static int hub_set_address(struct usb_device *udev, int devnum)
  * device says it supports the new USB 2.0 Link PM errata by setting the BESL
  * support bit in the BOS descriptor.
  */
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NUBIA_LINK_PM
+#else
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static void hub_set_initial_usb2_lpm_policy(struct usb_device *udev)
 {
 	struct usb_hub *hub = usb_hub_to_struct_hub(udev->parent);
@@ -4254,6 +4259,10 @@ static void hub_set_initial_usb2_lpm_policy(struct usb_device *udev)
 		usb_set_usb2_hardware_lpm(udev, 1);
 	}
 }
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 static int hub_enable_device(struct usb_device *udev)
 {
@@ -4585,7 +4594,14 @@ hub_port_init(struct usb_hub *hub, struct usb_device *udev, int port1,
 	/* notify HCD that we have a device connected and addressed */
 	if (hcd->driver->update_device)
 		hcd->driver->update_device(hcd, udev);
+<<<<<<< HEAD
 	hub_set_initial_usb2_lpm_policy(udev);
+=======
+#ifdef CONFIG_NUBIA_LINK_PM
+#else
+	hub_set_initial_usb2_lpm_policy(udev);
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 fail:
 	if (retval) {
 		hub_port_disable(hub, port1, 0);

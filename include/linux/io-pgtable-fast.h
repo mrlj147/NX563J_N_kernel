@@ -37,7 +37,11 @@ void av8l_fast_unmap_public(av8l_fast_iopte *ptep, size_t size);
 #define AV8L_FAST_PTE_UNMAPPED_NEED_TLBI 0xa
 
 void av8l_fast_clear_stale_ptes(av8l_fast_iopte *puds, u64 base,
+<<<<<<< HEAD
 				u64 start, u64 end, bool skip_sync);
+=======
+				u64 end, bool skip_sync);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 void av8l_register_notify(struct notifier_block *nb);
 
 #else  /* !CONFIG_IOMMU_IO_PGTABLE_FAST_PROVE_TLB */
@@ -46,7 +50,10 @@ void av8l_register_notify(struct notifier_block *nb);
 
 static inline void av8l_fast_clear_stale_ptes(av8l_fast_iopte *puds,
 					      u64 base,
+<<<<<<< HEAD
 					      u64 start,
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 					      u64 end,
 					      bool skip_sync)
 {

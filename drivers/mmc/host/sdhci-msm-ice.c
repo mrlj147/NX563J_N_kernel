@@ -377,7 +377,11 @@ int sdhci_msm_ice_cmdq_cfg(struct sdhci_host *host,
 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
 	struct sdhci_msm_host *msm_host = pltfm_host->priv;
 	int err = 0;
+<<<<<<< HEAD
 	short key_index = 0;
+=======
+	short key_index;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	sector_t lba = 0;
 	unsigned int bypass = SDHCI_MSM_ICE_ENABLE_BYPASS;
 	struct request *req;

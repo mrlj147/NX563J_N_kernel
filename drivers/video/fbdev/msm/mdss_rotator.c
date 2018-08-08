@@ -501,12 +501,15 @@ static int mdss_rotator_import_buffer(struct mdp_layer_buffer *buffer,
 
 	memset(planes, 0, sizeof(planes));
 
+<<<<<<< HEAD
 	if (buffer->plane_count > MAX_PLANES) {
 		pr_err("buffer plane_count exceeds MAX_PLANES limit:%d\n",
 				buffer->plane_count);
 		return -EINVAL;
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	for (i = 0; i < buffer->plane_count; i++) {
 		planes[i].memory_id = buffer->planes[i].fd;
 		planes[i].offset = buffer->planes[i].offset;
@@ -2110,6 +2113,7 @@ struct mdss_rot_entry_container *mdss_rotator_req_init(
 	struct mdss_rot_entry_container *req;
 	int size, i;
 
+<<<<<<< HEAD
 	/*
 	 * Check input and output plane_count from each given item
 	 * are within the MAX_PLANES limit
@@ -2124,6 +2128,8 @@ struct mdss_rot_entry_container *mdss_rotator_req_init(
 		}
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	size = sizeof(struct mdss_rot_entry_container);
 	size += sizeof(struct mdss_rot_entry) * count;
 	req = devm_kzalloc(&mgr->pdev->dev, size, GFP_KERNEL);

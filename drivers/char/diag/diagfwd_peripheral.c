@@ -244,6 +244,7 @@ static void diagfwd_data_process_done(struct diagfwd_info *fwd_info,
 
 	mutex_lock(&driver->hdlc_disable_mutex);
 	mutex_lock(&fwd_info->data_mutex);
+<<<<<<< HEAD
 
 	peripheral = GET_PD_CTXT(buf->ctxt);
 	if (peripheral == DIAG_ID_MPSS)
@@ -252,6 +253,11 @@ static void diagfwd_data_process_done(struct diagfwd_info *fwd_info,
 		peripheral = PERIPHERAL_LPASS;
 	if (peripheral == DIAG_ID_CDSP)
 		peripheral = PERIPHERAL_CDSP;
+=======
+	peripheral = GET_PD_CTXT(buf->ctxt);
+	if (peripheral == DIAG_ID_MPSS)
+		peripheral = PERIPHERAL_MODEM;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	session_info =
 		diag_md_session_get_peripheral(peripheral);
@@ -328,19 +334,30 @@ end:
 static void diagfwd_data_read_untag_done(struct diagfwd_info *fwd_info,
 				   unsigned char *buf, int len)
 {
+<<<<<<< HEAD
 	int len_cpd = 0;
 	int len_upd_1 = 0, len_upd_2 = 0;
 	int ctxt_cpd = 0;
 	int ctxt_upd_1 = 0, ctxt_upd_2 = 0;
+=======
+	int len_cpd = 0, len_upd_1 = 0;
+	int ctxt_cpd = 0, ctxt_upd_1 = 0;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	int buf_len = 0, processed = 0;
 	unsigned char *temp_buf_main = NULL;
 	unsigned char *temp_buf_cpd = NULL;
 	unsigned char *temp_buf_upd_1 = NULL;
+<<<<<<< HEAD
 	unsigned char *temp_buf_upd_2 = NULL;
 	struct diagfwd_buf_t *temp_ptr_upd = NULL;
 	struct diagfwd_buf_t *temp_ptr_cpd = NULL;
 	int flag_buf_1 = 0, flag_buf_2 = 0;
 	uint8_t peripheral;
+=======
+	struct diagfwd_buf_t *temp_ptr_upd = NULL;
+	struct diagfwd_buf_t *temp_ptr_cpd = NULL;
+	int flag_buf_1 = 0, flag_buf_2 = 0;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	if (!fwd_info || !buf || len <= 0) {
 		diag_ws_release();
@@ -358,17 +375,24 @@ static void diagfwd_data_read_untag_done(struct diagfwd_info *fwd_info,
 		diag_ws_release();
 		return;
 	}
+<<<<<<< HEAD
 	peripheral = fwd_info->peripheral;
 
 	if (driver->feature[peripheral].encode_hdlc &&
 		driver->feature[peripheral].untag_header &&
 		driver->peripheral_untag[peripheral]) {
+=======
+
+	if (driver->feature[fwd_info->peripheral].encode_hdlc &&
+		driver->feature[fwd_info->peripheral].untag_header) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		mutex_lock(&driver->diagfwd_untag_mutex);
 		temp_buf_cpd = buf;
 		temp_buf_main = buf;
 		if (fwd_info->buf_1 &&
 			fwd_info->buf_1->data_raw == buf) {
 			flag_buf_1 = 1;
+<<<<<<< HEAD
 			temp_ptr_cpd = fwd_info->buf_1;
 			if (fwd_info->type == TYPE_DATA) {
 				temp_buf_upd_1 =
@@ -394,6 +418,16 @@ static void diagfwd_data_read_untag_done(struct diagfwd_info *fwd_info,
 			       __func__, buf, peripheral,
 			       fwd_info->type);
 			goto end;
+=======
+			if (fwd_info->type == TYPE_DATA)
+				temp_buf_upd_1 =
+				fwd_info->buf_upd_1_a->data_raw;
+		} else {
+			flag_buf_2 = 1;
+			if (fwd_info->type == TYPE_DATA)
+				temp_buf_upd_1 =
+				fwd_info->buf_upd_1_b->data_raw;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		}
 		while (processed < len) {
 			buf_len =
@@ -417,6 +451,7 @@ static void diagfwd_data_read_untag_done(struct diagfwd_info *fwd_info,
 					temp_buf_upd_1 += buf_len;
 				}
 				break;
+<<<<<<< HEAD
 			case DIAG_ID_LPASS:
 				ctxt_cpd = DIAG_ID_LPASS;
 				len_cpd += buf_len;
@@ -455,11 +490,14 @@ static void diagfwd_data_read_untag_done(struct diagfwd_info *fwd_info,
 				break;
 			default:
 				goto end;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			}
 			len = len - 4;
 			temp_buf_main += (buf_len + 4);
 			processed += buf_len;
 		}
+<<<<<<< HEAD
 		if (peripheral == PERIPHERAL_LPASS &&
 			fwd_info->type == TYPE_DATA && len_upd_2) {
 			if (flag_buf_1) {
@@ -491,12 +529,20 @@ static void diagfwd_data_read_untag_done(struct diagfwd_info *fwd_info,
 					len_upd_1;
 				temp_ptr_upd = fwd_info->buf_upd_1_b;
 			}
+=======
+		if (fwd_info->type == TYPE_DATA && len_upd_1) {
+			if (flag_buf_1)
+				temp_ptr_upd = fwd_info->buf_upd_1_a;
+			else
+				temp_ptr_upd = fwd_info->buf_upd_1_b;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			temp_ptr_upd->ctxt &= 0x00FFFFFF;
 			temp_ptr_upd->ctxt |=
 				(SET_PD_CTXT(ctxt_upd_1));
 				atomic_set(&temp_ptr_upd->in_busy, 1);
 			diagfwd_data_process_done(fwd_info,
 				temp_ptr_upd, len_upd_1);
+<<<<<<< HEAD
 		} else {
 			if (flag_buf_1)
 				driver->upd_len_1_a[peripheral] = 0;
@@ -508,6 +554,17 @@ static void diagfwd_data_read_untag_done(struct diagfwd_info *fwd_info,
 				driver->cpd_len_1[peripheral] = len_cpd;
 			else
 				driver->cpd_len_2[peripheral] = len_cpd;
+=======
+		}
+		if (len_cpd) {
+			if (flag_buf_1) {
+				driver->cpd_len_1 = len_cpd;
+				temp_ptr_cpd = fwd_info->buf_1;
+			} else {
+				driver->cpd_len_2 = len_cpd;
+				temp_ptr_cpd = fwd_info->buf_2;
+			}
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			temp_ptr_cpd->ctxt &= 0x00FFFFFF;
 			temp_ptr_cpd->ctxt |=
 				(SET_PD_CTXT(ctxt_cpd));
@@ -515,6 +572,7 @@ static void diagfwd_data_read_untag_done(struct diagfwd_info *fwd_info,
 				temp_ptr_cpd, len_cpd);
 		} else {
 			if (flag_buf_1)
+<<<<<<< HEAD
 				driver->cpd_len_1[peripheral] = 0;
 			if (flag_buf_2)
 				driver->cpd_len_2[peripheral] = 0;
@@ -533,6 +591,16 @@ end:
 				   GET_BUF_NUM(temp_ptr_cpd->ctxt));
 	}
 	diagfwd_queue_read(fwd_info);
+=======
+				driver->cpd_len_1 = 0;
+			if (flag_buf_2)
+				driver->cpd_len_2 = 0;
+		}
+		mutex_unlock(&driver->diagfwd_untag_mutex);
+	} else {
+		diagfwd_data_read_done(fwd_info, buf, len);
+	}
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 static void diagfwd_data_read_done(struct diagfwd_info *fwd_info,
@@ -1094,6 +1162,7 @@ static void __diag_fwd_open(struct diagfwd_info *fwd_info)
 	if (!fwd_info->inited)
 		return;
 
+<<<<<<< HEAD
 	/*
 	 * Logging mode here is reflecting previous mode
 	 * status and will be updated to new mode later.
@@ -1109,6 +1178,8 @@ static void __diag_fwd_open(struct diagfwd_info *fwd_info)
 			atomic_set(&fwd_info->buf_2->in_busy, 0);
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (fwd_info->p_ops && fwd_info->p_ops->open)
 		fwd_info->p_ops->open(fwd_info->ctxt);
 
@@ -1269,6 +1340,7 @@ void diagfwd_write_done(uint8_t peripheral, uint8_t type, int ctxt)
 		return;
 
 	fwd_info = &peripheral_info[type][peripheral];
+<<<<<<< HEAD
 
 	if (ctxt == 1 && fwd_info->buf_1) {
 		/* Buffer 1 for core PD is freed */
@@ -1341,6 +1413,20 @@ void diagfwd_write_done(uint8_t peripheral, uint8_t type, int ctxt)
 
 		driver->upd_len_2_b = 0;
 
+=======
+	if (ctxt == 1 && fwd_info->buf_1)
+		atomic_set(&fwd_info->buf_1->in_busy, 0);
+	else if (ctxt == 2 && fwd_info->buf_2)
+		atomic_set(&fwd_info->buf_2->in_busy, 0);
+	else if (ctxt == 3 && fwd_info->buf_upd_1_a) {
+		atomic_set(&fwd_info->buf_upd_1_a->in_busy, 0);
+		if (driver->cpd_len_1 == 0)
+			atomic_set(&fwd_info->buf_1->in_busy, 0);
+	} else if (ctxt == 4 && fwd_info->buf_upd_1_b) {
+		atomic_set(&fwd_info->buf_upd_1_b->in_busy, 0);
+		if (driver->cpd_len_2 == 0)
+			atomic_set(&fwd_info->buf_2->in_busy, 0);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	} else
 		pr_err("diag: In %s, invalid ctxt %d\n", __func__, ctxt);
 
@@ -1473,8 +1559,12 @@ static void diagfwd_queue_read(struct diagfwd_info *fwd_info)
 
 void diagfwd_buffers_init(struct diagfwd_info *fwd_info)
 {
+<<<<<<< HEAD
 	struct diagfwd_buf_t *temp_fwd_buf;
 	unsigned char *temp_char_buf;
+=======
+	unsigned char *temp_buf;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	if (!fwd_info)
 		return;
@@ -1486,6 +1576,7 @@ void diagfwd_buffers_init(struct diagfwd_info *fwd_info)
 	}
 
 	mutex_lock(&fwd_info->buf_mutex);
+<<<<<<< HEAD
 
 	if (!fwd_info->buf_1) {
 		fwd_info->buf_1 = kzalloc(sizeof(struct diagfwd_buf_t),
@@ -1495,11 +1586,24 @@ void diagfwd_buffers_init(struct diagfwd_info *fwd_info)
 		kmemleak_not_leak(fwd_info->buf_1);
 	}
 
+=======
+	if (!fwd_info->buf_1) {
+		fwd_info->buf_1 = kzalloc(sizeof(struct diagfwd_buf_t),
+					  GFP_KERNEL);
+		if (!fwd_info->buf_1)
+			goto err;
+		kmemleak_not_leak(fwd_info->buf_1);
+	}
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (!fwd_info->buf_1->data) {
 		fwd_info->buf_1->data = kzalloc(PERIPHERAL_BUF_SZ +
 					APF_DIAG_PADDING,
 					GFP_KERNEL);
+<<<<<<< HEAD
 		if (ZERO_OR_NULL_PTR(fwd_info->buf_1->data))
+=======
+		if (!fwd_info->buf_1->data)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			goto err;
 		fwd_info->buf_1->len = PERIPHERAL_BUF_SZ;
 		kmemleak_not_leak(fwd_info->buf_1->data);
@@ -1511,7 +1615,11 @@ void diagfwd_buffers_init(struct diagfwd_info *fwd_info)
 		if (!fwd_info->buf_2) {
 			fwd_info->buf_2 = kzalloc(sizeof(struct diagfwd_buf_t),
 					      GFP_KERNEL);
+<<<<<<< HEAD
 			if (ZERO_OR_NULL_PTR(fwd_info->buf_2))
+=======
+			if (!fwd_info->buf_2)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				goto err;
 			kmemleak_not_leak(fwd_info->buf_2);
 		}
@@ -1520,7 +1628,11 @@ void diagfwd_buffers_init(struct diagfwd_info *fwd_info)
 			fwd_info->buf_2->data = kzalloc(PERIPHERAL_BUF_SZ +
 							APF_DIAG_PADDING,
 						    GFP_KERNEL);
+<<<<<<< HEAD
 			if (ZERO_OR_NULL_PTR(fwd_info->buf_2->data))
+=======
+			if (!fwd_info->buf_2->data)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				goto err;
 			fwd_info->buf_2->len = PERIPHERAL_BUF_SZ;
 			kmemleak_not_leak(fwd_info->buf_2->data);
@@ -1529,31 +1641,51 @@ void diagfwd_buffers_init(struct diagfwd_info *fwd_info)
 							fwd_info->type, 2);
 		}
 
+<<<<<<< HEAD
 		if (driver->feature[fwd_info->peripheral].untag_header) {
+=======
+		if (driver->feature[fwd_info->peripheral].untag_header)	{
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			if (!fwd_info->buf_upd_1_a) {
 				fwd_info->buf_upd_1_a =
 					kzalloc(sizeof(struct diagfwd_buf_t),
 						      GFP_KERNEL);
+<<<<<<< HEAD
 				if (ZERO_OR_NULL_PTR(fwd_info->buf_upd_1_a))
+=======
+				if (!fwd_info->buf_upd_1_a)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 					goto err;
 				kmemleak_not_leak(fwd_info->buf_upd_1_a);
 			}
 
+<<<<<<< HEAD
 			if (fwd_info->buf_upd_1_a &&
 				!fwd_info->buf_upd_1_a->data) {
+=======
+			if (!fwd_info->buf_upd_1_a->data) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				fwd_info->buf_upd_1_a->data =
 					kzalloc(PERIPHERAL_BUF_SZ +
 						APF_DIAG_PADDING,
 					    GFP_KERNEL);
+<<<<<<< HEAD
 				temp_char_buf = fwd_info->buf_upd_1_a->data;
 				if (ZERO_OR_NULL_PTR(temp_char_buf))
 					goto err;
 				fwd_info->buf_upd_1_a->len = PERIPHERAL_BUF_SZ;
 				kmemleak_not_leak(temp_char_buf);
+=======
+				if (!fwd_info->buf_upd_1_a->data)
+					goto err;
+				fwd_info->buf_upd_1_a->len = PERIPHERAL_BUF_SZ;
+				kmemleak_not_leak(fwd_info->buf_upd_1_a->data);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				fwd_info->buf_upd_1_a->ctxt = SET_BUF_CTXT(
 					fwd_info->peripheral,
 					fwd_info->type, 3);
 			}
+<<<<<<< HEAD
 
 			if (!fwd_info->buf_upd_1_b) {
 				fwd_info->buf_upd_1_b =
@@ -1566,10 +1698,23 @@ void diagfwd_buffers_init(struct diagfwd_info *fwd_info)
 
 			if (fwd_info->buf_upd_1_b &&
 				!fwd_info->buf_upd_1_b->data) {
+=======
+			if (!fwd_info->buf_upd_1_b) {
+			fwd_info->buf_upd_1_b =
+				kzalloc(sizeof(struct diagfwd_buf_t),
+					      GFP_KERNEL);
+			if (!fwd_info->buf_upd_1_b)
+				goto err;
+			kmemleak_not_leak(fwd_info->buf_upd_1_b);
+			}
+
+			if (!fwd_info->buf_upd_1_b->data) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				fwd_info->buf_upd_1_b->data =
 					kzalloc(PERIPHERAL_BUF_SZ +
 						APF_DIAG_PADDING,
 						GFP_KERNEL);
+<<<<<<< HEAD
 				temp_char_buf =
 					fwd_info->buf_upd_1_b->data;
 				if (ZERO_OR_NULL_PTR(temp_char_buf))
@@ -1577,10 +1722,18 @@ void diagfwd_buffers_init(struct diagfwd_info *fwd_info)
 				fwd_info->buf_upd_1_b->len =
 					PERIPHERAL_BUF_SZ;
 				kmemleak_not_leak(temp_char_buf);
+=======
+				if (!fwd_info->buf_upd_1_b->data)
+					goto err;
+				fwd_info->buf_upd_1_b->len =
+					PERIPHERAL_BUF_SZ;
+				kmemleak_not_leak(fwd_info->buf_upd_1_b->data);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				fwd_info->buf_upd_1_b->ctxt = SET_BUF_CTXT(
 					fwd_info->peripheral,
 					fwd_info->type, 4);
 			}
+<<<<<<< HEAD
 			if (fwd_info->peripheral ==
 				PERIPHERAL_LPASS) {
 				if (!fwd_info->buf_upd_2_a) {
@@ -1640,6 +1793,8 @@ void diagfwd_buffers_init(struct diagfwd_info *fwd_info)
 						fwd_info->type, 6);
 				}
 			}
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		}
 
 		if (driver->supports_apps_hdlc_encoding) {
@@ -1649,6 +1804,7 @@ void diagfwd_buffers_init(struct diagfwd_info *fwd_info)
 					kzalloc(PERIPHERAL_BUF_SZ +
 						APF_DIAG_PADDING,
 						GFP_KERNEL);
+<<<<<<< HEAD
 				temp_char_buf =
 					fwd_info->buf_1->data_raw;
 				if (ZERO_OR_NULL_PTR(temp_char_buf))
@@ -1658,11 +1814,20 @@ void diagfwd_buffers_init(struct diagfwd_info *fwd_info)
 				kmemleak_not_leak(temp_char_buf);
 			}
 
+=======
+				if (!fwd_info->buf_1->data_raw)
+					goto err;
+				fwd_info->buf_1->len_raw =
+					PERIPHERAL_BUF_SZ;
+				kmemleak_not_leak(fwd_info->buf_1->data_raw);
+			}
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			if (!fwd_info->buf_2->data_raw) {
 				fwd_info->buf_2->data_raw =
 					kzalloc(PERIPHERAL_BUF_SZ +
 						APF_DIAG_PADDING,
 						GFP_KERNEL);
+<<<<<<< HEAD
 				temp_char_buf =
 					fwd_info->buf_2->data_raw;
 				if (ZERO_OR_NULL_PTR(temp_char_buf))
@@ -1676,10 +1841,23 @@ void diagfwd_buffers_init(struct diagfwd_info *fwd_info)
 				untag_header) {
 				if (fwd_info->buf_upd_1_a &&
 					!fwd_info->buf_upd_1_a->data_raw) {
+=======
+				if (!fwd_info->buf_2->data_raw)
+					goto err;
+				fwd_info->buf_2->len_raw =
+					PERIPHERAL_BUF_SZ;
+				kmemleak_not_leak(fwd_info->buf_2->data_raw);
+			}
+
+			if (driver->feature[fwd_info->peripheral].
+					untag_header) {
+				if (!fwd_info->buf_upd_1_a->data_raw) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 					fwd_info->buf_upd_1_a->data_raw =
 						kzalloc(PERIPHERAL_BUF_SZ +
 							APF_DIAG_PADDING,
 							GFP_KERNEL);
+<<<<<<< HEAD
 					temp_char_buf =
 						fwd_info->buf_upd_1_a->data_raw;
 					if (ZERO_OR_NULL_PTR(temp_char_buf))
@@ -1691,10 +1869,22 @@ void diagfwd_buffers_init(struct diagfwd_info *fwd_info)
 
 				if (fwd_info->buf_upd_1_b &&
 					!fwd_info->buf_upd_1_b->data_raw) {
+=======
+					if (!fwd_info->buf_upd_1_a->data_raw)
+						goto err;
+					fwd_info->buf_upd_1_a->len_raw =
+						PERIPHERAL_BUF_SZ;
+					temp_buf =
+						fwd_info->buf_upd_1_a->data_raw;
+					kmemleak_not_leak(temp_buf);
+				}
+				if (!fwd_info->buf_upd_1_b->data_raw) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 					fwd_info->buf_upd_1_b->data_raw =
 						kzalloc(PERIPHERAL_BUF_SZ +
 							APF_DIAG_PADDING,
 							GFP_KERNEL);
+<<<<<<< HEAD
 					temp_char_buf =
 						fwd_info->buf_upd_1_b->data_raw;
 					if (ZERO_OR_NULL_PTR(temp_char_buf))
@@ -1730,6 +1920,15 @@ void diagfwd_buffers_init(struct diagfwd_info *fwd_info)
 					fwd_info->buf_upd_2_b->len_raw =
 						PERIPHERAL_BUF_SZ;
 					kmemleak_not_leak(temp_char_buf);
+=======
+					if (!fwd_info->buf_upd_1_b->data_raw)
+						goto err;
+					fwd_info->buf_upd_1_b->len_raw =
+						PERIPHERAL_BUF_SZ;
+					temp_buf =
+						fwd_info->buf_upd_1_b->data_raw;
+					kmemleak_not_leak(temp_buf);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				}
 			}
 		}
@@ -1742,12 +1941,19 @@ void diagfwd_buffers_init(struct diagfwd_info *fwd_info)
 			fwd_info->buf_1->data_raw = kzalloc(PERIPHERAL_BUF_SZ +
 						APF_DIAG_PADDING,
 							GFP_KERNEL);
+<<<<<<< HEAD
 			temp_char_buf =
 				fwd_info->buf_1->data_raw;
 			if (ZERO_OR_NULL_PTR(temp_char_buf))
 				goto err;
 			fwd_info->buf_1->len_raw = PERIPHERAL_BUF_SZ;
 			kmemleak_not_leak(temp_char_buf);
+=======
+			if (!fwd_info->buf_1->data_raw)
+				goto err;
+			fwd_info->buf_1->len_raw = PERIPHERAL_BUF_SZ;
+			kmemleak_not_leak(fwd_info->buf_1->data_raw);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		}
 	}
 
@@ -1784,6 +1990,7 @@ static void diagfwd_buffers_exit(struct diagfwd_info *fwd_info)
 		kfree(fwd_info->buf_2);
 		fwd_info->buf_2 = NULL;
 	}
+<<<<<<< HEAD
 	if (fwd_info->buf_upd_1_a) {
 		kfree(fwd_info->buf_upd_1_a->data);
 		fwd_info->buf_upd_1_a->data = NULL;
@@ -1816,6 +2023,8 @@ static void diagfwd_buffers_exit(struct diagfwd_info *fwd_info)
 		kfree(fwd_info->buf_upd_2_b);
 		fwd_info->buf_upd_2_b = NULL;
 	}
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	mutex_unlock(&fwd_info->buf_mutex);
 }
 

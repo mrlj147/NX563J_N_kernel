@@ -56,7 +56,11 @@
  * also linked into the probe response struct.
  */
 
+<<<<<<< HEAD
 #define IEEE80211_SCAN_RESULT_EXPIRE	(30 * HZ)
+=======
+#define IEEE80211_SCAN_RESULT_EXPIRE	(7 * HZ)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 static void bss_free(struct cfg80211_internal_bss *bss)
 {

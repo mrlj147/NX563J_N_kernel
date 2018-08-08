@@ -609,6 +609,11 @@ void blk_cleanup_queue(struct request_queue *q)
 		q->queue_lock = &q->__queue_lock;
 	spin_unlock_irq(lock);
 
+<<<<<<< HEAD
+=======
+	bdi_unregister(&q->backing_dev_info);
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* @q is and will stay empty, shutdown and put */
 	blk_put_queue(q);
 }

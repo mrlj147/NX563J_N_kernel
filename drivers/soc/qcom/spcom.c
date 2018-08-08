@@ -886,11 +886,18 @@ static int spcom_rx(struct spcom_channel *ch,
 
 	if (timeleft == 0) {
 		pr_err("rx_done timeout [%d] msec expired.\n", timeout_msec);
+<<<<<<< HEAD
 		mutex_unlock(&ch->lock);
 		return -ETIMEDOUT;
 	} else if (ch->rx_abort) {
 		mutex_unlock(&ch->lock);
 		return -ERESTART; /* probably SSR */
+=======
+		goto exit_err;
+	} else if (ch->rx_abort) {
+		pr_err("rx aborted.\n");
+		goto exit_err;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	} else if (ch->actual_rx_size) {
 		pr_debug("actual_rx_size is [%d].\n", ch->actual_rx_size);
 	} else {
@@ -1723,16 +1730,22 @@ static int spcom_handle_lock_ion_buf_command(struct spcom_channel *ch,
 
 	pr_debug("ion handle ok.\n");
 
+<<<<<<< HEAD
 	/* ION buf lock doesn't involve any rx/tx data to SP. */
 	mutex_lock(&ch->lock);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* Check if this ION buffer is already locked */
 	for (i = 0 ; i < ARRAY_SIZE(ch->ion_handle_table) ; i++) {
 		if (ch->ion_handle_table[i] == ion_handle) {
 			pr_err("fd [%d] ion buf is already locked.\n", fd);
 			/* decrement back the ref count */
 			ion_free(spcom_dev->ion_client, ion_handle);
+<<<<<<< HEAD
 			mutex_unlock(&ch->lock);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			return -EINVAL;
 		}
 	}
@@ -1744,7 +1757,10 @@ static int spcom_handle_lock_ion_buf_command(struct spcom_channel *ch,
 			ch->ion_fd_table[i] = fd;
 			pr_debug("ch [%s] locked ion buf #%d, fd [%d].\n",
 				ch->name, i, fd);
+<<<<<<< HEAD
 			mutex_unlock(&ch->lock);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			return 0;
 		}
 	}
@@ -1753,8 +1769,11 @@ static int spcom_handle_lock_ion_buf_command(struct spcom_channel *ch,
 	/* decrement back the ref count */
 	ion_free(spcom_dev->ion_client, ion_handle);
 
+<<<<<<< HEAD
 	mutex_unlock(&ch->lock);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return -EFAULT;
 }
 
@@ -1833,6 +1852,7 @@ static int spcom_handle_unlock_ion_buf_command(struct spcom_channel *ch,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	/* ION buf unlock doesn't involve any rx/tx data to SP. */
 	mutex_lock(&ch->lock);
 
@@ -1840,6 +1860,10 @@ static int spcom_handle_unlock_ion_buf_command(struct spcom_channel *ch,
 
 	mutex_unlock(&ch->lock);
 
+=======
+	ret = spcom_unlock_ion_buf(ch, fd);
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return ret;
 }
 
@@ -1991,8 +2015,12 @@ static int spcom_handle_read_req_resp(struct spcom_channel *ch,
 	ret = spcom_rx(ch, rx_buf, rx_buf_size, timeout_msec);
 	if (ret < 0) {
 		pr_err("rx error %d.\n", ret);
+<<<<<<< HEAD
 		kfree(rx_buf);
 		return ret;
+=======
+		goto exit_err;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	} else {
 		size = ret; /* actual_rx_size */
 	}
@@ -2295,6 +2323,7 @@ static ssize_t spcom_device_read(struct file *filp, char __user *user_buff,
 	if (buf == NULL)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	ret = spcom_handle_read(ch, buf, size);
 	if (ret < 0) {
 		pr_err("read error [%d].\n", ret);
@@ -2303,6 +2332,10 @@ static ssize_t spcom_device_read(struct file *filp, char __user *user_buff,
 	}
 	actual_size = ret;
 	if ((actual_size == 0) || (actual_size > size)) {
+=======
+	actual_size = spcom_handle_read(ch, buf, size);
+	if ((actual_size <= 0) || (actual_size > size)) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		pr_err("invalid actual_size [%d].\n", actual_size);
 		kfree(buf);
 		return -EFAULT;

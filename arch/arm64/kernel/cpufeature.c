@@ -972,9 +972,15 @@ void __init setup_cpu_features(void)
 	if (!cwg)
 		pr_warn("No Cache Writeback Granule information, assuming cache line size %d\n",
 			cls);
+<<<<<<< HEAD
 	if (ARCH_DMA_MINALIGN < cls)
 		pr_warn("ARCH_DMA_MINALIGN smaller than the Cache Writeback Granule (%d < %d)\n",
 			ARCH_DMA_MINALIGN, cls);
+=======
+	if (L1_CACHE_BYTES < cls)
+		pr_warn("L1_CACHE_BYTES smaller than the Cache Writeback Granule (%d < %d)\n",
+			L1_CACHE_BYTES, cls);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 static bool __maybe_unused

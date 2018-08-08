@@ -391,3 +391,12 @@ config PHY_CYGNUS_PCIE
 	  If unsure, say N.
 
 endmenu
+<<<<<<< HEAD
+=======
+
+config NUBIA_ADD_QCOM_WORKROUND_FOR_MODEM_DOG
+	bool "NUBIA ADD QCOM WORKROUND FOR MODEM_DOG"
+	default y
+	help
+	  NUBIA_ADD_QCOM_WORKROUND_FOR_MODEM_DOG
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf

@@ -13,7 +13,10 @@
 #define pr_fmt(fmt) "QCOM-BATT: %s: " fmt, __func__
 
 #include <linux/device.h>
+<<<<<<< HEAD
 #include <linux/delay.h>
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #include <linux/module.h>
 #include <linux/platform_device.h>
 #include <linux/regmap.h>
@@ -37,7 +40,10 @@
 #define PL_HW_ABSENT_VOTER		"PL_HW_ABSENT_VOTER"
 #define PL_VOTER			"PL_VOTER"
 #define RESTRICT_CHG_VOTER		"RESTRICT_CHG_VOTER"
+<<<<<<< HEAD
 #define ICL_CHANGE_VOTER		"ICL_CHANGE_VOTER"
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 struct pl_data {
 	int			pl_mode;
@@ -51,16 +57,24 @@ struct pl_data {
 	struct votable		*pl_disable_votable;
 	struct votable		*pl_awake_votable;
 	struct votable		*hvdcp_hw_inov_dis_votable;
+<<<<<<< HEAD
 	struct votable		*usb_icl_votable;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	struct work_struct	status_change_work;
 	struct work_struct	pl_disable_forever_work;
 	struct delayed_work	pl_taper_work;
 	struct power_supply	*main_psy;
 	struct power_supply	*pl_psy;
 	struct power_supply	*batt_psy;
+<<<<<<< HEAD
 	struct power_supply	*usb_psy;
 	int			charge_type;
 	int			total_settled_ua;
+=======
+	int			charge_type;
+	int			main_settled_ua;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	int			pl_settled_ua;
 	struct class		qcom_batt_class;
 	struct wakeup_source	*pl_ws;
@@ -96,10 +110,22 @@ enum {
 ********/
 static void split_settled(struct pl_data *chip)
 {
+<<<<<<< HEAD
 	int slave_icl_pct, total_current_ua;
 	int slave_ua = 0, main_settled_ua = 0;
 	union power_supply_propval pval = {0, };
 	int rc, total_settled_ua = 0;
+=======
+	int slave_icl_pct;
+	int slave_ua = 0, main_settled_ua = 0;
+	union power_supply_propval pval = {0, };
+	int rc;
+
+	/* TODO some parallel chargers do not have a fine ICL resolution. For
+	 * them implement a psy interface which returns the closest lower ICL
+	 * for desired split
+	 */
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	if ((chip->pl_mode != POWER_SUPPLY_PL_USBIN_USBIN)
 		&& (chip->pl_mode != POWER_SUPPLY_PL_USBIN_USBIN_EXT))
@@ -121,6 +147,7 @@ static void split_settled(struct pl_data *chip)
 		slave_icl_pct = max(0, chip->slave_pct - 10);
 		slave_ua = ((main_settled_ua + chip->pl_settled_ua)
 						* slave_icl_pct) / 100;
+<<<<<<< HEAD
 		total_settled_ua = main_settled_ua + chip->pl_settled_ua;
 	}
 
@@ -146,6 +173,14 @@ static void split_settled(struct pl_data *chip)
 	/* Set ICL on main charger */
 	rc = power_supply_set_property(chip->main_psy,
 				POWER_SUPPLY_PROP_CURRENT_MAX, &pval);
+=======
+	}
+
+	/* ICL_REDUCTION on main could be 0mA when pl is disabled */
+	pval.intval = slave_ua;
+	rc = power_supply_set_property(chip->main_psy,
+			POWER_SUPPLY_PROP_ICL_REDUCTION, &pval);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (rc < 0) {
 		pr_err("Couldn't change slave suspend state rc=%d\n", rc);
 		return;
@@ -160,12 +195,19 @@ static void split_settled(struct pl_data *chip)
 		return;
 	}
 
+<<<<<<< HEAD
 	chip->total_settled_ua = total_settled_ua;
 	chip->pl_settled_ua = slave_ua;
 
 	pl_dbg(chip, PR_PARALLEL,
 		"Split total_current_ua=%d main_settled_ua=%d slave_ua=%d\n",
 		total_current_ua, main_settled_ua, slave_ua);
+=======
+	/* main_settled_ua represents the total capability of adapter */
+	if (!chip->main_settled_ua)
+		chip->main_settled_ua = main_settled_ua;
+	chip->pl_settled_ua = slave_ua;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 static ssize_t version_show(struct class *c, struct class_attribute *attr,
@@ -233,10 +275,13 @@ static ssize_t restrict_chg_store(struct class *c, struct class_attribute *attr,
 
 	chip->restricted_charging_enabled = !!val;
 
+<<<<<<< HEAD
 	/* disable parallel charger in case of restricted charging */
 	vote(chip->pl_disable_votable, RESTRICT_CHG_VOTER,
 				chip->restricted_charging_enabled, 0);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	vote(chip->fcc_votable, RESTRICT_CHG_VOTER,
 				chip->restricted_charging_enabled,
 				chip->restricted_current);
@@ -346,6 +391,10 @@ done:
  *  FCC  *
 **********/
 #define EFFICIENCY_PCT	80
+<<<<<<< HEAD
+=======
+#define MIN_SPLIT_CHANGE_CURRENT_UA		300000
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static void split_fcc(struct pl_data *chip, int total_ua,
 			int *master_ua, int *slave_ua)
 {
@@ -386,15 +435,32 @@ static void split_fcc(struct pl_data *chip, int total_ua,
 	slave_limited_ua = min(effective_total_ua, bcl_ua);
 	*slave_ua = (slave_limited_ua * chip->slave_pct) / 100;
 	*slave_ua = (*slave_ua * chip->taper_pct) / 100;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/*
 	 * In USBIN_USBIN configuration with internal rsense parallel
 	 * charger's current goes through main charger's BATFET, keep
 	 * the main charger's FCC to the votable result.
 	 */
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_NUBIA_CHARGE_FEATURE)
+	if (chip->pl_mode == POWER_SUPPLY_PL_USBIN_USBIN)
+		*master_ua = max(MIN_SPLIT_CHANGE_CURRENT_UA, total_ua);
+	else
+		*master_ua = max(MIN_SPLIT_CHANGE_CURRENT_UA, total_ua - *slave_ua);
+#else
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (chip->pl_mode == POWER_SUPPLY_PL_USBIN_USBIN)
 		*master_ua = max(0, total_ua);
 	else
 		*master_ua = max(0, total_ua - *slave_ua);
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 static int pl_fcc_vote_callback(struct votable *votable, void *data,
@@ -433,6 +499,7 @@ static int pl_fcc_vote_callback(struct votable *votable, void *data,
 			pr_err("Couldn't set main fcc, rc=%d\n", rc);
 		return rc;
 	}
+<<<<<<< HEAD
 
 	if (chip->pl_mode != POWER_SUPPLY_PL_NONE) {
 		split_fcc(chip, total_fcc_ua, &master_fcc_ua, &slave_fcc_ua);
@@ -456,6 +523,31 @@ static int pl_fcc_vote_callback(struct votable *votable, void *data,
 			pr_err("Could not set main fcc, rc=%d\n", rc);
 			return rc;
 		}
+=======
+#if defined(CONFIG_NUBIA_CHARGE_FEATURE)
+	if(total_fcc_ua >= MIN_SPLIT_CHANGE_CURRENT_UA) {
+		split_fcc(chip, total_fcc_ua, &master_fcc_ua, &slave_fcc_ua);
+	}
+#else
+	split_fcc(chip, total_fcc_ua, &master_fcc_ua, &slave_fcc_ua);
+#endif
+	pval.intval = slave_fcc_ua;
+	rc = power_supply_set_property(chip->pl_psy,
+			POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX, &pval);
+	if (rc < 0) {
+		pr_err("Couldn't set parallel fcc, rc=%d\n", rc);
+		return rc;
+	}
+
+	chip->slave_fcc_ua = slave_fcc_ua;
+
+	pval.intval = master_fcc_ua;
+	rc = power_supply_set_property(chip->main_psy,
+			POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX, &pval);
+	if (rc < 0) {
+		pr_err("Could not set main fcc, rc=%d\n", rc);
+		return rc;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 
 	pl_dbg(chip, PR_PARALLEL, "master_fcc=%d slave_fcc=%d distribution=(%d/%d)\n",
@@ -516,6 +608,7 @@ static int pl_fv_vote_callback(struct votable *votable, void *data,
 	return 0;
 }
 
+<<<<<<< HEAD
 #define ICL_STEP_UA	25000
 static int usb_icl_vote_callback(struct votable *votable, void *data,
 			int icl_ua, const char *client)
@@ -576,6 +669,8 @@ static int usb_icl_vote_callback(struct votable *votable, void *data,
 	return 0;
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static void pl_disable_forever_work(struct work_struct *work)
 {
 	struct pl_data *chip = container_of(work,
@@ -597,7 +692,11 @@ static int pl_disable_vote_callback(struct votable *votable,
 	int rc;
 
 	chip->taper_pct = 100;
+<<<<<<< HEAD
 	chip->total_settled_ua = 0;
+=======
+	chip->main_settled_ua = 0;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	chip->pl_settled_ua = 0;
 
 	if (!pl_disable) { /* enable */
@@ -685,12 +784,22 @@ static int pl_awake_vote_callback(struct votable *votable,
 
 static bool is_main_available(struct pl_data *chip)
 {
+<<<<<<< HEAD
 	if (chip->main_psy)
 		return true;
 
 	chip->main_psy = power_supply_get_by_name("main");
 
 	return !!chip->main_psy;
+=======
+	if (!chip->main_psy)
+		chip->main_psy = power_supply_get_by_name("main");
+
+	if (!chip->main_psy)
+		return false;
+
+	return true;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 static bool is_batt_available(struct pl_data *chip)
@@ -799,7 +908,10 @@ static void handle_main_charge_type(struct pl_data *chip)
 static void handle_settled_icl_change(struct pl_data *chip)
 {
 	union power_supply_propval pval = {0, };
+<<<<<<< HEAD
 	int new_total_settled_ua;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	int rc;
 
 	if (get_effective_result(chip->pl_disable_votable))
@@ -819,6 +931,7 @@ static void handle_settled_icl_change(struct pl_data *chip)
 			return;
 		}
 
+<<<<<<< HEAD
 		new_total_settled_ua = pval.intval + chip->pl_settled_ua;
 		pl_dbg(chip, PR_PARALLEL,
 			"total_settled_ua=%d settled_ua=%d new_total_settled_ua=%d\n",
@@ -828,6 +941,11 @@ static void handle_settled_icl_change(struct pl_data *chip)
 		/* If ICL change is small skip splitting */
 		if (abs(new_total_settled_ua - chip->total_settled_ua)
 						> MIN_ICL_CHANGE_DELTA_UA)
+=======
+		/* If ICL change is small skip splitting */
+		if (abs((chip->main_settled_ua - chip->pl_settled_ua)
+				- pval.intval) > MIN_ICL_CHANGE_DELTA_UA)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			split_settled(chip);
 	} else {
 		rerun_election(chip->fcc_votable);
@@ -868,6 +986,7 @@ static void status_change_work(struct work_struct *work)
 	struct pl_data *chip = container_of(work,
 			struct pl_data, status_change_work);
 
+<<<<<<< HEAD
 	if (!chip->main_psy && is_main_available(chip)) {
 		/*
 		 * re-run election for FCC/FV/ICL once main_psy
@@ -880,6 +999,9 @@ static void status_change_work(struct work_struct *work)
 	}
 
 	if (!chip->main_psy)
+=======
+	if (!is_main_available(chip))
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		return;
 
 	if (!is_batt_available(chip))
@@ -961,6 +1083,7 @@ static int pl_init(void)
 		goto destroy_votable;
 	}
 
+<<<<<<< HEAD
 	chip->usb_icl_votable = create_votable("USB_ICL", VOTE_MIN,
 					usb_icl_vote_callback,
 					chip);
@@ -969,6 +1092,8 @@ static int pl_init(void)
 		goto destroy_votable;
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	chip->pl_disable_votable = create_votable("PL_DISABLE", VOTE_SET_ANY,
 					pl_disable_vote_callback,
 					chip);
@@ -1023,7 +1148,10 @@ destroy_votable:
 	destroy_votable(chip->pl_disable_votable);
 	destroy_votable(chip->fv_votable);
 	destroy_votable(chip->fcc_votable);
+<<<<<<< HEAD
 	destroy_votable(chip->usb_icl_votable);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 release_wakeup_source:
 	wakeup_source_unregister(chip->pl_ws);
 cleanup:

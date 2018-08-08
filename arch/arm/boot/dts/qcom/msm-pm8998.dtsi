@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2016-2017, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2016, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -12,7 +16,10 @@
 
 #include <dt-bindings/spmi/spmi.h>
 #include <dt-bindings/interrupt-controller/irq.h>
+<<<<<<< HEAD
 #include <dt-bindings/msm/power-on.h>
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 &spmi_bus {
 	qcom,pm8998@0 {
@@ -43,6 +50,13 @@
 				qcom,pon-type = <0>;
 				qcom,pull-up = <1>;
 				linux,code = <116>;
+<<<<<<< HEAD
+=======
+				qcom,support-reset = <1>;
+				qcom,s1-timer = <10256>;
+				qcom,s2-timer = <2000>;
+				qcom,s2-type = <1>;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			};
 
 			qcom,pon_2 {
@@ -57,7 +71,11 @@
 				qcom,pull-up = <1>;
 				qcom,s1-timer = <6720>;
 				qcom,s2-timer = <2000>;
+<<<<<<< HEAD
 				qcom,s2-type = <PON_POWER_OFF_DVDD_HARD_RESET>;
+=======
+				qcom,s2-type = <7>;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				qcom,use-bark;
 			};
 		};

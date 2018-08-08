@@ -10,6 +10,10 @@
  * GNU General Public License for more details.
  */
 
+<<<<<<< HEAD
+=======
+//#define DEBUG
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/of_device.h>
@@ -1355,7 +1359,11 @@ static int wcd9xxx_slim_probe(struct slim_device *slim)
 				     ARRAY_SIZE(wcd9xxx->slim->e_addr),
 				     &wcd9xxx->slim->laddr);
 	if (ret) {
+<<<<<<< HEAD
 		dev_err(&slim->dev, "%s: failed to get slimbus %s logical address: %d\n",
+=======
+		dev_err(&slim->dev, "%s: failed1 to get slimbus %s logical address: %d\n",
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		       __func__, wcd9xxx->slim->name, ret);
 		goto err_reset;
 	}
@@ -1379,7 +1387,11 @@ static int wcd9xxx_slim_probe(struct slim_device *slim)
 				     ARRAY_SIZE(wcd9xxx->slim_slave->e_addr),
 				     &wcd9xxx->slim_slave->laddr);
 	if (ret) {
+<<<<<<< HEAD
 		dev_err(&slim->dev, "%s: failed to get slimbus %s logical address: %d\n",
+=======
+		dev_err(&slim->dev, "%s: failed2 to get slimbus %s logical address: %d\n",
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		       __func__, wcd9xxx->slim->name, ret);
 		goto err_slim_add;
 	}

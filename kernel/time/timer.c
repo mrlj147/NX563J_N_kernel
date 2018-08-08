@@ -102,7 +102,10 @@ static DEFINE_PER_CPU(struct tvec_base, tvec_bases);
 unsigned int sysctl_timer_migration = 1;
 
 struct tvec_base tvec_base_deferrable;
+<<<<<<< HEAD
 static atomic_t deferrable_pending;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 void timers_update_migration(bool update_nohz)
 {
@@ -151,12 +154,18 @@ static inline struct tvec_base *get_target_base(struct tvec_base *base,
 
 static inline void __run_deferrable_timers(void)
 {
+<<<<<<< HEAD
 	if (time_after_eq(jiffies, tvec_base_deferrable.timer_jiffies)) {
 		if ((atomic_cmpxchg(&deferrable_pending, 1, 0) &&
 			tick_do_timer_cpu == TICK_DO_TIMER_NONE) ||
 			tick_do_timer_cpu == smp_processor_id())
 			__run_timers(&tvec_base_deferrable);
 	}
+=======
+	if (smp_processor_id() == tick_do_timer_cpu &&
+	    time_after_eq(jiffies, tvec_base_deferrable.timer_jiffies))
+		__run_timers(&tvec_base_deferrable);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 static inline void init_timer_deferrable_global(void)
@@ -1432,6 +1441,7 @@ static u64 cmp_next_hrtimer_event(u64 basem, u64 expires)
 	return DIV_ROUND_UP_ULL(nextevt, TICK_NSEC) * TICK_NSEC;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_SMP
 /*
  * check_pending_deferrable_timers - Check for unbound deferrable timer expiry.
@@ -1456,6 +1466,8 @@ bool check_pending_deferrable_timers(int cpu)
 }
 #endif
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /**
  * get_next_timer_interrupt - return the time (clock mono) of the next timer
  * @basej:	base time jiffies

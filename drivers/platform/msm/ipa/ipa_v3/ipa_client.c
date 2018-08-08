@@ -857,8 +857,11 @@ static int ipa3_reset_with_open_aggr_frame_wa(u32 clnt_hdl,
 	struct gsi_xfer_elem xfer_elem;
 	int i;
 	int aggr_active_bitmap = 0;
+<<<<<<< HEAD
 	bool pipe_suspended = false;
 	struct ipa_ep_cfg_ctrl ctrl;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	IPADBG("Applying reset channel with open aggregation frame WA\n");
 	ipahal_write_reg(IPA_AGGR_FORCE_CLOSE, (1 << clnt_hdl));
@@ -885,6 +888,7 @@ static int ipa3_reset_with_open_aggr_frame_wa(u32 clnt_hdl,
 	if (result)
 		return -EFAULT;
 
+<<<<<<< HEAD
 	ipahal_read_reg_n_fields(IPA_ENDP_INIT_CTRL_n, clnt_hdl, &ctrl);
 	if (ctrl.ipa_ep_suspend) {
 		IPADBG("pipe is suspended, remove suspend\n");
@@ -894,6 +898,8 @@ static int ipa3_reset_with_open_aggr_frame_wa(u32 clnt_hdl,
 			clnt_hdl, &ctrl);
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* Start channel and put 1 Byte descriptor on it */
 	gsi_res = gsi_start_channel(ep->gsi_chan_hdl);
 	if (gsi_res != GSI_STATUS_SUCCESS) {
@@ -953,6 +959,7 @@ static int ipa3_reset_with_open_aggr_frame_wa(u32 clnt_hdl,
 	 */
 	msleep(IPA_POLL_AGGR_STATE_SLEEP_MSEC);
 
+<<<<<<< HEAD
 	if (pipe_suspended) {
 		IPADBG("suspend the pipe again\n");
 		ctrl.ipa_ep_suspend = true;
@@ -960,6 +967,8 @@ static int ipa3_reset_with_open_aggr_frame_wa(u32 clnt_hdl,
 			clnt_hdl, &ctrl);
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* Restore channels properties */
 	result = ipa3_restore_channel_properties(ep, &orig_chan_props,
 		&orig_chan_scratch);
@@ -974,12 +983,15 @@ queue_xfer_fail:
 	ipa3_stop_gsi_channel(clnt_hdl);
 	dma_free_coherent(ipa3_ctx->pdev, 1, buff, dma_addr);
 start_chan_fail:
+<<<<<<< HEAD
 	if (pipe_suspended) {
 		IPADBG("suspend the pipe again\n");
 		ctrl.ipa_ep_suspend = true;
 		ipahal_write_reg_n_fields(IPA_ENDP_INIT_CTRL_n,
 			clnt_hdl, &ctrl);
 	}
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	ipa3_restore_channel_properties(ep, &orig_chan_props,
 		&orig_chan_scratch);
 restore_props_fail:

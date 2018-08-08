@@ -94,6 +94,23 @@ config POWER_RESET_QCOM
 	help
 	  Power off and restart support for Qualcomm boards.
 
+<<<<<<< HEAD
+=======
+config NUBIA_PANIC_BOOTMODE
+	bool "nubia panic bootmode"
+	depends on POWER_RESET_QCOM
+	default y
+	help
+	  nubia panic bootmode.
+
+config NUBIA_RESTART_BOOTMODE
+	bool "nubia restart bootmode"
+	depends on POWER_RESET_QCOM
+	default y
+	help
+	  nubia restart bootmode.
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 config QCOM_DLOAD_MODE
 	bool "Qualcomm download mode"
 	depends on POWER_RESET_QCOM

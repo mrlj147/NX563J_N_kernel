@@ -553,7 +553,11 @@ static void fastrpc_mmap_free(struct fastrpc_mmap *map)
 
 		if (!IS_ERR_OR_NULL(map->handle))
 			ion_free(fl->apps->client, map->handle);
+<<<<<<< HEAD
 		if (sess && sess->smmu.enabled) {
+=======
+		if (sess->smmu.enabled) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			if (map->size || map->phys)
 				msm_dma_unmap_sg(sess->smmu.dev,
 					map->table->sgl,
@@ -645,9 +649,12 @@ static int fastrpc_mmap_create(struct fastrpc_file *fl, int fd, unsigned attr,
 		else
 			sess = fl->sctx;
 
+<<<<<<< HEAD
 		VERIFY(err, !IS_ERR_OR_NULL(sess));
 		if (err)
 			goto bail;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		VERIFY(err, !IS_ERR_OR_NULL(map->buf = dma_buf_get(fd)));
 		if (err)
 			goto bail;
@@ -1630,15 +1637,22 @@ static int fastrpc_init_process(struct fastrpc_file *fl,
 		uint64_t phys = 0;
 		ssize_t size = 0;
 		int fds[3];
+<<<<<<< HEAD
 		char *proc_name;
+=======
+		char *proc_name = (unsigned char *)init->file;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		struct {
 			int pgid;
 			int namelen;
 			int pageslen;
 		} inbuf;
+<<<<<<< HEAD
 		VERIFY(err, proc_name = kzalloc(init->filelen, GFP_KERNEL));
 		VERIFY(err, 0 == copy_from_user(proc_name,
 			(unsigned char *)init->file, init->filelen));
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		inbuf.pgid = current->tgid;
 		inbuf.namelen = strlen(proc_name)+1;
 		inbuf.pageslen = 0;
@@ -2421,7 +2435,11 @@ static int fastrpc_channel_open(struct fastrpc_file *fl)
 		kref_init(&me->channel[cid].kref);
 		pr_info("'opened /dev/%s c %d %d'\n", gcinfo[cid].name,
 						MAJOR(me->dev_no), cid);
+<<<<<<< HEAD
 		if (cid == 0 && me->channel[cid].ssrcount !=
+=======
+		if (me->channel[cid].ssrcount !=
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 				 me->channel[cid].prevssrcount) {
 			if (fastrpc_mmap_remove_ssr(fl))
 				pr_err("ADSPRPC: SSR: Failed to unmap remote heap\n");
@@ -2730,7 +2748,11 @@ static int fastrpc_cb_probe(struct device *dev)
 		start = 0x60000000;
 	VERIFY(err, !IS_ERR_OR_NULL(sess->smmu.mapping =
 				arm_iommu_create_mapping(&platform_bus_type,
+<<<<<<< HEAD
 						start, 0x70000000)));
+=======
+						start, 0x7fffffff)));
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (err)
 		goto bail;
 	iommu_set_fault_handler(sess->smmu.mapping->domain,

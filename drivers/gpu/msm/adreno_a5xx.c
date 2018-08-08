@@ -1640,6 +1640,7 @@ static void a5xx_pwrlevel_change_settings(struct adreno_device *adreno_dev,
 }
 
 static void a5xx_clk_set_options(struct adreno_device *adreno_dev,
+<<<<<<< HEAD
 	const char *name, struct clk *clk, bool on)
 {
 
@@ -1649,6 +1650,13 @@ static void a5xx_clk_set_options(struct adreno_device *adreno_dev,
 
 	/* Handle clock settings for GFX PSCBCs */
 	if (on) {
+=======
+	const char *name, struct clk *clk)
+{
+	/* Handle clock settings for GFX PSCBCs */
+	if (adreno_is_a540(adreno_dev) || adreno_is_a512(adreno_dev) ||
+		adreno_is_a508(adreno_dev)) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		if (!strcmp(name, "mem_iface_clk")) {
 			clk_set_flags(clk, CLKFLAG_NORETAIN_PERIPH);
 			clk_set_flags(clk, CLKFLAG_NORETAIN_MEM);
@@ -1656,11 +1664,14 @@ static void a5xx_clk_set_options(struct adreno_device *adreno_dev,
 			clk_set_flags(clk, CLKFLAG_RETAIN_PERIPH);
 			clk_set_flags(clk, CLKFLAG_RETAIN_MEM);
 		}
+<<<<<<< HEAD
 	} else {
 		if (!strcmp(name, "core_clk")) {
 			clk_set_flags(clk, CLKFLAG_NORETAIN_PERIPH);
 			clk_set_flags(clk, CLKFLAG_NORETAIN_MEM);
 		}
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 }
 

@@ -59,7 +59,14 @@
 #define FALSE  0
 
 #define MAX_LANE_COUNT 4
+<<<<<<< HEAD
 #define CSID_TIMEOUT msecs_to_jiffies(100)
+=======
+/*ZTEMT houyujun modified for reset waittime--start*/
+//#define CSID_TIMEOUT msecs_to_jiffies(100)
+#define CSID_TIMEOUT msecs_to_jiffies(1000)
+/*ZTEMT houyujun modified for reset waittime--end*/
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 #undef CDBG
 #define CDBG(fmt, args...) pr_debug(fmt, ##args)
@@ -227,14 +234,18 @@ static void msm_csid_set_sof_freeze_debug_reg(
 static int msm_csid_reset(struct csid_device *csid_dev)
 {
 	int32_t rc = 0;
+<<<<<<< HEAD
 	uint32_t irq = 0, irq_bitshift;
 
 	irq_bitshift = csid_dev->ctrl_reg->csid_reg.csid_rst_done_irq_bitshift;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	msm_camera_io_w(csid_dev->ctrl_reg->csid_reg.csid_rst_stb_all,
 		csid_dev->base +
 		csid_dev->ctrl_reg->csid_reg.csid_rst_cmd_addr);
 	rc = wait_for_completion_timeout(&csid_dev->reset_complete,
 		CSID_TIMEOUT);
+<<<<<<< HEAD
 	if (rc < 0) {
 		pr_err("wait_for_completion in msm_csid_reset fail rc = %d\n",
 			rc);
@@ -255,6 +266,13 @@ static int msm_csid_reset(struct csid_device *csid_dev)
 			rc = -ETIMEDOUT;
 	} else {
 		CDBG("%s succeeded", __func__);
+=======
+	if (rc <= 0) {
+		pr_err("wait_for_completion in msm_csid_reset fail rc = %d\n",
+			rc);
+		if (rc == 0)
+			rc = -ETIMEDOUT;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 	return rc;
 }

@@ -1294,6 +1294,20 @@ enum msm_sensor_resolution_t {
 	MSM_SENSOR_RES_5,
 	MSM_SENSOR_RES_6,
 	MSM_SENSOR_RES_7,
+<<<<<<< HEAD
+=======
+    // ZTEMT: fuyipeng add the res -----start
+	MSM_SENSOR_RES_8,
+	MSM_SENSOR_RES_9,
+	MSM_SENSOR_RES_10,
+	MSM_SENSOR_RES_11,
+	MSM_SENSOR_RES_12,
+	MSM_SENSOR_RES_13,
+	MSM_SENSOR_RES_14,
+	MSM_SENSOR_RES_15,
+	MSM_SENSOR_RES_16,
+    // ZTEMT: fuyipeng add the res -----end
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	MSM_SENSOR_INVALID_RES,
 };
 
@@ -1809,6 +1823,12 @@ struct msm_actuator_cfg_data {
 		struct msm_actuator_set_info_t set_info;
 		struct msm_actuator_get_info_t get_info;
 		enum af_camera_name cam_name;
+<<<<<<< HEAD
+=======
+        // ZTEMT: fuyipeng add for manual AF -----start
+        char act_name[MSM_ACTUATOT_MAX_NAME];
+        // ZTEMT: fuyipeng add for manual AF -----end
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	} cfg;
 };
 

@@ -204,6 +204,7 @@ out:
 static DEVICE_ATTR(thermal_throttling, 0644,
 		   wil_tt_sysfs_show, wil_tt_sysfs_store);
 
+<<<<<<< HEAD
 static ssize_t
 wil_fst_link_loss_sysfs_show(struct device *dev, struct device_attribute *attr,
 			     char *buf)
@@ -272,6 +273,11 @@ static struct attribute *wil6210_sysfs_entries[] = {
 	&dev_attr_ftm_txrx_offset.attr,
 	&dev_attr_thermal_throttling.attr,
 	&dev_attr_fst_link_loss.attr,
+=======
+static struct attribute *wil6210_sysfs_entries[] = {
+	&dev_attr_ftm_txrx_offset.attr,
+	&dev_attr_thermal_throttling.attr,
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	NULL
 };
 

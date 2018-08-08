@@ -114,7 +114,10 @@ struct ion_client {
  */
 struct ion_handle {
 	struct kref ref;
+<<<<<<< HEAD
 	unsigned int user_ref_count;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	struct ion_client *client;
 	struct ion_buffer *buffer;
 	struct rb_node node;
@@ -434,6 +437,7 @@ int ion_handle_put(struct ion_handle *handle)
 	return ret;
 }
 
+<<<<<<< HEAD
 /* Must hold the client lock */
 static void user_ion_handle_get(struct ion_handle *handle)
 {
@@ -478,6 +482,8 @@ static int user_ion_handle_put_nolock(struct ion_handle *handle)
 	return ret;
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static struct ion_handle *ion_handle_lookup(struct ion_client *client,
 					    struct ion_buffer *buffer)
 {
@@ -689,6 +695,7 @@ static void ion_free_nolock(struct ion_client *client, struct ion_handle *handle
 	ion_handle_put_nolock(handle);
 }
 
+<<<<<<< HEAD
 static void user_ion_free_nolock(struct ion_client *client,
 				 struct ion_handle *handle)
 {
@@ -708,6 +715,8 @@ static void user_ion_free_nolock(struct ion_client *client,
 	user_ion_handle_put_nolock(handle);
 }
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 void ion_free(struct ion_client *client, struct ion_handle *handle)
 {
 	BUG_ON(client != handle->client);
@@ -1582,7 +1591,11 @@ static long ion_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 						data.allocation.flags, true);
 		if (IS_ERR(handle))
 			return PTR_ERR(handle);
+<<<<<<< HEAD
 		pass_to_user(handle);
+=======
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		data.allocation.handle = handle->id;
 
 		cleanup_handle = handle;
@@ -1598,7 +1611,11 @@ static long ion_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 			mutex_unlock(&client->lock);
 			return PTR_ERR(handle);
 		}
+<<<<<<< HEAD
 		user_ion_free_nolock(client, handle);
+=======
+		ion_free_nolock(client, handle);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		ion_handle_put_nolock(handle);
 		mutex_unlock(&client->lock);
 		break;
@@ -1622,6 +1639,7 @@ static long ion_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 		struct ion_handle *handle;
 
 		handle = ion_import_dma_buf(client, data.fd.fd);
+<<<<<<< HEAD
 		if (IS_ERR(handle)) {
 			ret = PTR_ERR(handle);
 		} else {
@@ -1631,6 +1649,12 @@ static long ion_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 			else
 				data.handle.handle = handle->id;
 		}
+=======
+		if (IS_ERR(handle))
+			ret = PTR_ERR(handle);
+		else
+			data.handle.handle = handle->id;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		break;
 	}
 	case ION_IOC_SYNC:
@@ -1662,10 +1686,15 @@ static long ion_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 	if (dir & _IOC_READ) {
 		if (copy_to_user((void __user *)arg, &data, _IOC_SIZE(cmd))) {
 			if (cleanup_handle) {
+<<<<<<< HEAD
 				mutex_lock(&client->lock);
 				user_ion_free_nolock(client, cleanup_handle);
 				ion_handle_put_nolock(cleanup_handle);
 				mutex_unlock(&client->lock);
+=======
+				ion_free(client, cleanup_handle);
+				ion_handle_put(cleanup_handle);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			}
 			return -EFAULT;
 		}

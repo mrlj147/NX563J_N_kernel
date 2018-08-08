@@ -173,9 +173,12 @@ extern int mod_timer_pending(struct timer_list *timer, unsigned long expires);
 extern int mod_timer_pinned(struct timer_list *timer, unsigned long expires);
 
 extern void set_timer_slack(struct timer_list *time, int slack_hz);
+<<<<<<< HEAD
 #ifdef CONFIG_SMP
 extern bool check_pending_deferrable_timers(int cpu);
 #endif
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 #define TIMER_NOT_PINNED	0
 #define TIMER_PINNED		1

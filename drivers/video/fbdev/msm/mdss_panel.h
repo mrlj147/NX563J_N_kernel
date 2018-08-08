@@ -534,8 +534,11 @@ struct mipi_panel_info {
 	char lp11_init;
 	u32  init_delay;
 	u32  post_init_delay;
+<<<<<<< HEAD
 	u32  num_of_sublinks;
 	u32  lanes_per_sublink;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 struct edp_panel_info {
@@ -842,7 +845,16 @@ struct mdss_panel_info {
 	struct ion_handle *splash_ihdl;
 	int panel_power_state;
 	int compression_mode;
+<<<<<<< HEAD
 
+=======
+#ifdef CONFIG_NUBIA_LCD_DISP_PREFERENCE
+	int panel_ready_for_cmd;
+#endif
+#ifdef CONFIG_NUBIA_LCD_BACKLIGHT_CURVE
+	uint32_t backlight_curve[256];
+#endif
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	uint32_t panel_dead;
 	u32 panel_force_dead;
 	u32 panel_orientation;
@@ -850,7 +862,10 @@ struct mdss_panel_info {
 	bool is_lpm_mode;
 	bool is_split_display; /* two DSIs in one display, pp split or not */
 	bool use_pingpong_split;
+<<<<<<< HEAD
 	bool split_link_enabled;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	/*
 	 * index[0] = left layer mixer, value of 0 not valid

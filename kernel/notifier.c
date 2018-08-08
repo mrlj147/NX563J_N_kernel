@@ -90,7 +90,12 @@ static int notifier_call_chain(struct notifier_block **nl,
 			continue;
 		}
 #endif
+<<<<<<< HEAD
 		ret = nb->notifier_call(nb, val, v);
+=======
+		if(nb->notifier_call!= NULL)
+			ret = nb->notifier_call(nb, val, v);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 		if (nr_calls)
 			(*nr_calls)++;

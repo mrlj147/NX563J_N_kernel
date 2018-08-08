@@ -2009,6 +2009,7 @@ static int __dwc3_gadget_start(struct dwc3 *dwc)
 	int			ret = 0;
 	u32			reg;
 
+<<<<<<< HEAD
 	/*
 	 * Use IMOD if enabled via dwc->imod_interval. Otherwise, if
 	 * the core supports IMOD, disable it.
@@ -2020,6 +2021,8 @@ static int __dwc3_gadget_start(struct dwc3 *dwc)
 		dwc3_writel(dwc->regs, DWC3_DEV_IMOD(0), 0);
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	reg = dwc3_readl(dwc->regs, DWC3_DCFG);
 	reg &= ~(DWC3_DCFG_SPEED_MASK);
 
@@ -3371,6 +3374,11 @@ static irqreturn_t dwc3_process_event_buf(struct dwc3 *dwc, u32 buf)
 		 */
 		evt->lpos = (evt->lpos + 4) % DWC3_EVENT_BUFFERS_SIZE;
 		left -= 4;
+<<<<<<< HEAD
+=======
+
+		dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(buf), 4);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 
 	dwc->bh_handled_evt_cnt[dwc->bh_dbg_index] += (evt->count / 4);
@@ -3384,6 +3392,7 @@ static irqreturn_t dwc3_process_event_buf(struct dwc3 *dwc, u32 buf)
 	reg &= ~DWC3_GEVNTSIZ_INTMASK;
 	dwc3_writel(dwc->regs, DWC3_GEVNTSIZ(buf), reg);
 
+<<<<<<< HEAD
 	if (dwc->imod_interval)
 		dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(buf),
 				DWC3_GEVNTCOUNT_EHB);
@@ -3400,6 +3409,11 @@ void dwc3_bh_work(struct work_struct *w)
 	 pm_runtime_put(dwc->dev);
 }
 
+=======
+	return ret;
+}
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 static irqreturn_t dwc3_thread_interrupt(int irq, void *_dwc)
 {
 	struct dwc3 *dwc = _dwc;
@@ -3454,8 +3468,11 @@ static irqreturn_t dwc3_check_event_buf(struct dwc3 *dwc, u32 buf)
 	reg |= DWC3_GEVNTSIZ_INTMASK;
 	dwc3_writel(dwc->regs, DWC3_GEVNTSIZ(buf), reg);
 
+<<<<<<< HEAD
 	dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(buf), count);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return IRQ_WAKE_THREAD;
 }
 
@@ -3491,7 +3508,11 @@ irqreturn_t dwc3_interrupt(int irq, void *_dwc)
 	dwc->irq_dbg_index = (dwc->irq_dbg_index + 1) % MAX_INTR_STATS;
 
 	if (ret == IRQ_WAKE_THREAD)
+<<<<<<< HEAD
 		queue_work(dwc->dwc_wq, &dwc->bh_work);
+=======
+		dwc3_thread_interrupt(dwc->irq, dwc);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 	return IRQ_HANDLED;
 }

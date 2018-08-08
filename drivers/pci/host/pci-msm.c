@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2014-2017, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2014-2016, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -24,7 +28,10 @@
 #include <linux/kernel.h>
 #include <linux/of_pci.h>
 #include <linux/pci.h>
+<<<<<<< HEAD
 #include <linux/iommu.h>
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #include <linux/platform_device.h>
 #include <linux/regulator/consumer.h>
 #include <linux/regulator/rpm-smd-regulator.h>
@@ -2415,6 +2422,7 @@ static void msm_pcie_sel_debug_testcase(struct msm_pcie_dev_t *dev,
 			dev->res[base_sel - 1].base,
 			wr_offset, wr_mask, wr_value);
 
+<<<<<<< HEAD
 		base_sel_size = resource_size(dev->res[base_sel - 1].resource);
 
 		if (wr_offset >  base_sel_size - 4 ||
@@ -2425,6 +2433,10 @@ static void msm_pcie_sel_debug_testcase(struct msm_pcie_dev_t *dev,
 		else
 			msm_pcie_write_reg_field(dev->res[base_sel - 1].base,
 				wr_offset, wr_mask, wr_value);
+=======
+		msm_pcie_write_reg_field(dev->res[base_sel - 1].base,
+			wr_offset, wr_mask, wr_value);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 		break;
 	case 13: /* dump all registers of base_sel */
@@ -2512,6 +2524,7 @@ int msm_pcie_debug_info(struct pci_dev *dev, u32 option, u32 base,
 }
 EXPORT_SYMBOL(msm_pcie_debug_info);
 
+<<<<<<< HEAD
 #ifdef CONFIG_SYSFS
 static ssize_t msm_pcie_enumerate_store(struct device *dev,
 					struct device_attribute *attr,
@@ -2554,6 +2567,8 @@ static void msm_pcie_sysfs_exit(struct msm_pcie_dev_t *dev)
 }
 #endif
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 #ifdef CONFIG_DEBUG_FS
 static struct dentry *dent_msm_pcie;
 static struct dentry *dfile_rc_sel;
@@ -2577,6 +2592,7 @@ static ssize_t msm_pcie_cmd_debug(struct file *file,
 	char str[MAX_MSG_LEN];
 	unsigned int testcase = 0;
 	int i;
+<<<<<<< HEAD
 	u32 size = sizeof(str) < count ? sizeof(str) : count;
 
 	memset(str, 0, size);
@@ -2585,6 +2601,15 @@ static ssize_t msm_pcie_cmd_debug(struct file *file,
 		return -EFAULT;
 
 	for (i = 0; i < size && (str[i] >= '0') && (str[i] <= '9'); ++i)
+=======
+
+	memset(str, 0, sizeof(str));
+	ret = copy_from_user(str, buf, sizeof(str));
+	if (ret)
+		return -EFAULT;
+
+	for (i = 0; i < sizeof(str) && (str[i] >= '0') && (str[i] <= '9'); ++i)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		testcase = (testcase * 10) + (str[i] - '0');
 
 	if (!rc_sel)
@@ -2613,6 +2638,7 @@ static ssize_t msm_pcie_set_rc_sel(struct file *file,
 	char str[MAX_MSG_LEN];
 	int i;
 	u32 new_rc_sel = 0;
+<<<<<<< HEAD
 	u32 size = sizeof(str) < count ? sizeof(str) : count;
 
 	memset(str, 0, size);
@@ -2621,6 +2647,15 @@ static ssize_t msm_pcie_set_rc_sel(struct file *file,
 		return -EFAULT;
 
 	for (i = 0; i < size && (str[i] >= '0') && (str[i] <= '9'); ++i)
+=======
+
+	memset(str, 0, sizeof(str));
+	ret = copy_from_user(str, buf, sizeof(str));
+	if (ret)
+		return -EFAULT;
+
+	for (i = 0; i < sizeof(str) && (str[i] >= '0') && (str[i] <= '9'); ++i)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		new_rc_sel = (new_rc_sel * 10) + (str[i] - '0');
 
 	if ((!new_rc_sel) || (new_rc_sel > rc_sel_max)) {
@@ -2657,6 +2692,7 @@ static ssize_t msm_pcie_set_base_sel(struct file *file,
 	int i;
 	u32 new_base_sel = 0;
 	char *base_sel_name;
+<<<<<<< HEAD
 	u32 size = sizeof(str) < count ? sizeof(str) : count;
 
 	memset(str, 0, size);
@@ -2665,6 +2701,15 @@ static ssize_t msm_pcie_set_base_sel(struct file *file,
 		return -EFAULT;
 
 	for (i = 0; i < size && (str[i] >= '0') && (str[i] <= '9'); ++i)
+=======
+
+	memset(str, 0, sizeof(str));
+	ret = copy_from_user(str, buf, sizeof(str));
+	if (ret)
+		return -EFAULT;
+
+	for (i = 0; i < sizeof(str) && (str[i] >= '0') && (str[i] <= '9'); ++i)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		new_base_sel = (new_base_sel * 10) + (str[i] - '0');
 
 	if (!new_base_sel || new_base_sel > 5) {
@@ -2759,15 +2804,25 @@ static ssize_t msm_pcie_set_wr_offset(struct file *file,
 	unsigned long ret;
 	char str[MAX_MSG_LEN];
 	int i;
+<<<<<<< HEAD
 	u32 size = sizeof(str) < count ? sizeof(str) : count;
 
 	memset(str, 0, size);
 	ret = copy_from_user(str, buf, size);
+=======
+
+	memset(str, 0, sizeof(str));
+	ret = copy_from_user(str, buf, sizeof(str));
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (ret)
 		return -EFAULT;
 
 	wr_offset = 0;
+<<<<<<< HEAD
 	for (i = 0; i < size && (str[i] >= '0') && (str[i] <= '9'); ++i)
+=======
+	for (i = 0; i < sizeof(str) && (str[i] >= '0') && (str[i] <= '9'); ++i)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		wr_offset = (wr_offset * 10) + (str[i] - '0');
 
 	pr_alert("PCIe: wr_offset is now 0x%x\n", wr_offset);
@@ -2786,15 +2841,25 @@ static ssize_t msm_pcie_set_wr_mask(struct file *file,
 	unsigned long ret;
 	char str[MAX_MSG_LEN];
 	int i;
+<<<<<<< HEAD
 	u32 size = sizeof(str) < count ? sizeof(str) : count;
 
 	memset(str, 0, size);
 	ret = copy_from_user(str, buf, size);
+=======
+
+	memset(str, 0, sizeof(str));
+	ret = copy_from_user(str, buf, sizeof(str));
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (ret)
 		return -EFAULT;
 
 	wr_mask = 0;
+<<<<<<< HEAD
 	for (i = 0; i < size && (str[i] >= '0') && (str[i] <= '9'); ++i)
+=======
+	for (i = 0; i < sizeof(str) && (str[i] >= '0') && (str[i] <= '9'); ++i)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		wr_mask = (wr_mask * 10) + (str[i] - '0');
 
 	pr_alert("PCIe: wr_mask is now 0x%x\n", wr_mask);
@@ -2812,15 +2877,25 @@ static ssize_t msm_pcie_set_wr_value(struct file *file,
 	unsigned long ret;
 	char str[MAX_MSG_LEN];
 	int i;
+<<<<<<< HEAD
 	u32 size = sizeof(str) < count ? sizeof(str) : count;
 
 	memset(str, 0, size);
 	ret = copy_from_user(str, buf, size);
+=======
+
+	memset(str, 0, sizeof(str));
+	ret = copy_from_user(str, buf, sizeof(str));
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (ret)
 		return -EFAULT;
 
 	wr_value = 0;
+<<<<<<< HEAD
 	for (i = 0; i < size && (str[i] >= '0') && (str[i] <= '9'); ++i)
+=======
+	for (i = 0; i < sizeof(str) && (str[i] >= '0') && (str[i] <= '9'); ++i)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		wr_value = (wr_value * 10) + (str[i] - '0');
 
 	pr_alert("PCIe: wr_value is now 0x%x\n", wr_value);
@@ -2939,15 +3014,25 @@ static ssize_t msm_pcie_set_corr_counter_limit(struct file *file,
 	unsigned long ret;
 	char str[MAX_MSG_LEN];
 	int i;
+<<<<<<< HEAD
 	u32 size = sizeof(str) < count ? sizeof(str) : count;
 
 	memset(str, 0, size);
 	ret = copy_from_user(str, buf, size);
+=======
+
+	memset(str, 0, sizeof(str));
+	ret = copy_from_user(str, buf, sizeof(str));
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (ret)
 		return -EFAULT;
 
 	corr_counter_limit = 0;
+<<<<<<< HEAD
 	for (i = 0; i < size && (str[i] >= '0') && (str[i] <= '9'); ++i)
+=======
+	for (i = 0; i < sizeof(str) && (str[i] >= '0') && (str[i] <= '9'); ++i)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		corr_counter_limit = (corr_counter_limit * 10) + (str[i] - '0');
 
 	pr_info("PCIe: corr_counter_limit is now %lu\n", corr_counter_limit);
@@ -4643,8 +4728,11 @@ int msm_pcie_enable(struct msm_pcie_dev_t *dev, u32 options)
 	do {
 		usleep_range(LINK_UP_TIMEOUT_US_MIN, LINK_UP_TIMEOUT_US_MAX);
 		val =  readl_relaxed(dev->elbi + PCIE20_ELBI_SYS_STTS);
+<<<<<<< HEAD
 		PCIE_DBG(dev, "PCIe RC%d: LTSSM_STATE:0x%x\n",
 			dev->rc_idx, (val >> 12) & 0x3f);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	} while ((!(val & XMLH_LINK_UP) ||
 		!msm_pcie_confirm_linkup(dev, false, false, NULL))
 		&& (link_check_count++ < LINK_UP_CHECK_MAX_COUNT));
@@ -5574,6 +5662,7 @@ static irqreturn_t handle_global_irq(int irq, void *data)
 	return IRQ_HANDLED;
 }
 
+<<<<<<< HEAD
 static void msm_pcie_unmap_qgic_addr(struct msm_pcie_dev_t *dev,
 					struct pci_dev *pdev)
 {
@@ -5644,14 +5733,42 @@ void msm_pcie_destroy_irq(unsigned int irq)
 		PCIE_DBG(dev, "destroy QGIC based irq %d\n", irq);
 
 		if (irq < firstirq || irq > firstirq + nvec - 1) {
+=======
+void msm_pcie_destroy_irq(unsigned int irq, struct msm_pcie_dev_t *pcie_dev)
+{
+	int pos, i;
+	struct msm_pcie_dev_t *dev;
+
+	if (pcie_dev)
+		dev = pcie_dev;
+	else
+		dev = irq_get_chip_data(irq);
+
+	if (!dev) {
+		pr_err("PCIe: device is null. IRQ:%d\n", irq);
+		return;
+	}
+
+	if (dev->msi_gicm_addr) {
+		PCIE_DBG(dev, "destroy QGIC based irq %d\n", irq);
+
+		for (i = 0; i < MSM_PCIE_MAX_MSI; i++)
+			if (irq == dev->msi[i].num)
+				break;
+		if (i == MSM_PCIE_MAX_MSI) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			PCIE_ERR(dev,
 				"Could not find irq: %d in RC%d MSI table\n",
 				irq, dev->rc_idx);
 			return;
 		} else {
+<<<<<<< HEAD
 			if (irq == firstirq + nvec - 1)
 				msm_pcie_unmap_qgic_addr(dev, pdev);
 			pos = irq - firstirq;
+=======
+			pos = i;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		}
 	} else {
 		PCIE_DBG(dev, "destroy default MSI irq %d\n", irq);
@@ -5671,7 +5788,11 @@ void msm_pcie_destroy_irq(unsigned int irq)
 void arch_teardown_msi_irq(unsigned int irq)
 {
 	PCIE_GEN_DBG("irq %d deallocated\n", irq);
+<<<<<<< HEAD
 	msm_pcie_destroy_irq(irq);
+=======
+	msm_pcie_destroy_irq(irq, NULL);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 void arch_teardown_msi_irqs(struct pci_dev *dev)
@@ -5690,7 +5811,11 @@ void arch_teardown_msi_irqs(struct pci_dev *dev)
 			continue;
 		nvec = 1 << entry->msi_attrib.multiple;
 		for (i = 0; i < nvec; i++)
+<<<<<<< HEAD
 			arch_teardown_msi_irq(entry->irq + i);
+=======
+			msm_pcie_destroy_irq(entry->irq + i, pcie_dev);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 }
 
@@ -5752,7 +5877,10 @@ static int arch_setup_msi_irq_default(struct pci_dev *pdev,
 
 	PCIE_DBG(dev, "irq %d allocated\n", irq);
 
+<<<<<<< HEAD
 	irq_set_chip_data(irq, pdev);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	irq_set_msi_desc(irq, desc);
 
 	/* write msi vector and data */
@@ -5800,6 +5928,7 @@ again:
 	return irq;
 }
 
+<<<<<<< HEAD
 static int msm_pcie_map_qgic_addr(struct msm_pcie_dev_t *dev,
 					struct pci_dev *pdev,
 					struct msi_msg *msg)
@@ -5870,6 +5999,12 @@ static int arch_setup_msi_irq_qgic(struct pci_dev *pdev,
 		struct msi_desc *desc, int nvec)
 {
 	int irq, index, ret, firstirq = 0;
+=======
+static int arch_setup_msi_irq_qgic(struct pci_dev *pdev,
+		struct msi_desc *desc, int nvec)
+{
+	int irq, index, firstirq = 0;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	struct msi_msg msg;
 	struct msm_pcie_dev_t *dev = PCIE_BUS_PRIV_DATA(pdev->bus);
 
@@ -5886,16 +6021,24 @@ static int arch_setup_msi_irq_qgic(struct pci_dev *pdev,
 			firstirq = irq;
 
 		irq_set_irq_type(irq, IRQ_TYPE_EDGE_RISING);
+<<<<<<< HEAD
 		irq_set_chip_data(irq, pdev);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	}
 
 	/* write msi vector and data */
 	irq_set_msi_desc(firstirq, desc);
+<<<<<<< HEAD
 
 	ret = msm_pcie_map_qgic_addr(dev, pdev, &msg);
 	if (ret)
 		return ret;
 
+=======
+	msg.address_hi = 0;
+	msg.address_lo = dev->msi_gicm_addr;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	msg.data = dev->msi_gicm_base + (firstirq - dev->msi[0].num);
 	write_msi_msg(firstirq, &msg);
 
@@ -5967,6 +6110,10 @@ static int msm_pcie_msi_map(struct irq_domain *domain, unsigned int irq,
 	   irq_hw_number_t hwirq)
 {
 	irq_set_chip_and_handler (irq, &pcie_msi_chip, handle_simple_irq);
+<<<<<<< HEAD
+=======
+	irq_set_chip_data(irq, domain->host_data);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return 0;
 }
 
@@ -6442,9 +6589,12 @@ static int msm_pcie_probe(struct platform_device *pdev)
 		msm_pcie_dev[rc_idx].pcidev_table[i].registered = true;
 	}
 
+<<<<<<< HEAD
 	dev_set_drvdata(&msm_pcie_dev[rc_idx].pdev->dev, &msm_pcie_dev[rc_idx]);
 	msm_pcie_sysfs_init(&msm_pcie_dev[rc_idx]);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	ret = msm_pcie_get_resources(&msm_pcie_dev[rc_idx],
 				msm_pcie_dev[rc_idx].pdev);
 
@@ -6658,16 +6808,22 @@ int __init pcie_init(void)
 
 static void __exit pcie_exit(void)
 {
+<<<<<<< HEAD
 	int i;
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	PCIE_GEN_DBG("pcie:%s.\n", __func__);
 
 	platform_driver_unregister(&msm_pcie_driver);
 
 	msm_pcie_debugfs_exit();
+<<<<<<< HEAD
 
 	for (i = 0; i < MAX_RC_NUM; i++)
 		msm_pcie_sysfs_exit(&msm_pcie_dev[i]);
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 }
 
 subsys_initcall_sync(pcie_init);

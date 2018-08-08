@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2011-2017, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2011-2016, The Linux Foundation. All rights reserved.
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -396,6 +400,10 @@ static struct {
 	int	user_cal_available;
 	u32	user_cal_rcvd;
 	int	user_cal_exp_size;
+<<<<<<< HEAD
+=======
+	int	device_opened;
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	int	iris_xo_mode_set;
 	int	fw_vbatt_state;
 	char	wlan_nv_macAddr[WLAN_MAC_ADDR_SIZE];
@@ -3257,6 +3265,17 @@ static int wcnss_node_open(struct inode *inode, struct file *file)
 			return -EFAULT;
 	}
 
+<<<<<<< HEAD
+=======
+	mutex_lock(&penv->dev_lock);
+	penv->user_cal_rcvd = 0;
+	penv->user_cal_read = 0;
+	penv->user_cal_available = false;
+	penv->user_cal_data = NULL;
+	penv->device_opened = 1;
+	mutex_unlock(&penv->dev_lock);
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	return rc;
 }
 
@@ -3265,7 +3284,11 @@ static ssize_t wcnss_wlan_read(struct file *fp, char __user
 {
 	int rc = 0;
 
+<<<<<<< HEAD
 	if (!penv)
+=======
+	if (!penv || !penv->device_opened)
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 		return -EFAULT;
 
 	rc = wait_event_interruptible(penv->read_wait, penv->fw_cal_rcvd
@@ -3302,6 +3325,7 @@ static ssize_t wcnss_wlan_write(struct file *fp, const char __user
 			*user_buffer, size_t count, loff_t *position)
 {
 	int rc = 0;
+<<<<<<< HEAD
 	char *cal_data = NULL;
 
 	if (!penv || penv->user_cal_available)
@@ -3326,10 +3350,40 @@ static ssize_t wcnss_wlan_write(struct file *fp, const char __user
 	}
 
 	mutex_lock(&penv->dev_lock);
+=======
+	u32 size = 0;
+
+	if (!penv || !penv->device_opened || penv->user_cal_available)
+		return -EFAULT;
+
+	if (penv->user_cal_rcvd == 0 && count >= 4
+			&& !penv->user_cal_data) {
+		rc = copy_from_user((void *)&size, user_buffer, 4);
+		if (!size || size > MAX_CALIBRATED_DATA_SIZE) {
+			pr_err(DEVICE " invalid size to write %d\n", size);
+			return -EFAULT;
+		}
+
+		rc += count;
+		count -= 4;
+		penv->user_cal_exp_size =  size;
+		penv->user_cal_data = kmalloc(size, GFP_KERNEL);
+		if (penv->user_cal_data == NULL) {
+			pr_err(DEVICE " no memory to write\n");
+			return -ENOMEM;
+		}
+		if (0 == count)
+			goto exit;
+
+	} else if (penv->user_cal_rcvd == 0 && count < 4)
+		return -EFAULT;
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if ((UINT32_MAX - count < penv->user_cal_rcvd) ||
 		(penv->user_cal_exp_size < count + penv->user_cal_rcvd)) {
 		pr_err(DEVICE " invalid size to write %zu\n", count +
 				penv->user_cal_rcvd);
+<<<<<<< HEAD
 		mutex_unlock(&penv->dev_lock);
 		return -ENOMEM;
 	}
@@ -3349,10 +3403,22 @@ static ssize_t wcnss_wlan_write(struct file *fp, const char __user
 	}
 
 	kfree(cal_data);
+=======
+		rc = -ENOMEM;
+		goto exit;
+	}
+	rc = copy_from_user((void *)penv->user_cal_data +
+			penv->user_cal_rcvd, user_buffer, count);
+	if (0 == rc) {
+		penv->user_cal_rcvd += count;
+		rc += count;
+	}
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	if (penv->user_cal_rcvd == penv->user_cal_exp_size) {
 		penv->user_cal_available = true;
 		pr_info_ratelimited("wcnss: user cal written");
 	}
+<<<<<<< HEAD
 	mutex_unlock(&penv->dev_lock);
 
 	return rc;
@@ -3362,6 +3428,13 @@ static int wcnss_node_release(struct inode *inode, struct file *file)
 {
 	return 0;
 }
+=======
+
+exit:
+	return rc;
+}
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 static int wcnss_notif_cb(struct notifier_block *this, unsigned long code,
 				void *ss_handle)
@@ -3420,7 +3493,10 @@ static const struct file_operations wcnss_node_fops = {
 	.open = wcnss_node_open,
 	.read = wcnss_wlan_read,
 	.write = wcnss_wlan_write,
+<<<<<<< HEAD
 	.release = wcnss_node_release,
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 };
 
 static struct miscdevice wcnss_misc = {
@@ -3448,6 +3524,7 @@ wcnss_wlan_probe(struct platform_device *pdev)
 	}
 	penv->pdev = pdev;
 
+<<<<<<< HEAD
 	penv->user_cal_data =
 		devm_kzalloc(&pdev->dev, MAX_CALIBRATED_DATA_SIZE, GFP_KERNEL);
 	if (!penv->user_cal_data) {
@@ -3455,6 +3532,8 @@ wcnss_wlan_probe(struct platform_device *pdev)
 		return -ENOMEM;
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* register sysfs entries */
 	ret = wcnss_create_sysfs(&pdev->dev);
 	if (ret) {
@@ -3475,11 +3554,14 @@ wcnss_wlan_probe(struct platform_device *pdev)
 	mutex_init(&penv->pm_qos_mutex);
 	init_waitqueue_head(&penv->read_wait);
 
+<<<<<<< HEAD
 	penv->user_cal_rcvd = 0;
 	penv->user_cal_read = 0;
 	penv->user_cal_exp_size = 0;
 	penv->user_cal_available = false;
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	/* Since we were built into the kernel we'll be called as part
 	 * of kernel initialization.  We don't know if userspace
 	 * applications are available to service PIL at this time

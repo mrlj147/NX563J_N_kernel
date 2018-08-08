@@ -27,7 +27,11 @@
 #include "diag_mux.h"
 #include "diag_usb.h"
 #include "diag_memorydevice.h"
+<<<<<<< HEAD
 #include "diag_ipc_logging.h"
+=======
+
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 struct diag_mux_state_t *diag_mux;
 static struct diag_logger_t usb_logger;
@@ -146,6 +150,7 @@ int diag_mux_write(int proc, unsigned char *buf, int len, int ctx)
 		case DIAG_ID_MPSS:
 			upd = PERIPHERAL_MODEM;
 			break;
+<<<<<<< HEAD
 		case DIAG_ID_LPASS:
 			upd = PERIPHERAL_LPASS;
 			break;
@@ -155,6 +160,9 @@ int diag_mux_write(int proc, unsigned char *buf, int len, int ctx)
 		case UPD_WLAN:
 		case UPD_AUDIO:
 		case UPD_SENSORS:
+=======
+		case UPD_WLAN:
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			break;
 		default:
 			pr_err("diag: invalid pd ctxt= %d\n", upd);

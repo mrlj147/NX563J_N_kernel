@@ -592,6 +592,7 @@ no_mem:
 }
 EXPORT_SYMBOL_GPL(posix_acl_create);
 
+<<<<<<< HEAD
 /**
  * posix_acl_update_mode  -  update mode in set_acl
  *
@@ -623,6 +624,8 @@ int posix_acl_update_mode(struct inode *inode, umode_t *mode_p,
 }
 EXPORT_SYMBOL(posix_acl_update_mode);
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 /*
  * Fix up the uids and gids in posix acl extended attributes in place.
  */

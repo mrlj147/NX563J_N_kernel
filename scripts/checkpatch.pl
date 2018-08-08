@@ -60,8 +60,11 @@ my $spelling_file = "$D/spelling.txt";
 my $codespell = 0;
 my $codespellfile = "/usr/share/codespell/dictionary.txt";
 my $color = 1;
+<<<<<<< HEAD
 my $qca_sign_off = 0;
 my $codeaurora_sign_off = 0;
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 sub help {
 	my ($exitcode) = @_;
@@ -2431,6 +2434,7 @@ sub process {
 					     "email address '$email' might be better as '$suggested_email$comment'\n" . $herecurr);
 				}
 			}
+<<<<<<< HEAD
 			if ($chk_author) {
 				if ($line =~ /^\s*signed-off-by:.*qca\.qualcomm\.com/i) {
 					$qca_sign_off = 1;
@@ -2441,6 +2445,12 @@ sub process {
 					     "invalid Signed-off-by identity\n" . $line );
 				}
 			}
+=======
+			if ($chk_author && $line =~ /^\s*signed-off-by:.*(quicinc|qualcomm)\.com/i) {
+				WARN("BAD_SIGN_OFF",
+				     "invalid Signed-off-by identity\n" . $line );
+			}			
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 
 # Check for duplicate signatures
 			my $sig_nospace = $line;
@@ -2566,8 +2576,12 @@ sub process {
 		}
 
 #check the patch for invalid author credentials
+<<<<<<< HEAD
 		if ($chk_author && !($line =~ /^From:.*qca\.qualcomm\.com/) &&
 		    $line =~ /^From:.*(quicinc|qualcomm)\.com/) {
+=======
+		if ($chk_author && $line =~ /^From:.*(quicinc|qualcomm)\.com/) {
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 			WARN("BAD_AUTHOR", "invalid author identity\n" . $line );
 		}
 
@@ -6051,11 +6065,14 @@ sub process {
 		}
 	}
 
+<<<<<<< HEAD
 	if ($chk_author && $qca_sign_off && !$codeaurora_sign_off) {
 		WARN("BAD_SIGN_OFF",
 		     "QCA Signed-off-by requires CODEAURORA Signed-off-by\n" . $line );
 	}
 
+=======
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	# If we have no input at all, then there is nothing to report on
 	# so just keep quiet.
 	if ($#rawlines == -1) {

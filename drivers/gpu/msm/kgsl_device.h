@@ -166,7 +166,11 @@ struct kgsl_functable {
 		unsigned int prelevel, unsigned int postlevel, bool post);
 	void (*regulator_disable_poll)(struct kgsl_device *device);
 	void (*clk_set_options)(struct kgsl_device *device,
+<<<<<<< HEAD
 		const char *name, struct clk *clk, bool on);
+=======
+		const char *name, struct clk *clk);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	void (*gpu_model)(struct kgsl_device *device, char *str,
 		size_t bufsz);
 	void (*stop_fault_timer)(struct kgsl_device *device);

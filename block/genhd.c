@@ -656,6 +656,7 @@ void del_gendisk(struct gendisk *disk)
 	disk->flags &= ~GENHD_FL_UP;
 
 	sysfs_remove_link(&disk_to_dev(disk)->kobj, "bdi");
+<<<<<<< HEAD
 	if (disk->queue) {
 		/*
 		 * Unregister bdi before releasing device numbers (as they can
@@ -666,6 +667,9 @@ void del_gendisk(struct gendisk *disk)
 	} else {
 		WARN_ON(1);
 	}
+=======
+	blk_unregister_queue(disk);
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	blk_unregister_region(disk_devt(disk), disk->minors);
 
 	part_stat_set_all(&disk->part0, 0);

@@ -57,6 +57,10 @@ obj-$(CONFIG_COMPAT) += compat.o
 obj-$(CONFIG_CGROUPS) += cgroup.o
 obj-$(CONFIG_CGROUP_FREEZER) += cgroup_freezer.o
 obj-$(CONFIG_CGROUP_PIDS) += cgroup_pids.o
+<<<<<<< HEAD
+=======
+obj-$(CONFIG_NUBIA_CGF_NOTIFY_EVENT) += cgf_notify.o
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 obj-$(CONFIG_CPUSETS) += cpuset.o
 obj-$(CONFIG_UTS_NS) += utsname.o
 obj-$(CONFIG_USER_NS) += user_namespace.o

@@ -1633,7 +1633,11 @@ static void __trace_find_cmdline(int pid, char comm[])
 
 	map = savedcmd->map_pid_to_cmdline[pid];
 	if (map != NO_CMDLINE_MAP)
+<<<<<<< HEAD
 		strlcpy(comm, get_saved_cmdlines(map), TASK_COMM_LEN - 1);
+=======
+		strcpy(comm, get_saved_cmdlines(map));
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
 	else
 		strcpy(comm, "<...>");
 }

@@ -65,3 +65,8 @@ obj-$(CONFIG_FB_MSM_QPIC_ILI_QVGA_PANEL) += qpic_panel_ili_qvga.o
 
 obj-$(CONFIG_FB_MSM_MDSS) += mdss_fb.o mdss_util.o
 obj-$(CONFIG_COMPAT) += mdss_compat_utils.o
+<<<<<<< HEAD
+=======
+
+obj-$(CONFIG_NUBIA_LCD_DISP_PREFERENCE) += nubia_disp_preference.o
+>>>>>>> 4e281077f2786ff40edca328f9da7f39d87fa2cf
