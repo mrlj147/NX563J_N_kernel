@@ -3132,6 +3132,8 @@ long msm_cpp_subdev_ioctl(struct v4l2_subdev *sd,
 	struct msm_camera_v4l2_ioctl_t *ioctl_ptr = NULL;
 	int rc = 0;
 
+	CPP_DBG("E\n");
+
 	if (sd == NULL) {
 		pr_err("sd %pK\n", sd);
 		return -EINVAL;
@@ -3625,9 +3627,6 @@ STREAM_BUFF_END:
 		}
 		break;
 	}
-	default:
-		pr_err_ratelimited("invalid value: cmd=0x%x\n", cmd);
-		break;
 	case VIDIOC_MSM_CPP_IOMMU_ATTACH: {
 		if (cpp_dev->iommu_state == CPP_IOMMU_STATE_DETACHED) {
 			int32_t stall_disable;
@@ -3707,16 +3706,23 @@ STREAM_BUFF_END:
 				break;
 			}
 			cpp_dev->iommu_state = CPP_IOMMU_STATE_DETACHED;
+
 		} else {
-			pr_err("%s:%d IOMMMU attach triggered in invalid state\n",
+			pr_err("%s:%d IOMMMU detach triggered in invalid state\n",
 				__func__, __LINE__);
 			rc = -EINVAL;
 		}
 		break;
 	}
+	default:
+		pr_err_ratelimited("invalid value: cmd=0x%x\n", cmd);
+		break;
 	}
+
 	mutex_unlock(&cpp_dev->mutex);
+
 	CPP_DBG("X\n");
+
 	return rc;
 }
 
@@ -4363,6 +4369,7 @@ static long msm_cpp_subdev_fops_compat_ioctl(struct file *file,
 	}
 
 	mutex_unlock(&cpp_dev->mutex);
+
 	switch (cmd) {
 	case VIDIOC_MSM_CPP_LOAD_FIRMWARE:
 	case VIDIOC_MSM_CPP_FLUSH_QUEUE:

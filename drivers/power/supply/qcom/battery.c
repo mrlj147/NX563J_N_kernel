@@ -379,6 +379,7 @@ done:
  *  FCC  *
 **********/
 #define EFFICIENCY_PCT	80
+#define MIN_SPLIT_CHANGE_CURRENT_UA		300000
 static void split_fcc(struct pl_data *chip, int total_ua,
 			int *master_ua, int *slave_ua)
 {
@@ -424,10 +425,17 @@ static void split_fcc(struct pl_data *chip, int total_ua,
 	 * charger's current goes through main charger's BATFET, keep
 	 * the main charger's FCC to the votable result.
 	 */
+#if defined(CONFIG_NUBIA_CHARGE_FEATURE)
+	if (chip->pl_mode == POWER_SUPPLY_PL_USBIN_USBIN)
+		*master_ua = max(MIN_SPLIT_CHANGE_CURRENT_UA, total_ua);
+	else
+		*master_ua = max(MIN_SPLIT_CHANGE_CURRENT_UA, total_ua - *slave_ua);
+#else
 	if (chip->pl_mode == POWER_SUPPLY_PL_USBIN_USBIN)
 		*master_ua = max(0, total_ua);
 	else
 		*master_ua = max(0, total_ua - *slave_ua);
+#endif
 }
 
 static int pl_fcc_vote_callback(struct votable *votable, void *data,
@@ -454,8 +462,16 @@ static int pl_fcc_vote_callback(struct votable *votable, void *data,
 		return rc;
 	}
 
+#if defined(CONFIG_NUBIA_CHARGE_FEATURE)
+	if(total_fcc_ua >= MIN_SPLIT_CHANGE_CURRENT_UA) {
+		split_fcc(chip, total_fcc_ua, &master_fcc_ua, &slave_fcc_ua);
+	}
+#else
+	split_fcc(chip, total_fcc_ua, &master_fcc_ua, &slave_fcc_ua);
 	if (chip->pl_mode != POWER_SUPPLY_PL_NONE) {
 		split_fcc(chip, total_fcc_ua, &master_fcc_ua, &slave_fcc_ua);
+	}
+#endif
 
 		/*
 		 * If there is an increase in slave share
@@ -508,7 +524,7 @@ static int pl_fcc_vote_callback(struct votable *votable, void *data,
 				return rc;
 			}
 		}
-	}
+	
 
 	pl_dbg(chip, PR_PARALLEL, "master_fcc=%d slave_fcc=%d distribution=(%d/%d)\n",
 		   master_fcc_ua, slave_fcc_ua,

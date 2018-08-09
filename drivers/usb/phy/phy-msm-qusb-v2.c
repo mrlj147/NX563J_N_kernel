@@ -70,7 +70,11 @@
 #define QUSB2PHY_PLL_ANALOG_CONTROLS_ONE	0x0
 #define QUSB2PHY_PLL_ANALOG_CONTROLS_TWO	0x4
 
+#ifdef CONFIG_NUBIA_EYETEST_CONFIG
+unsigned int phy_tune1 = 0;
+#else
 unsigned int phy_tune1;
+#endif
 module_param(phy_tune1, uint, S_IRUGO | S_IWUSR);
 MODULE_PARM_DESC(phy_tune1, "QUSB PHY v2 TUNE1");
 
@@ -380,6 +384,8 @@ static int qusb_phy_update_dpdm(struct usb_phy *phy, int value)
 	return ret;
 }
 
+#ifdef CONFIG_NUBIA_EYETEST_CONFIG
+#else
 static void qusb_phy_get_tune1_param(struct qusb_phy *qphy)
 {
 	u8 reg;
@@ -409,6 +415,7 @@ static void qusb_phy_get_tune1_param(struct qusb_phy *qphy)
 	}
 	qphy->tune_val = reg;
 }
+#endif
 
 static void qusb_phy_write_seq(void __iomem *base, u32 *seq, int cnt,
 		unsigned long delay)
@@ -518,6 +525,8 @@ static int qusb_phy_init(struct usb_phy *phy)
 	if (qphy->qusb_phy_init_seq)
 		qusb_phy_write_seq(qphy->base, qphy->qusb_phy_init_seq,
 				qphy->init_seq_len, 0);
+#ifdef CONFIG_NUBIA_EYETEST_CONFIG
+#else
 	if (qphy->efuse_reg) {
 		if (!qphy->tune_val)
 			qusb_phy_get_tune1_param(qphy);
@@ -527,6 +536,7 @@ static int qusb_phy_init(struct usb_phy *phy)
 		writel_relaxed(qphy->tune_val,
 				qphy->base + QUSB2PHY_PORT_TUNE1);
 	}
+#endif
 
 	/* If phy_tune1 modparam set, override tune1 value */
 	if (phy_tune1) {
