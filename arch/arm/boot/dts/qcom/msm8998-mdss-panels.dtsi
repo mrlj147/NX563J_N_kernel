@@ -30,14 +30,22 @@
 #include "dsi-panel-sim-dualmipi-cmd.dtsi"
 #include "dsi-panel-s6e3ha3-amoled-dualmipi-wqhd-cmd.dtsi"
 #include "dsi-panel-nt36850-truly-dualmipi-wqhd-cmd.dtsi"
+#include "nubia_panel/nubia_panel.dtsi"
 
 &soc {
 	dsi_panel_pwr_supply: dsi_panel_pwr_supply {
 		#address-cells = <1>;
 		#size-cells = <0>;
-
-		qcom,panel-supply-entry@0 {
-			reg = <0>;
+                qcom,panel-supply-entry@0 {
+                        reg = <0>;
+                        qcom,supply-name = "wqhd-vdda";
+                        qcom,supply-min-voltage = <2864000>;
+                        qcom,supply-max-voltage = <2864000>;
+                        qcom,supply-enable-load = <32000>;
+                        qcom,supply-disable-load = <80>;
+                };
+		qcom,panel-supply-entry@1 {
+			reg = <1>;
 			qcom,supply-name = "wqhd-vddio";
 			qcom,supply-min-voltage = <1880000>;
 			qcom,supply-max-voltage = <1880000>;
@@ -45,17 +53,18 @@
 			qcom,supply-disable-load = <80>;
 		};
 
-		qcom,panel-supply-entry@1 {
-			reg = <1>;
+		qcom,panel-supply-entry@2 {
+			reg = <2>;
 			qcom,supply-name = "lab";
 			qcom,supply-min-voltage = <4600000>;
 			qcom,supply-max-voltage = <6000000>;
 			qcom,supply-enable-load = <100000>;
 			qcom,supply-disable-load = <100>;
+			qcom,supply-pre-on-sleep = <2>;
 		};
 
-		qcom,panel-supply-entry@2 {
-			reg = <2>;
+		qcom,panel-supply-entry@3 {
+			reg = <3>;
 			qcom,supply-name = "ibb";
 			qcom,supply-min-voltage = <4600000>;
 			qcom,supply-max-voltage = <6000000>;
@@ -148,18 +157,9 @@
 };
 
 &dsi_nt35597_dsc_cmd {
-	qcom,mdss-dsi-panel-timings = [00 11 04 04 07 0c 04 04 03 03 04 00];
-	qcom,mdss-dsi-t-clk-post = <0x05>;
-	qcom,mdss-dsi-t-clk-pre = <0x1b>;
-	qcom,mdss-dsi-tx-eot-append;
-	qcom,esd-check-enabled;
-	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
-	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
-	qcom,mdss-dsi-panel-status-command-state = "dsi_hs_mode";
-	qcom,mdss-dsi-panel-status-value = <0x9c>;
-	qcom,mdss-dsi-panel-on-check-value = <0x9c>;
-	qcom,mdss-dsi-panel-status-read-length = <1>;
-	qcom,mdss-dsi-panel-max-error-count = <3>;
+	qcom,mdss-dsi-panel-timings = [00 1a 06 06 0a 11 05 07 05 03 04 00];
+	qcom,mdss-dsi-t-clk-post = <0x07>;
+	qcom,mdss-dsi-t-clk-pre = <0x28>;
 };
 
 &dsi_sharp_4k_dsc_video {

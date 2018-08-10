@@ -396,6 +396,9 @@
 			regulator-min-microvolt = <2864000>;
 			regulator-max-microvolt = <2864000>;
 			status = "okay";
+			//proxy-supply = <&pm8998_l22>;
+                        //qcom,proxy-consumer-enable;
+                        //qcom,proxy-consumer-current = <32000>;
 		};
 	};
 
@@ -477,8 +480,8 @@
 	rpm-regulator-ldoa28 {
 		status = "okay";
 		pm8998_l28: regulator-l28 {
-			regulator-min-microvolt = <3008000>;
-			regulator-max-microvolt = <3008000>;
+			regulator-min-microvolt = <2856000>;
+			regulator-max-microvolt = <2856000>;
 			status = "okay";
 		};
 	};

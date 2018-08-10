@@ -37,6 +37,12 @@
 		bootargs = "rcupdate.rcu_expedited=1";
 	};
 
+	// Nubia add start
+	aliases {
+		serial1 = &uartblsp2dm2;
+	};
+	// Nubia add end
+
 	cpus {
 		#address-cells = <2>;
 		#size-cells = <0>;
@@ -398,6 +404,15 @@
 			reg = <0x0 0x9d600000 0x0 0x02400000>;
 			label = "cont_splash_mem";
 		};
+
+		/* nubia add pstore reserve region*/
+		pstore_reserve_mem: pstore_reserve_mem_region@Aff00000 {
+			linux,reserve-contiguous-region;
+			linux,reserve-region;
+			linux,remove-completely;
+			reg = <0x0 0xAff00000 0x0 0x00100000>;
+			label = "pstore_reserve_mem";
+		};
 	};
 };
 
@@ -491,6 +506,18 @@
 			 <&clock_gcc clk_gcc_blsp2_ahb_clk>;
 		clock-names = "core", "iface";
 	};
+
+	// Nubia add start
+	uartblsp2dm2: serial@0c1b1000 {
+		compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+		reg = <0xc1b1000 0x1000>;
+		interrupts = <0 115 0>;
+		status = "disabled";
+		clocks = <&clock_gcc clk_gcc_blsp2_uart3_apps_clk>,
+			 <&clock_gcc clk_gcc_blsp2_ahb_clk>;
+		clock-names = "core", "iface";
+	};
+	// Nubia add end
 
 	slim_aud: slim@171c0000 {
 		cell-index = <1>;
@@ -1799,6 +1826,7 @@
 			snps,has-lpm-erratum;
 			snps,hird-threshold = /bits/ 8 <0x10>;
 			snps,num-gsi-evt-buffs = <0x3>;
+			maximum-speed = "high-speed";
 		};
 
 		qcom,usbbam@a904000 {
@@ -2773,7 +2801,7 @@
 			qcom,mitigation-freq-khz = <576000>;
 			qcom,vph-high-threshold-uv = <3500000>;
 			qcom,vph-low-threshold-uv = <3300000>;
-			qcom,soc-low-threshold = <10>;
+			qcom,soc-low-threshold = <5>;
 			qcom,thermal-handle = <&msm_thermal_freq>;
 		};
 	};
@@ -2849,8 +2877,8 @@
 		reg = <0x17817000 0x1000>;
 		reg-names = "wdt-base";
 		interrupts = <0 3 0>, <0 4 0>;
-		qcom,bark-time = <11000>;
-		qcom,pet-time = <10000>;
+		qcom,bark-time = <20000>;
+		qcom,pet-time = <15000>;
 		qcom,ipi-ping;
 		qcom,wakeup-enable;
 		qcom,scandump-size = <0x40000>;
@@ -3211,6 +3239,25 @@
 			&tsif0_sync_active
 			&tsif1_signals_active
 			&tsif1_sync_active>;		/* dual-tsif-mode2 */
+	};
+
+	//nubia add hw version
+	nubia_hw_ver_gpio: nubia_hw_gpio_ctrl {
+		compatible = "qcom,nubia_hw-gpio-ctrl";
+		qcom,pcb-gpio1 = <&tlmm 99 0>;
+		qcom,pcb-gpio2 = <&tlmm 100 0>;
+		qcom,rf-gpio1 = <&tlmm  127 0>;
+		qcom,rf-gpio2 = <&tlmm 128 0>;
+		qcom,config-gpio1 = <&tlmm 59 0>;
+		qcom,config-gpio2 = <&tlmm 60 0>;
+		//qcom,pm-gpio1 = <&pm8998_gpios 12 0>;
+		//qcom,pm-gpio2 = <&pm8998_gpios 12 0>;
+		//qcom,pcb-pm-adc_channel = <0x38>;
+		//qcom,config-pm-adc_channel = <0x51>;//powerup 100k
+		//qcom,nubia_hw-vadc = <&pm8998_vadc>;
+		pinctrl-names = "pull_up_default","pull_down_default";
+		pinctrl-0 = <&nubia_gpio_default>;
+		pinctrl-1 = <&nubia_gpio_pulldown>;
 	};
 
 	wil6210: qcom,wil6210 {

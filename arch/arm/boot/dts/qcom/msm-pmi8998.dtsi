@@ -149,7 +149,26 @@
 			#address-cells = <1>;
 			#size-cells = <1>;
 
+			/*BEGIN:Modify for usb/audio switch */
+			qcom,usb-audio-select-support;
+			qcom,switch-en-gpio = <&tlmm 23 0>;
+			qcom,mbhc-int-gpio = <&tlmm 24 0>;
+			qcom,switch-select-gpio = <&tlmm 78 0>;
+
+			qcom,bat-temp-limit-support;
+			qcom,bat-temp-limit-current = <1000000>;
+			qcom,bat-temp-jeita-current = <250000>;
+			qcom,bat-temp-limit-threshold = <400>;
+			qcom,bat-temp-limit-voltage = <4100>;
+			/*END*/
+
 			qcom,pmic-revid = <&pmi8998_revid>;
+			qcom,step-soc-thresholds = <60 70 80 90>;
+			qcom,step-current-deltas = <950000 950000 0 0 0>;
+
+			qcom,fcc-max-ua = <2150000>;
+			qcom,fv-max-uv = <4400000>;
+			qcom,usb-icl-ua = <2000000>;
 
 			io-channels = <&pmi8998_rradc 8>,
 				      <&pmi8998_rradc 10>,
@@ -340,6 +359,15 @@
 			qcom,fg-esr-timer-awake = <96 96>;
 			qcom,fg-esr-timer-asleep = <256 256>;
 			qcom,fg-esr-timer-charging = <0 96>;
+			qcom,fg-recharge-soc-thr = <99>;
+			qcom,fg-recharge-voltage = <4340>;
+			qcom,battery-thermal-coefficients = [bd 50 ff];
+			qcom,fg-jeita-thresholds = <0 10 43 50>;
+			qcom,fg-jeita-hyst-temp = <2>;
+			qcom,fg-chg-term-current = <200>;
+			qcom,fg-sys-term-current = <(-250)>;
+			qcom,fg-force-load-profile;
+			qcom,hold-soc-while-full;
 			qcom,cycle-counter-en;
 			status = "okay";
 
@@ -392,6 +420,17 @@
 						  "mem-xcp",
 						  "dma-grant";
 			};
+		};
+
+		neo,battery {
+				compatible = "nubia,neo-battery";
+				#address-cells = <1>;
+				#size-cells = <1>;
+				reg = <0x1000 0x700>;
+				neo,batt-capacity-uah = <3100000>;
+				neo,batt-cutoff-mv = <3450>;
+				neo,batt-soc-increase-per-sec = <10>;
+				neo,batt-soc-decrease-per-sec = <60>;
 		};
 	};
 
@@ -481,7 +520,8 @@
 			#pwm-cells = <2>;
 			status = "disabled";
 		};
-
+/* Nubia add start */
+/*
 		qcom,leds@d000 {
 			compatible = "qcom,leds-qpnp";
 			reg = <0xd000 0x100>;
@@ -525,6 +565,92 @@
 				linux,default-trigger = "boot-indication";
 			};
 		};
+*/
+		qcom,leds@d000 {
+			compatible = "qcom,leds-qpnp";
+			reg = <0xd000 0x100>;
+			label = "rgb";
+			status = "okay";
+
+			red_led: qcom,rgb_0 {
+				label = "rgb";
+				qcom,id = <3>;
+				qcom,mode = "lpg";
+				pwms = <&pmi8998_pwm_5 0 0>;
+				qcom,pwm-us = <1000>;
+				qcom,start-idx = <0>;
+				qcom,idx-len = <63>;
+				qcom,duty-pcts= [02 04 06 08 09 0a 0c 0e 10 11 12 14 16 18 19 1a 1b 1c 1e 20 22 24 26 28
+					19 2a 2c 2e 2f 30 32 34 36 38 39 3a 3b 3c 3d 3e 40 42 44 46 48 49 4a 4b 4c 4e 50 52 54 56 58 59 5a 5b 5c 5e 60 62 64];
+				qcom,lut-flags = <27>;
+				qcom,pause-lo = <0>;
+				qcom,pause-hi = <0>;
+				qcom,ramp-step-ms = <200>;
+				qcom,max-current = <12>;
+				qcom,is_auto_breath = <0>;
+				qcom,led_channel = <8>;
+				qcom,default-state = "off";
+				linux,name = "nubia_led";
+				linux,default-trigger = "none";
+				nubia,grade_percentage = <30>;
+				nubia,grade_scale_offset = <0> ;
+			};
+
+			green_led: qcom,rgb_1 {
+				label = "rgb";
+				qcom,id = <4>;
+				qcom,mode = "lpg";
+				pwms = <&pmi8998_pwm_4 0 0>;
+				qcom,pwm-us = <1000>;
+				qcom,start-idx = <0>;
+				qcom,idx-len = <63>;
+				qcom,duty-pcts= [02 04 06 08 09 0a 0c 0e 10 11 12 14 16 18 19 1a 1b 1c 1e 20 22 24 26 28
+					19 2a 2c 2e 2f 30 32 34 36 38 39 3a 3b 3c 3d 3e 40 42 44 46 48 49 4a 4b 4c 4e 50 52 54 56 58 59 5a 5b 5c 5e 60 62 64];
+				qcom,lut-flags = <27>;
+				qcom,pause-lo = <0>;
+				qcom,pause-hi = <0>;
+				qcom,ramp-step-ms = <200>;
+				qcom,max-current = <12>;
+				qcom,is_auto_breath = <1>;
+				qcom,led_channel = <0x10>;
+				qcom,default-state = "off";
+				linux,name = "green";
+				nubia,grade_percentage = <100>;
+				nubia,grade_scale_offset = <10> ;
+				nubia,fade_time = <3>;
+				nubia,fullon_time = <0>;
+				nubia,fulloff_time = <4>;
+				nubia,onceblink_max_grade = <70>;
+				nubia,autoblink_max_grade = <100>;
+				qcom,in-order-command-processing;
+				linux,default-trigger = "none";
+			};
+
+			blue_led: qcom,rgb_2 {
+				label = "rgb";
+				qcom,id = <5>;
+				qcom,mode = "lpg";
+				pwms = <&pmi8998_pwm_3 0 0>;
+				qcom,pwm-us = <1000>;
+				qcom,start-idx = <0>;
+				qcom,idx-len = <63>;
+				qcom,duty-pcts= [02 04 06 08 09 0a 0c 0e 10 11 12 14 16 18 19 1a 1b 1c 1e 20 22 24 26 28
+					19 2a 2c 2e 2f 30 32 34 36 38 39 3a 3b 3c 3d 3e 40 42 44 46 48 49 4a 4b 4c 4e 50 52 54 56 58 59 5a 5b 5c 5e 60 62 64];
+				qcom,lut-flags = <27>;
+				qcom,pause-lo = <0>;
+				qcom,pause-hi = <0>;
+				qcom,ramp-step-ms = <200>;
+				qcom,default-state = "off";
+				qcom,max-current = <12>;
+				qcom,is_auto_breath = <0>;
+				qcom,led_channel = <8>;
+				linux,name = "blue";
+				linux,default-trigger = "none";
+				nubia,grade_percentage = <30>;
+				nubia,grade_scale_offset = <0> ;
+			};
+		};
+/* Nubia add end */
 
 		labibb: qpnp-labibb-regulator {
 			compatible = "qcom,qpnp-labibb-regulator";
@@ -628,13 +754,15 @@
 			qcom,dim-mode = "hybrid";
 			qcom,hyb-thres = <625>;
 			qcom,sync-dly-us = <800>;
-			qcom,fs-curr-ua = <25000>;
+			qcom,fs-curr-ua = <20000>;
 			qcom,cons-sync-write-delay-us = <1000>;
-			qcom,led-strings-list = [00 01 02 03];
+			qcom,led-strings-list = [00 01];
 			qcom,en-ext-pfet-sc-pro;
 			qcom,pmic-revid = <&pmi8998_revid>;
 			qcom,loop-auto-gm-en;
 			qcom,auto-calibration-enable;
+			bob_test-supply = <&pmi8998_bob>;
+			qcom,en-cabc;
 			status = "okay";
 		};
 

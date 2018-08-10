@@ -33,6 +33,33 @@
 			};
 		};
 
+		// Nubia add start
+		uart_ir_active: uart_ir_active {
+			mux {
+				pins = "gpio49", "gpio50";
+				function = "blsp_uart9_a";
+			};
+
+			config {
+				pins = "gpio49", "gpio50";
+				drive-strength = <2>;
+				bias-disable;
+			};
+		};
+		uart_ir_sleep: uart_ir_sleep {
+			mux {
+				pins = "gpio49", "gpio50";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio49", "gpio50";
+				drive-strength = <2>;
+				bias-pull-down;
+				output-low;
+			};
+		};
+		// Nubia add end
+
 		wcd9xxx_intr {
 			wcd_intr_default: wcd_intr_default{
 				mux {
@@ -219,65 +246,167 @@
 		};
 
 		nfc {
+		/*
 			nfc_int_active: nfc_int_active {
-				/* active state */
+				// active state
 				mux {
-					/* GPIO 92 NFC Read Interrupt */
+					// GPIO 92 NFC Read Interrupt
 					pins = "gpio92";
 					function = "gpio";
 				};
 
 				config {
 					pins = "gpio92";
-					drive-strength = <6>; /* 6 MA */
+					drive-strength = <6>; // 6 MA
 					bias-pull-up;
 				};
 			};
 
 			nfc_int_suspend: nfc_int_suspend {
-				/* sleep state */
+				// sleep state
 				mux {
-					/* GPIO 92 NFC Read Interrupt */
+					// GPIO 92 NFC Read Interrupt
 					pins = "gpio92";
 					function = "gpio";
 				};
 
 				config {
 					pins = "gpio92";
-					drive-strength = <6>; /* 6 MA */
+					drive-strength = <6>; // 6 MA
 					bias-pull-up;
 				};
 			};
 
 			nfc_enable_active: nfc_enable_active {
-				/* active state */
+				// active state
 				mux {
-					/* 12: NFC ENABLE 116:ESE Enable */
+					// 12: NFC ENABLE 116:ESE Enable
 					pins = "gpio12", "gpio116";
 					function = "gpio";
 				};
 
 				config {
 					pins = "gpio12", "gpio116";
-					drive-strength = <6>; /* 6 MA */
+					drive-strength = <6>; // 6 MA
 					bias-pull-up;
 				};
 			};
 
 			nfc_enable_suspend: nfc_enable_suspend {
-				/* sleep state */
+				// sleep state
 				mux {
-					/* 12: NFC ENABLE 116:ESE Enable */
+					// 12: NFC ENABLE 116:ESE Enable
 					pins = "gpio12", "gpio116";
 					function = "gpio";
 				};
 
 				config {
 					pins = "gpio12", "gpio116";
-					drive-strength = <6>; /* 6 MA */
+					drive-strength = <6>; // 6 MA
 					bias-disable;
 				};
 			};
+		*/
+
+	//add by slv for nfc brcm2079x
+            bcm2079x_int_pin{
+				label = "bcm2079x_int_pin";
+				bcm2079x_int_active: active{
+				// active state
+				mux {
+					// GPIO 92 NFC Read Interrupt
+					pins = "gpio92";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio92";
+					drive-strength = <6>; // 6 MA
+					bias-pull-up;
+					};
+				};
+
+				bcm2079x_int_suspend: suspend{
+					// sleep state
+					mux {
+						// GPIO 92 NFC Read Interrupt
+						pins = "gpio92";
+						function = "gpio";
+					};
+
+					config {
+						pins = "gpio92";
+						drive-strength = <6>; // 6 MA
+						bias-pull-up;
+					};
+				};
+           };
+
+            bcm2079x_en_pin{
+				label = "bcm2079x_en_pin";
+                bcm2079x_en_active: active{
+				// active state
+					mux {
+						// GPIO 92 NFC Read Interrupt
+						pins = "gpio12";
+						function = "gpio";
+					};
+
+					config {
+						pins = "gpio12";
+						drive-strength = <6>; // 6 MA
+						bias-pull-up;
+					};
+				};
+
+				bcm2079x_en_suspend: suspend {
+					// sleep state
+					mux {
+						// GPIO 92 NFC Read Interrupt
+						pins = "gpio12";
+						function = "gpio";
+					};
+
+					config {
+						pins = "gpio12";
+						drive-strength = <6>; // 6 MA
+						bias-pull-up;
+					};
+				};
+            };
+
+            bcm2079x_ctl_pin{
+				label = "bcm2079x_ctl_pin";
+                bcm2079x_ctl_active: active{
+					// active state
+					mux {
+						// GPIO 92 NFC Read Interrupt
+						pins = "gpio76";
+						function = "gpio";
+					};
+
+					config {
+						pins = "gpio76";
+						drive-strength = <6>; // 6 MA
+						bias-pull-up;
+					};
+				};
+
+				bcm2079x_ctl_suspend: suspend {
+					// sleep state
+					mux {
+						// GPIO 92 NFC Read Interrupt
+						pins = "gpio76";
+						function = "gpio";
+					};
+
+					config {
+						pins = "gpio76";
+						drive-strength = <6>; // 6 MA
+						bias-pull-up;
+					};
+				};
+            };
 		};
 
 		i2c_7 {
@@ -307,6 +436,41 @@
 				};
 			};
 		};
+		/* Nubia add start */
+		drv2605_power_pin{
+			/*qcom,pins = <&gp 95>;*/
+			pins = "gpio95";
+			qcom,num-grp-pins = <1>;
+			qcom,pin-func = <0>;
+			label = "drv2605_power_pin";
+			drv2605_power_active: active {
+				drive-strength = <6>;
+				bias-pull-up;
+				output-high;
+			};
+			drv2605_power_suspend: suspend {
+				drive-strength = <6>;
+				bias-pull-down;
+				output-low;
+			};
+		};
+		ir_remote_power_pin{
+			pins = "gpio39";
+			qcom,num-grp-pins = <1>;
+			qcom,pin-func = <0>;
+			label = "ir_remote_power_pin";
+			ir_remote_power_active: active {
+				drive-strength = <6>;
+				bias-pull-up;
+				output-high;
+			};
+			ir_remote_power_suspend: suspend {
+				drive-strength = <6>;
+				bias-pull-down;
+				output-low;
+			};
+		};
+		/* Nubia add end */
 
 		i2c_8 {
 			i2c_8_active: i2c_8_active {
@@ -447,6 +611,58 @@
 				};
 			};
 		};
+
+		// Nubia sensor add start
+		pa224_int {
+			pa224_default: pa224_default{
+				mux {
+					pins = "gpio62";
+					function = "gpio";
+				};
+				config {
+					pins = "gpio62";
+					drive-strength = <6>;
+					bias-pull-up;
+				};
+			};
+			pa224_sleep: pa224_sleep{
+				mux {
+					pins = "gpio62";
+					function = "gpio";
+				};
+				config {
+					pins = "gpio62";
+					drive-strength = <6>;
+					bias-high-impedance;
+				};
+			};
+		};
+		hall_int_0_pin{
+			hall_int_0_default: hall_int_0_default {
+			 mux {
+					pins = "gpio123","gpio124";
+					function = "gpio";
+				};
+			config {
+				pins="gpio123","gpio124";
+				drive-strength = <6>;
+				bias-pull-up;
+				};
+			};
+
+			hall_int_0_sleep: hall_int_0_sleep {
+			 mux {
+					pins = "gpio123","gpio124";
+					function = "gpio";
+				};
+			config{
+				pins= "gpio123","gpio124";
+				drive-strength = <6>;
+				bias-high-impedance;
+				};
+			};
+		};
+		// Nubia sensor add end
 
 		/* SPI CONFIGURATION */
 
@@ -682,6 +898,7 @@
 		};
 
 		/* USB C analog configuration */
+/*
 		wcd_usbc_analog_en1 {
 			wcd_usbc_analog_en1_idle: wcd_usbc_ana_en1_idle {
 				mux {
@@ -737,15 +954,16 @@
 				};
 			};
 		};
+*/
 
 		cdc_reset_ctrl {
 			cdc_reset_sleep: cdc_reset_sleep {
 				mux {
-					pins = "gpio64";
+					pins = "gpio63";
 					function = "gpio";
 				};
 				config {
-					pins = "gpio64";
+					pins = "gpio63";
 					drive-strength = <16>;
 					bias-disable;
 					output-low;
@@ -753,14 +971,43 @@
 			};
 			cdc_reset_active:cdc_reset_active {
 				mux {
-					pins = "gpio64";
+					pins = "gpio63";
 					function = "gpio";
 				};
 				config {
-					pins = "gpio64";
+					pins = "gpio63";
 					drive-strength = <16>;
 					bias-pull-down;
 					output-high;
+				};
+			};
+		};
+
+		nubia_gpio {
+			nubia_gpio_default: nubia_gpio_default{
+				mux {
+					pins = "gpio59", "gpio60", "gpio99", "gpio100", "gpio127", "gpio128";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio59", "gpio60", "gpio99", "gpio100", "gpio127", "gpio128";
+					drive-strength = <2>; /* 2 mA */
+					bias-pull-up; /* pull up */
+					input-enable;
+				};
+			};
+			nubia_gpio_pulldown: nubia_gpio_pulldown{
+				mux {
+					pins = "gpio59", "gpio60", "gpio99", "gpio100", "gpio127", "gpio128";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio59", "gpio60", "gpio99", "gpio100", "gpio127", "gpio128";
+					drive-strength = <2>; /* 2 mA */
+					bias-pull-down; /* pull down */
+					input-enable;
 				};
 			};
 		};
@@ -1117,6 +1364,58 @@
 			};
 		};
 
+		/*ZTEMT: fengxun added for AL3200 ---start*/
+		al3200_gpio_int_active: al3200_gpio_int_active {
+			mux {
+				pins = "gpio7";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio7";
+				bias-disable; /* No PULL */
+				drive-strength = <6>; /* 2 MA */
+			};
+		};
+		al3200_gpio_int_sleep: al3200_gpio_int_sleep {
+			mux {
+				pins = "gpio7";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio7";
+				bias-disable; /* No PULL */
+				drive-strength = <2>; /* 2 MA */
+			};
+		};
+
+		al3200_gpio_active: al3200_gpio_active {
+			mux {
+				pins = "gpio6","gpio21","gpio77","gpio115";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio6","gpio21","gpio77","gpio115";
+				bias-disable; /* No PULL */
+				drive-strength = <2>; /* 2 MA */
+			};
+		};
+		al3200_gpio_sleep: al3200_gpio_sleep {
+			mux {
+				pins = "gpio6","gpio21","gpio77","gpio115";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio6","gpio21","gpio77","gpio115";
+				bias-disable; /* No PULL */
+				drive-strength = <2>; /* 2 MA */
+			};
+		};
+		/*ZTEMT: fengxun added for AL3200 ---end*/
+
 		spi_6 {
 			spi_6_active: spi_6_active {
 				mux {
@@ -1340,7 +1639,119 @@
 				};
 			};
 		};
+		// nubia add start
+		// add fingerprint pinctrl
+		fp_rst_gpio {
+			fp_rst_active: fp_rst_active {
+				mux {
+					pins = "gpio85";
+					function = "gpio";
+				};
 
+				config {
+					pins = "gpio85";
+					drive-strength = <2>;
+					bias-pull-up;
+				};
+			};
+
+			fp_rst_suspend: fp_rst_suspend {
+				mux {
+					pins = "gpio85";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio85";
+					drive-strength = <2>;
+					bias-pull-up;
+				};
+			};
+		};
+
+		fp_drdy_gpio {
+			fp_drdy_active: fp_drdy_active {
+				mux {
+					pins = "gpio121";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio121";
+					drive-strength = <2>;
+					bias-pull-up;
+				};
+			};
+
+			fp_drdy_suspend: fp_drdy_suspend {
+				mux {
+					pins = "gpio121";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio121";
+					drive-strength = <2>;
+					bias-pull-up;
+				};
+			};
+		};
+
+		fp_enable_gpio {
+			fp_enable_active: fp_enable_active {
+				mux {
+					pins = "gpio79";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio79";
+					drive-strength = <2>;
+					bias-pull-up;
+				};
+			};
+
+			fp_enable_suspend: fp_enable_suspend {
+				mux {
+					pins = "gpio79";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio79";
+					drive-strength = <2>;
+					bias-pull-up;
+				};
+			};
+		};
+		fp_enable_vddio_gpio {
+			fp_enable_vddio_active: fp_enable_vddio_active {
+				mux {
+					pins = "gpio40";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio40";
+					drive-strength = <2>;
+					bias-pull-up;
+				};
+			};
+
+			fp_enable_vddio_suspend: fp_enable_vddio_suspend {
+				mux {
+					pins = "gpio40";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio40";
+					drive-strength = <2>;
+					bias-pull-up;
+				};
+			};
+		};
+		// nubia add end
 		/* HS UART CONFIGURATION */
 		blsp1_uart1_active: blsp1_uart1_active {
 			mux {
@@ -1484,30 +1895,30 @@
 
 		blsp1_uart3: blsp1_uart3 {
 			blsp1_uart3_tx_active: blsp1_uart3_tx_active {
-				mux {
+			mux {
 					pins = "gpio45";
-					function = "blsp_uart3_a";
-				};
-
-				config {
-					pins = "gpio45";
-					drive-strength = <2>;
-					bias-disable;
-				};
+				function = "blsp_uart3_a";
 			};
+
+			config {
+					pins = "gpio45";
+				drive-strength = <2>;
+				bias-disable;
+			};
+		};
 
 			blsp1_uart3_tx_sleep: blsp1_uart3_tx_sleep {
-				mux {
+			mux {
 					pins = "gpio45";
-					function = "gpio";
-				};
-
-				config {
-					pins = "gpio45";
-					drive-strength = <2>;
-					bias-pull-up;
-				};
+				function = "gpio";
 			};
+
+			config {
+					pins = "gpio45";
+				drive-strength = <2>;
+				bias-pull-up;
+			};
+		};
 
 			blsp1_uart3_rxcts_active: blsp1_uart3_rxcts_active {
 				mux {
@@ -1606,14 +2017,14 @@
 		};
 
 		cam_sensor_front_active: cam_sensor_front_active {
-			/* RESET  VANA*/
+			/* RESET */
 			mux {
-				pins = "gpio28", "gpio29";
+				pins = "gpio28";
 				function = "gpio";
 			};
 
 			config {
-				pins = "gpio28", "gpio29";
+				pins = "gpio28";
 				bias-disable; /* No PULL */
 				drive-strength = <2>; /* 2 MA */
 			};
@@ -2033,6 +2444,63 @@
 				output-high; /* active low reset */
 			};
 		};
+//nubia touch screen pinctrl
+		nubia_synaptics_int {
+			synaptics_int_active: synaptics_int_active {
+				mux {
+					pins = "gpio125";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio125";
+					drive-strength = <16>;
+					bias-pull-up;
+				};
+			};
+
+			synaptics_int_suspend: synaptics_int_suspend {
+				mux {
+					pins = "gpio125";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio125";
+					drive-strength = <16>;
+					bias-pull-down;
+				};
+			};
+		};
+
+	nubia_synaptics_reset {
+			synaptics_reset_active: synaptics_reset_active {
+				mux {
+					pins = "gpio89";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio89";
+					drive-strength = <16>;
+					bias-pull-up;
+				};
+			};
+
+			synaptics_reset_suspend: synaptics_reset_suspend {
+				mux {
+					pins = "gpio89";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio89";
+					drive-strength = <16>;
+					bias-pull-down;
+				};
+			};
+		};
+//nubia end
 
 		sdc2_clk_on: sdc2_clk_on {
 			config {
@@ -2177,6 +2645,7 @@
 		};
 
 
+//ZTEMT:fengxun modify for camera AL3200
 		mdss_hdmi_hpd_active: mdss_hdmi_hpd_active {
 			mux {
 				pins = "gpio34";
